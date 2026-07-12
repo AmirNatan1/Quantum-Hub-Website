@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wireframe — Home · Quantum-hub</title>
+<!--
+  LOW-FI WIREFRAME — Phase 2. Deliberately grayscale: structure, hierarchy, and copy only.
+  Pattern codes (P1–P14), surfaces (S1–S4), and motion notes refer to DESIGN-SPEC.md.
+  Copy below is DRAFT v1 in the matchmaker voice — review before Phase 3.
+-->
+<style>
+  :root{
+    --wf-ink:#283030; --wf-g600:#4d5a5a; --wf-g400:#96a3a3; --wf-g200:#dde3e3;
+    --wf-g100:#eef1f1; --wf-g50:#f6f8f8; --wf-white:#fff;
+  }
+  *{box-sizing:border-box; margin:0;}
+  body{font-family:system-ui,sans-serif; color:var(--wf-g600); background:var(--wf-white); line-height:1.55;}
+  .container{max-width:1200px; margin:0 auto; padding:0 32px;}
+  section{padding:72px 0; border-bottom:1px dashed var(--wf-g200); position:relative;}
+  h1,h2,h3{color:var(--wf-ink); line-height:1.15;}
+  h1{font-size:52px;} h2{font-size:32px;} h3{font-size:19px;}
+  p{max-width:68ch;}
+  /* wireframe furniture */
+  .wf-note{position:absolute; top:12px; right:16px; font-size:11px; background:var(--wf-ink); color:#fff;
+    padding:4px 10px; border-radius:999px; letter-spacing:.05em;}
+  .wf-motion{font-size:11px; color:var(--wf-g400); border:1px dashed var(--wf-g200); border-radius:8px;
+    padding:6px 10px; margin-top:20px; display:inline-block;}
+  .ph{background:repeating-linear-gradient(45deg,var(--wf-g100),var(--wf-g100) 12px,var(--wf-g50) 12px,var(--wf-g50) 24px);
+    border:1px dashed var(--wf-g400); border-radius:12px; display:flex; align-items:center; justify-content:center;
+    color:var(--wf-g400); font-size:12px; text-align:center; padding:8px;}
+  .eyebrow{font-size:12px; letter-spacing:.14em; color:var(--wf-g400); margin-bottom:12px;}
+  .btn{display:inline-block; border-radius:999px; padding:12px 28px; font-size:14px; text-decoration:none; margin-right:12px;}
+  .btn-primary{background:var(--wf-ink); color:#fff;}
+  .btn-outline{border:1.5px solid var(--wf-ink); color:var(--wf-ink);}
+  .inverse{background:var(--wf-ink); color:var(--wf-g200);}
+  .inverse h2,.inverse h3,.inverse .stat{color:#fff;}
+  .subtle{background:var(--wf-g50);}
+  .grid{display:grid; gap:20px;}
+  .cols-2{grid-template-columns:1fr 1fr;} .cols-4{grid-template-columns:repeat(4,1fr);} .cols-5{grid-template-columns:repeat(5,1fr);}
+  .card{background:#fff; border:1px solid var(--wf-g200); border-radius:18px; padding:24px;}
+  .split{display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; margin-top:40px;}
+  .stat{font-size:56px; font-weight:700;}
+  header.wf{position:sticky; top:0; background:rgba(255,255,255,.9); border-bottom:1px solid var(--wf-g200);
+    padding:16px 0; z-index:10;}
+  header.wf .container{display:flex; align-items:center; gap:24px; font-size:13px;}
+  header.wf nav{display:flex; gap:20px; flex:1;}
+  header.wf a{color:var(--wf-g600); text-decoration:none;}
+  footer.wf{background:var(--wf-ink); color:var(--wf-g400); padding:48px 0; font-size:13px;}
+  @media(max-width:768px){.cols-4,.cols-5,.cols-2,.split{grid-template-columns:1fr;} h1{font-size:36px;}}
+</style>
+</head>
+<body>
+
+<!-- HEADER — sticky 72px, hide-on-down/show-on-up, slims to 60px on return.
+     Partners Login REMOVED (Phase 0 rule #1).
+     THREE TIERS: page links (text) · utility (small ghost) · one action pill.
+     Secondary pages collapse into "Explore ▾" dropdown → nav stays at 4 visible items. -->
+<header class="wf">
+  <div class="container">
+    <div class="ph" style="width:120px;height:36px;">logo (ph-global-logo)</div>
+    <nav>
+      <a href="#">For partners</a>
+      <a href="#">For startups</a>
+      <a href="#">SPARK</a>
+      <a href="#" style="color:var(--wf-ink);">Explore ▾</a>
+    </nav>
+    <!-- T-utility: deliberately smaller/quieter — a site control, not a page -->
+    <span style="font-size:11px; color:var(--wf-g400); border:1px solid var(--wf-g200); border-radius:999px; padding:5px 10px;">🌐 EN</span>
+    <!-- T-action: the ONLY pill in the header (magenta in hi-fi) -->
+    <a class="btn btn-primary" href="#" style="padding:8px 18px;">Contact us</a>
+  </div>
+  <!-- Explore dropdown (open state shown for wireframe): -->
+  <div class="container" style="margin-top:10px;">
+    <div class="card" style="max-width:520px; display:grid; grid-template-columns:1fr 1fr; gap:16px; font-size:13px;">
+      <div>
+        <p style="font-size:11px; color:var(--wf-g400); letter-spacing:.14em;">explore ▾ — dropdown panel</p>
+        <p style="margin-top:8px;"><a href="#">Industries</a><br><a href="#">Case studies</a><br><a href="#">About</a><br><a href="#">What we're up to</a></p>
+      </div>
+      <div class="ph" style="height:90px;">featured case tile</div>
+    </div>
+    <span class="wf-motion">dropdown: click-open 180ms ease-out · Esc/outside-click closes · "Book a meeting" moved out of header → conversion bands + Contact page</span>
+  </div>
+</header>
+
+<!-- 1 · HERO — compact ~65vh; section 2 must peek above the fold -->
+<section style="min-height:62vh; display:flex; align-items:center;">
+  <span class="wf-note">1 · P1 hero + who-are-you split · S1</span>
+  <div class="container">
+    <p class="eyebrow">industry & tech platform</p>
+    <h1>Where industry meets innovation<span style="font-size:52px;"> ●</span><em style="font-size:12px;color:var(--wf-g400);"> (the one magenta dot)</em></h1>
+    <p style="font-size:18px; margin:20px 0 32px;">We connect industry leaders with vetted startups — and prove the fit with a real POC.</p>
+    <div class="grid cols-2" style="max-width:760px;">
+      <div class="card" style="padding:32px;">
+        <h3>I'm a corporate partner</h3>
+        <p style="font-size:14px;">Scout vetted technologies and test them in a working POC — before you invest.</p>
+        <a class="btn btn-primary" href="#" style="margin-top:16px;">Start a POC</a>
+      </div>
+      <div class="card" style="padding:32px;">
+        <h3>I'm a startup</h3>
+        <p style="font-size:14px;">Reach industrial decision-makers and validate your product where it matters.</p>
+        <a class="btn btn-outline" href="#" style="margin-top:16px;">Apply to SPARK</a>
+      </div>
+    </div>
+    <span class="wf-motion">motion: panels rise on load · hover tilt/raise · click stores audience preference + swaps header CTA</span>
+  </div>
+</section>
+
+<!-- 2 · STAT BAND — verified numbers only (fact register F-08: values TBD by team) -->
+<section class="inverse">
+  <span class="wf-note">2 · P2 stat band · S3 · PINNED + COUNT-UP</span>
+  <div class="container">
+    <p class="eyebrow">proof, not promises</p>
+    <div class="grid cols-4" style="margin-top:24px;">
+      <div><div class="stat">[N]</div><p>POCs completed</p></div>
+      <div><div class="stat">[N]</div><p>startups assessed</p></div>
+      <div><div class="stat">[N]</div><p>corporate partners</p></div>
+      <div><div class="stat">[N]</div><p>countries reached</p></div>
+    </div>
+    <p style="font-size:11px; margin-top:24px; color:var(--wf-g400);">values pending fact register F-08 — no number ships unverified</p>
+    <span class="wf-motion">motion: pins ~100vh · numerals count up once · unpins · reduced-motion = static finals</span>
+  </div>
+</section>
+
+<!-- 3 · WHO WE ARE + logo proof row — proof stays still -->
+<section>
+  <span class="wf-note">3 · P9 logo + proof row · S1</span>
+  <div class="container">
+    <p class="eyebrow">who we are</p>
+    <h2>A matchmaker with a workshop</h2>
+    <p style="margin-top:16px;">Quantum-hub connects industry leaders with startups across Automotive, Logistics, Industry 4.0, and Energy — then proves each match with a hands-on POC at our own testing playground. Our partners are five holding groups with operations worldwide.</p>
+    <div class="grid cols-5" style="margin-top:32px;">
+      <div class="ph" style="height:64px;">Taavura-Livnat<br>(ph-partner-logo-01)</div>
+      <div class="ph" style="height:64px;">Talcar<br>(02)</div>
+      <div class="ph" style="height:64px;">VDL<br>(03)</div>
+      <div class="ph" style="height:64px;">Hyundai<br>(04)</div>
+      <div class="ph" style="height:64px;">Bazan<br>(05)</div>
+    </div>
+    <span class="wf-motion">motion: fade-in only — credibility content does not move · logos grayscale, hover color</span>
+  </div>
+</section>
+
+<!-- 4 · INDUSTRIES GRID -->
+<section class="subtle">
+  <span class="wf-note">4 · P6 sector grid · S2 · links → /industries/ (fixes wrong "Discover more")</span>
+  <div class="container">
+    <p class="eyebrow">industries we cover</p>
+    <h2>Four sectors, one connected playground</h2>
+    <div class="grid cols-4" style="margin-top:32px;">
+      <div class="card"><p style="font-size:11px;">● (blue dot)</p><h3>Automotive</h3><p style="font-size:13px;">From ADAS to fleet telemetry — tested on real vehicles.</p></div>
+      <div class="card"><p style="font-size:11px;">● (teal dot)</p><h3>Logistics</h3><p style="font-size:13px;">Warehousing, sensing, and routing across live operations.</p></div>
+      <div class="card"><p style="font-size:11px;">● (violet dot)</p><h3>Industry 4.0</h3><p style="font-size:13px;">Automation and data for factories that can't stop.</p></div>
+      <div class="card"><p style="font-size:11px;">● (amber dot)</p><h3>Energy</h3><p style="font-size:13px;">Refining, hydrogen, and the grid's next technologies.</p></div>
+    </div>
+    <span class="wf-motion">motion: staggered rise (60ms) · hover raise + sector dot grows · whole tile clickable</span>
+  </div>
+</section>
+
+<!-- 5 · HOW WE WORK — consolidates 3 redundant live-site sections into 4 splits -->
+<section>
+  <span class="wf-note">5 · P4 feature splits ×4 · S1 · replaces "Setting up innovation…" + "How we work?" + offerings</span>
+  <div class="container">
+    <p class="eyebrow">how we work</p>
+    <h2>From pain point to pilot, end to end</h2>
+
+    <div class="split">
+      <div>
+        <h3>1 · We start with the need</h3>
+        <p>Our partners' real pain points guide the search — commercial need first, technology second. That's why our matches hold.</p>
+      </div>
+      <div class="ph" style="height:220px;">media (ph-home-whoarewe)</div>
+    </div>
+
+    <div class="split">
+      <div class="ph" style="height:220px;">media</div>
+      <div>
+        <h3>2 · We scout and vet</h3>
+        <p>We screen startups globally against each use case — stage, tech readiness, and a partner with a concrete interest.</p>
+      </div>
+    </div>
+
+    <div class="split">
+      <div>
+        <h3>3 · We prove it with a POC</h3>
+        <p>Design, planning, and execution at our own playground — without interrupting anyone's daily operations.</p>
+      </div>
+      <div class="ph" style="height:220px;">media</div>
+    </div>
+
+    <div class="split">
+      <div class="ph" style="height:220px;">media</div>
+      <div>
+        <h3>4 · We scale what works</h3>
+        <p>A validated POC becomes a pilot, and a pilot becomes a commercial partnership. We stay until it does.</p>
+      </div>
+    </div>
+    <span class="wf-motion">motion: text rises in · media parallax ±20px · alternating sides</span>
+  </div>
+</section>
+
+<!-- 6 · BIG CLAIM INTERLUDE -->
+<section class="inverse" style="padding:110px 0;">
+  <span class="wf-note">6 · P3 big claim · S3 · replaces "Setting up innovation for mutual success"</span>
+  <div class="container">
+    <h2 style="font-size:42px; max-width:18ch;">We prove the fit before you invest.</h2>
+    <span class="wf-motion">motion: word-by-word opacity scrub (Lux-style) · reduced-motion = static</span>
+  </div>
+</section>
+
+<!-- 7 · SPARK TEASER — the ONLY SPARK explanation on Home; link fixed → /spark/ -->
+<section>
+  <span class="wf-note">7 · P4 single split · S1 · link FIXED → /spark/ (was → POC Playground)</span>
+  <div class="container">
+    <div class="split">
+      <div>
+        <p class="eyebrow">spark — poc runway program</p>
+        <h2>Equity-free. Industry-backed. Built to commercialize.</h2>
+        <p style="margin-top:16px;">SPARK connects MVP+ startups with our corporate partners and runs a real POC together — no equity, no fees, just a use case a partner actually wants.</p>
+        <a class="btn btn-outline" href="#" style="margin-top:20px;">Read more about SPARK</a>
+      </div>
+      <div class="ph" style="height:260px;">SPARK visual (ph-spark-steps montage)</div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 · FEATURED CASE STUDY -->
+<section class="subtle">
+  <span class="wf-note">8 · P8 case tile · S2 · video auto-loops muted, in-view only</span>
+  <div class="container">
+    <p class="eyebrow">from the playground</p>
+    <h2>See a POC in action</h2>
+    <div class="ph" style="height:380px; margin-top:32px;">POC Playground video (ph-case-video-poc) — muted auto-loop, pause control, plays only in viewport</div>
+    <p style="margin-top:20px;"><strong style="color:var(--wf-ink);">The POC Playground</strong> — our own beta site where partner industries meet startup technology. <a href="#">Explore all case studies →</a></p>
+  </div>
+</section>
+
+<!-- 9 · WHAT WE'RE UP TO — replaces stale 2024 event block -->
+<section>
+  <span class="wf-note">9 · P11 news strip · S1 · replaces stale "Upcoming event ×4" · LinkedIn-feedable</span>
+  <div class="container">
+    <p class="eyebrow">what we're up to</p>
+    <div class="grid cols-4" style="margin-top:24px;">
+      <div class="card"><p style="font-size:11px; color:var(--wf-g400);">[date]</p><p style="font-size:14px;">[News / LinkedIn post title — ph-news-01]</p></div>
+      <div class="card"><p style="font-size:11px; color:var(--wf-g400);">[date]</p><p style="font-size:14px;">[ph-news-02]</p></div>
+      <div class="card"><p style="font-size:11px; color:var(--wf-g400);">[date]</p><p style="font-size:14px;">[ph-news-03]</p></div>
+      <div class="card"><p style="font-size:11px; color:var(--wf-g400);">[date]</p><p style="font-size:14px;">[ph-news-04]</p></div>
+    </div>
+    <span class="wf-motion">motion: row slides in from right · mobile = swipe row · answers LinkedIn-visibility goal</span>
+  </div>
+</section>
+
+<!-- 10 · CONVERSION BAND -->
+<section class="inverse" style="padding:88px 0;">
+  <span class="wf-note">10 · P13 conversion band · S3 · page's last magenta moment</span>
+  <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap;">
+    <h2 style="font-size:36px;">Ready to test before you invest?</h2>
+    <a class="btn btn-primary" href="#" style="background:#fff; color:var(--wf-ink);">Book a meeting <em style="font-size:10px;">(magenta in hi-fi)</em></a>
+  </div>
+</section>
+
+<!-- FOOTER — single nav (was duplicated ×2), auto-year, LinkedIn prominent. No bottom bar. -->
+<footer class="wf">
+  <div class="container">
+    <div style="display:flex; justify-content:space-between; gap:32px; flex-wrap:wrap;">
+      <div class="ph" style="width:110px;height:32px;">logo</div>
+      <nav style="display:flex; gap:18px;">
+        <a href="#" style="color:inherit;">For partners</a><a href="#" style="color:inherit;">For startups</a>
+        <a href="#" style="color:inherit;">SPARK</a><a href="#" style="color:inherit;">Industries</a>
+        <a href="#" style="color:inherit;">Case studies</a><a href="#" style="color:inherit;">About</a><a href="#" style="color:inherit;">Contact</a>
+      </nav>
+      <span>[LinkedIn]</span>
+    </div>
+    <p style="margin-top:32px; font-size:11px;">Accessibility · Cookies · Privacy · Terms &nbsp;|&nbsp; Quantum © [auto-year] · T.L.G-T.S Technology LTD</p>
+  </div>
+</footer>
+
+</body>
+</html>

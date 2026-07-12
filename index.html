@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quantum-hub — Where industry meets innovation</title>
+<meta name="description" content="Quantum-hub connects industry leaders with vetted startups across Automotive, Logistics, Industry 4.0 and Energy — and proves the fit with a real POC.">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/svg+xml" href="assets/quantum-logo.svg">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js" defer></script>
+</head>
+<body>
+
+<div class="bg" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"></div>
+
+<!-- HEADER — 3 tiers: nav links · quiet utility · one CTA pill. Partners Login: removed. -->
+<header class="site-header">
+  <div class="container">
+    <a class="logo-tile" href="index.html" aria-label="Quantum-hub home">
+      <img src="assets/quantum-logo.svg" alt="Quantum-hub"
+           onerror="this.style.display='none';this.parentNode.insertAdjacentHTML('beforeend','&lt;span class=&quot;logo-fallback&quot;&gt;q&lt;/span&gt;')">
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="for-partners.html">For partners</a>
+      <a href="for-startups.html">For startups</a>
+      <a href="spark.html">SPARK</a>
+      <span class="explore">
+        <a href="#" data-explore-toggle aria-expanded="false" aria-haspopup="true">Explore</a>
+        <div class="explore-panel" role="menu">
+          <div>
+            <a href="industries.html" role="menuitem">Industries</a>
+            <a href="case-studies.html" role="menuitem">Case studies</a>
+            <a href="about.html" role="menuitem">About</a>
+            <a href="about.html#news" role="menuitem">What we're up to</a>
+          </div>
+          <a class="explore-feature" href="case-studies.html">Featured: the POC Playground — see a live proof of concept</a>
+        </div>
+      </span>
+    </nav>
+    <button class="utility-btn" type="button" aria-label="Change language">
+      <i data-lucide="globe" style="width:14px;height:14px;"></i> EN
+    </button>
+    <a class="btn btn--primary btn--sm" data-context-cta href="contact.html">Contact us</a>
+  </div>
+</header>
+
+<main>
+
+<!-- 1 · HERO — compact; next section peeks above the fold -->
+<section class="hero">
+  <div class="container reveal">
+    <span class="eyebrow">industry &amp; tech platform</span>
+    <h1 class="display-xl">Where industry meets innovation</h1>
+    <p class="lede" style="margin-top: var(--space-4);">We connect industry leaders with vetted startups — and prove the fit with a real POC.</p>
+    <div class="audience reveal-stagger">
+      <a class="audience-panel" href="for-partners.html" data-audience="partner">
+        <h3>I'm a corporate partner</h3>
+        <p>Scout vetted technologies and test them in a working POC — before you invest.</p>
+        <span class="btn btn--secondary btn--sm">Start a POC</span>
+      </a>
+      <a class="audience-panel" href="for-startups.html" data-audience="startup">
+        <h3>I'm a startup</h3>
+        <p>Reach industrial decision-makers and validate your product where it matters.</p>
+        <span class="btn btn--outline btn--sm">Apply to SPARK</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 2 · STAT BAND — pinned + count-up. Values await fact register F-08: data-count stays unset until verified. -->
+<div class="pin-wrap surface-inverse">
+  <section class="pinned">
+    <div class="container">
+      <span class="eyebrow">proof, not promises</span>
+      <div class="stats" style="margin-top: var(--space-6);">
+        <div><div class="stat-num" data-count="" aria-label="value pending verification">[N]</div><div class="stat-label">POCs completed</div></div>
+        <div><div class="stat-num" data-count="">[N]</div><div class="stat-label">startups assessed</div></div>
+        <div><div class="stat-num" data-count="">[N]</div><div class="stat-label">corporate partners</div></div>
+        <div><div class="stat-num" data-count="">[N]</div><div class="stat-label">countries reached</div></div>
+      </div>
+      <p class="stat-source">Verified figures only — pending fact register F-08. (Example when live: <code>data-count="47" data-suffix="+"</code>.)</p>
+    </div>
+  </section>
+</div>
+
+<!-- 3 · WHO WE ARE + logo proof row — proof stays still -->
+<section class="section">
+  <div class="container">
+    <div class="reveal">
+      <span class="eyebrow">who we are</span>
+      <h2 class="heading">A matchmaker with a workshop</h2>
+      <p class="lede" style="margin-top: var(--space-3);">Quantum-hub connects industry leaders with startups across Automotive, Logistics, Industry&nbsp;4.0, and Energy — then proves each match with a hands-on POC at our own testing playground. Our partners are five holding groups with operations worldwide.</p>
+    </div>
+    <div class="logo-row" style="margin-top: var(--space-6);">
+      <div class="ph" title="Taavura-Livnat Group">Taavura-Livnat</div>
+      <div class="ph" title="Talcar">Talcar</div>
+      <div class="ph" title="VDL Group">VDL</div>
+      <div class="ph" title="Hyundai">Hyundai</div>
+      <div class="ph" title="Bazan Group">Bazan</div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · INDUSTRIES GRID -->
+<section class="section surface-subtle">
+  <div class="container">
+    <div class="reveal">
+      <span class="eyebrow">industries we cover</span>
+      <h2 class="heading">Four sectors, one connected playground</h2>
+    </div>
+    <div class="grid grid--4 reveal-stagger" style="margin-top: var(--space-6);">
+      <a class="card card--interactive" href="industries.html#automotive" style="display:block;color:inherit;">
+        <span class="sector-dot sector-dot--automotive" aria-hidden="true"></span>
+        <h3>Automotive</h3>
+        <p>From ADAS to fleet telemetry — tested on real vehicles.</p>
+      </a>
+      <a class="card card--interactive" href="industries.html#logistics" style="display:block;color:inherit;">
+        <span class="sector-dot sector-dot--logistics" aria-hidden="true"></span>
+        <h3>Logistics</h3>
+        <p>Warehousing, sensing, and routing across live operations.</p>
+      </a>
+      <a class="card card--interactive" href="industries.html#industry40" style="display:block;color:inherit;">
+        <span class="sector-dot sector-dot--industry" aria-hidden="true"></span>
+        <h3>Industry 4.0</h3>
+        <p>Automation and data for factories that can't stop.</p>
+      </a>
+      <a class="card card--interactive" href="industries.html#energy" style="display:block;color:inherit;">
+        <span class="sector-dot sector-dot--energy" aria-hidden="true"></span>
+        <h3>Energy</h3>
+        <p>Refining, hydrogen, and the grid's next technologies.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · HOW WE WORK — 4 alternating splits (consolidates 3 redundant live-site sections) -->
+<section class="section">
+  <div class="container">
+    <div class="reveal">
+      <span class="eyebrow">how we work</span>
+      <h2 class="heading">From pain point to pilot, end to end</h2>
+    </div>
+
+    <div class="split reveal">
+      <div>
+        <h3>1 · We start with the need</h3>
+        <p>Our partners' real pain points guide the search — commercial need first, technology second. That's why our matches hold.</p>
+      </div>
+      <div class="media" data-parallax="20"><div class="ph ph--43">media — ph-home-whoarewe</div></div>
+    </div>
+
+    <div class="split reveal">
+      <div class="media" data-parallax="20"><div class="ph ph--43">media</div></div>
+      <div>
+        <h3>2 · We scout and vet</h3>
+        <p>We screen startups globally against each use case — stage, tech readiness, and a partner with a concrete interest.</p>
+      </div>
+    </div>
+
+    <div class="split reveal">
+      <div>
+        <h3>3 · We prove it with a POC</h3>
+        <p>Design, planning, and execution at our own playground — without interrupting anyone's daily operations.</p>
+      </div>
+      <div class="media" data-parallax="20"><div class="ph ph--43">media</div></div>
+    </div>
+
+    <div class="split reveal">
+      <div class="media" data-parallax="20"><div class="ph ph--43">media</div></div>
+      <div>
+        <h3>4 · We scale what works</h3>
+        <p>A validated POC becomes a pilot, and a pilot becomes a commercial partnership. We stay until it does.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · BIG CLAIM — word-by-word scrub -->
+<section class="section surface-inverse" style="padding: 110px 0;">
+  <div class="container">
+    <h2 class="big-claim">We prove the fit before you invest.</h2>
+  </div>
+</section>
+
+<!-- 7 · SPARK TEASER — the only SPARK mention on Home; canonical link -->
+<section class="section">
+  <div class="container">
+    <div class="split reveal" style="margin-top: 0;">
+      <div>
+        <span class="eyebrow">spark — poc runway program</span>
+        <h2 class="heading">Equity-free. Industry-backed. Built to commercialize.</h2>
+        <p style="margin-top: var(--space-3);">SPARK connects MVP+ startups with our corporate partners and runs a real POC together — no equity, no fees, just a use case a partner actually wants.</p>
+        <a class="btn btn--outline" href="spark.html" style="margin-top: var(--space-5);">Read more about SPARK <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+      </div>
+      <div class="media" data-parallax="24"><div class="ph ph--43">SPARK visual — ph-spark-steps</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 · FEATURED CASE — the video moment: expands to fill the screen while pinned -->
+<section class="section surface-subtle" style="padding-bottom: 0;">
+  <div class="container reveal">
+    <span class="eyebrow">from the playground</span>
+    <h2 class="heading">See a POC in action</h2>
+  </div>
+</section>
+<div class="video-moment">
+  <div class="vm-sticky">
+    <div class="vm-frame">
+      <!-- when the asset arrives:
+           <video data-loop muted loop playsinline preload="metadata" poster="…"><source src="…"></video> -->
+      <div class="ph">ph-case-video-poc — muted auto-loop · expands to full screen on scroll · plays only in viewport</div>
+      <div class="vm-caption">
+        <h2>The POC Playground</h2>
+        <p>Our own beta site — where partner industries meet startup technology under real operating conditions.</p>
+        <a class="btn btn--primary btn--sm" href="case-studies.html" style="margin-top: var(--space-3);">Explore all case studies</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 9 · WHAT WE'RE UP TO — replaces the stale event block -->
+<section class="section">
+  <div class="container">
+    <div class="reveal">
+      <span class="eyebrow">what we're up to</span>
+      <h2 class="heading">Fresh from the hub</h2>
+    </div>
+    <div class="grid grid--4 reveal-stagger" style="margin-top: var(--space-6);">
+      <article class="card news-card"><time>[date]</time><p>[News or LinkedIn post — ph-news-01]</p></article>
+      <article class="card news-card"><time>[date]</time><p>[ph-news-02]</p></article>
+      <article class="card news-card"><time>[date]</time><p>[ph-news-03]</p></article>
+      <article class="card news-card"><time>[date]</time><p>[ph-news-04]</p></article>
+    </div>
+    <p style="margin-top: var(--space-5);"><a href="https://www.linkedin.com/company/quantum-hub/">Follow Quantum-hub on LinkedIn <i data-lucide="arrow-right" style="width:14px;height:14px;vertical-align:-2px;"></i></a></p>
+  </div>
+</section>
+
+<!-- 10 · CONVERSION BAND -->
+<section class="section surface-inverse section--compressed">
+  <div class="container convert reveal">
+    <h2>Ready to test before you invest?</h2>
+    <a class="btn btn--primary" href="contact.html">Book a meeting</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <a class="logo-tile" href="index.html" aria-label="Quantum-hub home" style="width:36px;height:36px;">
+        <img src="assets/quantum-logo.svg" alt="Quantum-hub"
+             onerror="this.style.display='none';this.parentNode.insertAdjacentHTML('beforeend','&lt;span class=&quot;logo-fallback&quot;&gt;q&lt;/span&gt;')">
+      </a>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="for-partners.html">For partners</a>
+        <a href="for-startups.html">For startups</a>
+        <a href="spark.html">SPARK</a>
+        <a href="industries.html">Industries</a>
+        <a href="case-studies.html">Case studies</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <a href="https://www.linkedin.com/company/quantum-hub/" aria-label="Quantum-hub on LinkedIn"><i data-lucide="linkedin" style="width:20px;height:20px;"></i></a>
+    </div>
+    <p class="footer-legal">
+      <a href="#">Accessibility</a> · <a href="#">Cookies</a> · <a href="#">Privacy</a> · <a href="#">Terms</a>
+      &nbsp;|&nbsp; Quantum © <span id="y"></span> · T.L.G-T.S Technology LTD
+    </p>
+  </div>
+</footer>
+
+<script>document.getElementById("y").textContent = new Date().getFullYear();</script>
+<script src="js/motion.js" defer></script>
+</body>
+</html>

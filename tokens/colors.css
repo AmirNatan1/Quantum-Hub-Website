@@ -1,0 +1,59 @@
+/* Quantum-hub — Color tokens (DARK V2)
+   Brand palette from LOGO.jpg: charcoal #283030, magenta #D82B72.
+   V2: the site is dark throughout — black/charcoal + magenta + blends. No white surfaces. */
+:root {
+  /* Brand */
+  --q-ink: #283030;
+  --q-ink-soft: #3a4444;
+  --q-magenta: #d82b72;
+  --q-magenta-strong: #b81f5e;
+  --q-magenta-soft: #f06ba0;      /* v2: soft = lighter tint for text accents on dark */
+  --q-magenta-glow: rgba(216, 43, 114, 0.16);
+
+  /* Dark scale (cool, charcoal-derived) */
+  --q-black: #0e1112;             /* page base */
+  --q-neutral-900: #14181a;
+  --q-neutral-800: #1a2020;
+  --q-neutral-700: #283030;
+  --q-neutral-600: #3a4444;
+  --q-neutral-500: #6b7a7a;
+  --q-neutral-400: #8a9797;
+  --q-neutral-300: #c2cbcb;
+  --q-neutral-200: #dde3e3;
+  --q-neutral-100: #eef1f1;
+  --q-neutral-0: #ffffff;
+
+  /* Sector accents (unchanged; read well on dark) */
+  --q-automotive: #4a8bf0;
+  --q-logistics: #1fb3a5;
+  --q-industry: #9a6ff0;
+  --q-energy: #f0a72e;
+
+  /* Semantic status */
+  --q-success: #34c98a;
+  --q-warning: #e8b04a;
+  --q-danger: #f0566a;
+  --q-info: #4a8bf0;
+
+  /* Semantic aliases — DARK */
+  --text-heading: #ffffff;
+  --text-body: var(--q-neutral-300);
+  --text-muted: var(--q-neutral-400);
+  --text-inverse: var(--q-ink);
+  --text-link: var(--q-magenta-soft);
+  --text-link-hover: #ffffff;
+
+  --surface-page: var(--q-black);
+  --surface-subtle: rgba(255, 255, 255, 0.025);   /* translucent so the blend shows through */
+  --surface-card: rgba(255, 255, 255, 0.04);
+  --surface-inverse: rgba(216, 43, 114, 0.06);    /* v2: "inverse" bands are magenta-washed */
+  --surface-accent: rgba(216, 43, 114, 0.10);
+
+  --border-default: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.18);
+  --border-focus: var(--q-magenta);
+
+  --accent-primary: var(--q-magenta);
+  --accent-primary-hover: var(--q-magenta-strong);
+  --accent-primary-soft: rgba(216, 43, 114, 0.15);
+}

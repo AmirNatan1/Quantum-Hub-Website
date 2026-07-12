@@ -1,0 +1,29 @@
+/* Quantum-hub — base element styles (DARK V2) */
+* { box-sizing: border-box; margin: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--text-body);
+  background: var(--surface-page);
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: var(--weight-heavy);
+  color: var(--text-heading);
+  letter-spacing: var(--tracking-display);
+  line-height: var(--leading-tight);
+}
+p em, li em { font-style: italic; color: #fff; }   /* serif italic emphasis = white (v2 signature) */
+a { color: var(--text-link); text-decoration: none; }
+a:hover { color: var(--text-link-hover); }
+::selection { background: var(--q-magenta); color: #fff; }
+:focus-visible { outline: none; box-shadow: var(--shadow-focus); border-radius: var(--radius-sm); }
+img, video { max-width: 100%; display: block; }
+button, input, select, textarea { font-family: var(--font-ui); }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

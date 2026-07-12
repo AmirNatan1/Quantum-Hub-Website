@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wireframe — Register for SPARK · Quantum-hub</title>
+<link rel="stylesheet" href="_wireframe.css">
+<!-- DESIGN-SPEC §6.5 — replaces the "spark with us!" Elementor POPUP (and its "SUMBIT" typo).
+     Reached ONLY via "Register now" buttons. Minimal distraction: standard header, no other CTAs. -->
+</head>
+<body>
+
+<header class="wf">
+  <div class="container">
+    <div class="ph" style="width:120px;height:36px;">logo</div>
+    <nav>
+      <a href="for-partners.html">For partners</a><a href="for-startups.html">For startups</a>
+      <a href="spark.html">SPARK</a><a href="#">Explore ▾</a>
+    </nav>
+    <span class="utility">🌐 EN</span>
+    <!-- no CTA pill on this page — the page IS the conversion -->
+  </div>
+</header>
+
+<section class="subtle" style="min-height:80vh;">
+  <span class="wf-note">P14 simple form · S2 · single column, max 4 fields + consents</span>
+  <div class="container" style="max-width:640px;">
+    <p class="eyebrow">spark — batch [N]</p>
+    <h1 style="font-size:40px;">Register for SPARK</h1>
+    <p style="margin-top:12px;">Tell us who you are — the full application form follows by email. We review every submission, even outside batch windows.</p>
+
+    <form style="margin-top:24px;">
+      <label>Full name<input type="text" placeholder="Your name"></label>
+      <label>Work email<input type="email" placeholder="you@startup.com"></label>
+      <label>Company name<input type="text" placeholder="Startup Ltd."></label>
+      <label>Product stage
+        <select><option>MVP</option><option>Beta</option><option>In market</option></select>
+      </label>
+      <label style="font-weight:400; display:flex; gap:10px; align-items:flex-start; margin-top:20px;">
+        <input type="checkbox" style="width:auto; margin-top:3px;"> <span style="font-size:13px;">I agree to the <a href="#">privacy policy</a></span>
+      </label>
+      <label style="font-weight:400; display:flex; gap:10px; align-items:flex-start;">
+        <input type="checkbox" style="width:auto; margin-top:3px;"> <span style="font-size:13px;">Send me updates about future batches (optional)</span>
+      </label>
+      <button class="btn btn-primary" type="button" style="margin-top:24px; border:none; cursor:pointer;">Submit application</button>
+      <p style="font-size:11px; color:var(--wf-g400); margin-top:10px;">(spelled correctly this time — live popup says "SUMBIT")</p>
+    </form>
+
+    <div class="card" style="margin-top:32px; border-style:dashed;">
+      <p style="font-size:13px;"><strong style="color:var(--wf-ink);">Success state (replaces form in place, no redirect):</strong><br>
+      "Application received — we'll get back to you within [X] days." <em style="color:var(--wf-g400);">([X] pending team confirmation)</em></p>
+    </div>
+    <span class="wf-motion">motion: none beyond field focus rings + inline validation · form is P14, no scroll effects</span>
+  </div>
+</section>
+
+<footer class="wf"><div class="container"><p>footer — standard (see home.html)</p></div></footer>
+
+</body>
+</html>

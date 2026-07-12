@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wireframe — Contact · Quantum-hub</title>
+<link rel="stylesheet" href="_wireframe.css">
+<!-- DESIGN-SPEC §6.9 — simplified per review: EMAIL + MESSAGE only. Book-a-meeting lives here.
+     The site-wide embedded contact form is abolished; this page is the single contact surface. -->
+</head>
+<body>
+
+<header class="wf">
+  <div class="container">
+    <div class="ph" style="width:120px;height:36px;">logo</div>
+    <nav>
+      <a href="for-partners.html">For partners</a><a href="for-startups.html">For startups</a>
+      <a href="spark.html">SPARK</a><a href="#">Explore ▾</a>
+    </nav>
+    <span class="utility">🌐 EN</span>
+    <!-- no Contact pill — we're here -->
+  </div>
+</header>
+
+<section class="subtle" style="min-height:75vh;">
+  <span class="wf-note">P14 simple form · S2 · two-column</span>
+  <div class="container">
+    <p class="eyebrow">contact us</p>
+    <h1 style="font-size:44px;">Tell us what you're working on</h1>
+    <div class="split" style="align-items:flex-start; margin-top:36px;">
+
+      <!-- LEFT: direct channels -->
+      <div>
+        <div class="card">
+          <h3 style="font-size:16px;">Email</h3>
+          <p style="font-size:14px;"><a href="mailto:company@quantum-hub.com">company@quantum-hub.com</a></p>
+          <h3 style="font-size:16px; margin-top:20px;">Visit</h3>
+          <p style="font-size:14px;">Arik Einstein 3, 8th Fl., Herzliya <em style="font-size:11px; color:var(--wf-g400);">(F-11: "FI" typo fixed; confirm current address)</em></p>
+          <h3 style="font-size:16px; margin-top:20px;">LinkedIn</h3>
+          <p style="font-size:14px;"><a href="#">Quantum-hub on LinkedIn →</a></p>
+        </div>
+        <div class="card" style="margin-top:20px;">
+          <h3 style="font-size:16px;">Prefer to talk?</h3>
+          <p style="font-size:14px;">Pick a slot that suits you.</p>
+          <div class="ph" style="height:120px; margin-top:12px;">book-a-meeting calendar embed (sosa-style) — provider TBD</div>
+        </div>
+      </div>
+
+      <!-- RIGHT: the whole form. Two fields. -->
+      <div class="card" style="padding:32px;">
+        <form>
+          <label>Email<input type="email" placeholder="you@company.com"></label>
+          <label>Message<textarea rows="6" placeholder="What are you working on, and how can we help?"></textarea></label>
+          <label style="font-weight:400; display:flex; gap:10px; align-items:flex-start; margin-top:16px;">
+            <input type="checkbox" style="width:auto; margin-top:3px;"> <span style="font-size:13px;">I agree to the <a href="#">privacy policy</a></span>
+          </label>
+          <button class="btn btn-primary" type="button" style="margin-top:20px; border:none; cursor:pointer;">Send message</button>
+        </form>
+        <p style="font-size:11px; color:var(--wf-g400); margin-top:14px;">was: Full name + Company + Email + Message + consent, embedded on every page. Now: email + message, here only (review requirement).</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="wf"><div class="container"><p>footer — standard (see home.html)</p></div></footer>
+
+</body>
+</html>

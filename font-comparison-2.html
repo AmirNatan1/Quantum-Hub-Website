@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Body text options under Syne — round 2 · Quantum-hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=Space+Grotesk:wght@400;500;600&family=Sora:wght@300;400;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0e1112; --magenta:#d82b72; --magenta-soft:#f06ba0; --mist:#c2cbcb; --dim:#8a9797;
+  }
+  *{box-sizing:border-box;margin:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--ink); color:var(--mist); line-height:1.65; font-family:"Inter",sans-serif;}
+  .bg{position:fixed; inset:0; z-index:-1; pointer-events:none;
+    background:
+      radial-gradient(600px 400px at var(--gx,80%) var(--gy,10%), rgba(216,43,114,.16), transparent 70%),
+      radial-gradient(800px 600px at calc(100% - var(--gx,80%)) calc(100% - var(--gy,10%)), rgba(216,43,114,.08), transparent 70%),
+      linear-gradient(180deg, #0e1112 0%, #1a2020 50%, #14090f 100%);}
+  .container{max-width:1000px; margin:0 auto; padding:0 32px;}
+  section{padding:88px 0; border-bottom:1px solid rgba(194,203,203,.08);}
+  h1{font-family:"Syne",sans-serif; font-weight:800; font-size:56px; color:#fff; line-height:1.06;}
+  .eyebrow{font-size:12px; letter-spacing:.18em; color:var(--magenta); font-weight:600; display:block; margin-bottom:16px; text-transform:lowercase;}
+  .pick{font-size:12px; color:var(--dim); border:1px dashed rgba(194,203,203,.25); border-radius:8px; padding:8px 12px; display:inline-block; margin-top:28px;}
+  .kicker{position:sticky; top:0; z-index:5; background:rgba(14,17,18,.85); backdrop-filter:blur(10px);
+    padding:14px 0; border-bottom:1px solid rgba(194,203,203,.1); font-size:13px;}
+  .kicker .container{display:flex; gap:20px; flex-wrap:wrap;}
+  .kicker a{color:var(--mist); text-decoration:none;}
+  .kicker a:hover{color:#fff;}
+  mark{background:none; color:#fff; font-weight:600;}
+  .m mark{color:var(--magenta-soft); font-weight:600;}
+
+  /* 1 — Space Grotesk body */
+  .o1 p.body{font-family:"Space Grotesk",sans-serif; font-size:18px; max-width:60ch; margin-top:18px;}
+
+  /* 2 — Sora light body, airy */
+  .o2 p.body{font-family:"Sora",sans-serif; font-weight:300; font-size:17px; letter-spacing:.01em; max-width:58ch; margin-top:18px;}
+  .o2 p.body strong{font-weight:600; color:#fff;}
+
+  /* 3 — Newsreader serif body, editorial contrast */
+  .o3 p.body{font-family:"Newsreader",serif; font-size:19px; max-width:58ch; margin-top:18px;}
+  .o3 p.body em{font-style:italic; color:#fff;}
+
+  /* 4 — dressed Inter: lede + highlights + mono meta */
+  .o4 p.lede{font-family:"Inter",sans-serif; font-size:22px; font-weight:500; color:#fff; max-width:44ch; margin-top:18px; line-height:1.45;}
+  .o4 p.body{font-family:"Inter",sans-serif; font-size:16px; max-width:60ch; margin-top:14px;}
+  .o4 .meta{font-family:"Space Mono",monospace; font-size:12px; color:var(--dim); letter-spacing:.06em; display:block; margin-top:22px;}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"></div>
+
+<div class="kicker">
+  <div class="container">
+    <strong style="color:#fff;">Body text under Syne — round 2</strong>
+    <a href="#o1">1 · Space Grotesk</a>
+    <a href="#o2">2 · Sora light</a>
+    <a href="#o3">3 · Serif contrast</a>
+    <a href="#o4">4 · Dressed Inter</a>
+  </div>
+</div>
+
+<!-- 1 · SPACE GROTESK BODY -->
+<section class="o1 m" id="o1">
+  <div class="container">
+    <span class="eyebrow">option 1 · syne + space grotesk body</span>
+    <h1>Proof, not promises.</h1>
+    <p class="body">We connect industry leaders with <mark>vetted startups</mark> — and prove the fit with a real POC. Space Grotesk has quirks Inter refuses to have: angled terminals, a lively lowercase g, slightly odd proportions that keep long paragraphs from going flat.</p>
+    <p class="body">Every case here ran at our own beta sites, with success criteria set by the industry partner — not by us.</p>
+    <p class="pick">The safe spice: more character at zero legibility cost. Key phrases pop in soft magenta.</p>
+  </div>
+</section>
+
+<!-- 2 · SORA LIGHT BODY -->
+<section class="o2" id="o2">
+  <div class="container">
+    <span class="eyebrow">option 2 · syne + sora light</span>
+    <h1>Proof, not promises.</h1>
+    <p class="body">We connect industry leaders with <strong>vetted startups</strong> — and prove the fit with a real POC. Sora at light weight makes the contrast do the work: whisper-thin body against Syne's heavyweight titles, with <strong>key phrases snapping to bold white</strong>.</p>
+    <p class="body">Every case here ran at our own beta sites, with success criteria set by the industry partner — not by us.</p>
+    <p class="pick">The elegant spice: maximum weight contrast. Feels premium; needs the dark background to shine.</p>
+  </div>
+</section>
+
+<!-- 3 · SERIF CONTRAST BODY -->
+<section class="o3" id="o3">
+  <div class="container">
+    <span class="eyebrow">option 3 · syne + newsreader serif</span>
+    <h1>Proof, not promises.</h1>
+    <p class="body">We connect industry leaders with <em>vetted startups</em> — and prove the fit with a real POC. A serif under a display grotesque is the classic editorial move: suddenly the paragraphs read like a magazine feature, and <em>italic emphasis</em> becomes beautiful instead of forbidden.</p>
+    <p class="body">Every case here ran at our own beta sites, with success criteria set by the industry partner — not by us.</p>
+    <p class="pick">The bold spice: most distinctive pairing, most editorial. Risk: may read "literary" rather than "industrial tech".</p>
+  </div>
+</section>
+
+<!-- 4 · DRESSED INTER -->
+<section class="o4" id="o4">
+  <div class="container">
+    <span class="eyebrow">option 4 · syne + inter, but dressed</span>
+    <h1>Proof, not promises.</h1>
+    <p class="lede">We connect industry leaders with vetted startups — and prove the fit with a real POC.</p>
+    <p class="body">The trick isn't the typeface, it's the treatment: every section opens with a large white lede line, supporting text drops to smaller gray, and technical metadata switches to monospace. Three text sizes per section instead of one — hierarchy is the spice.</p>
+    <span class="meta">POC · AUTOMOTIVE · 2026 — meta lines in Space Mono</span>
+    <p class="pick">The structural spice: keeps Inter's neutrality but nothing is "plain" because no two lines look alike.</p>
+  </div>
+</section>
+
+<script>
+(function(){
+  var bg=document.querySelector(".bg");
+  function move(){
+    var p=document.documentElement.scrollTop/(document.documentElement.scrollHeight-document.documentElement.clientHeight||1);
+    bg.style.setProperty("--gx",(80-p*60)+"%"); bg.style.setProperty("--gy",(10+p*70)+"%");
+  }
+  window.addEventListener("scroll",move,{passive:true}); move();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Quantum-hub</title>
+<meta name="description" content="Tell us what you're working on.">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/svg+xml" href="assets/quantum-logo.svg">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js" defer></script>
+</head>
+<body>
+
+<div class="bg" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="container">
+    <a class="logo-tile" href="index.html" aria-label="Quantum-hub home">
+      <img src="assets/quantum-logo.svg" alt="Quantum-hub">
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="for-partners.html">For partners</a>
+      <a href="for-startups.html">For startups</a>
+      <a href="spark.html">SPARK</a>
+      <span class="explore">
+        <a href="#" data-explore-toggle aria-expanded="false" aria-haspopup="true">Explore</a>
+        <div class="explore-panel" role="menu">
+          <div>
+            <a href="industries.html" role="menuitem">Industries</a>
+            <a href="case-studies.html" role="menuitem">Case studies</a>
+            <a href="about.html" role="menuitem">About</a>
+            <a href="about.html#news" role="menuitem">What we're up to</a>
+          </div>
+          <a class="explore-feature" href="case-studies.html">Featured: the POC Playground</a>
+        </div>
+      </span>
+    </nav>
+    <button class="utility-btn" type="button" aria-label="Change language"><i data-lucide="globe" style="width:14px;height:14px;"></i> EN</button>
+    <!-- no Contact pill — we're here -->
+  </div>
+</header>
+
+<main>
+
+<section class="hero" style="min-height:78vh; align-items:flex-start; padding-top: calc(var(--header-height) + var(--space-8));">
+  <div class="container">
+    <div class="reveal">
+      <span class="eyebrow">contact us</span>
+      <h1 class="display-l">Tell us what you're working on</h1>
+    </div>
+    <div class="split reveal" style="align-items: flex-start; margin-top: var(--space-6);">
+
+      <!-- LEFT: direct channels -->
+      <div>
+        <div class="card">
+          <h3 style="font-size:16px;"><i data-lucide="mail" style="width:16px;height:16px;vertical-align:-3px;"></i> Email</h3>
+          <p style="font-family: var(--font-ui); font-size:15px; margin-top: var(--space-1);"><a href="mailto:company@quantum-hub.com">company@quantum-hub.com</a></p>
+          <h3 style="font-size:16px; margin-top: var(--space-5);"><i data-lucide="map-pin" style="width:16px;height:16px;vertical-align:-3px;"></i> Visit</h3>
+          <p style="font-family: var(--font-ui); font-size:15px; margin-top: var(--space-1);">Arik Einstein 3, 8th Fl., Herzliya <span class="muted">(confirm — F-11)</span></p>
+          <h3 style="font-size:16px; margin-top: var(--space-5);"><i data-lucide="linkedin" style="width:16px;height:16px;vertical-align:-3px;"></i> LinkedIn</h3>
+          <p style="font-family: var(--font-ui); font-size:15px; margin-top: var(--space-1);"><a href="https://www.linkedin.com/company/quantum-hub/">Quantum-hub on LinkedIn →</a></p>
+        </div>
+        <div class="card" style="margin-top: var(--space-4);">
+          <h3 style="font-size:16px;">Prefer to talk?</h3>
+          <p style="font-size:15px;">Pick a slot that suits you.</p>
+          <div class="ph ph--32" style="margin-top: var(--space-3);">book-a-meeting calendar embed — provider TBD</div>
+        </div>
+      </div>
+
+      <!-- RIGHT: email + message only -->
+      <div class="card" style="padding: var(--space-6);">
+        <form class="field">
+          <label for="c-email">Email</label>
+          <input id="c-email" type="email" placeholder="you@company.com" autocomplete="email">
+          <label for="c-msg">Message</label>
+          <textarea id="c-msg" rows="7" placeholder="What are you working on, and how can we help?"></textarea>
+          <label style="font-weight:400; display:flex; gap:10px; align-items:flex-start; margin-top: var(--space-4); color: var(--q-neutral-300);">
+            <input type="checkbox" style="width:auto; height:auto; margin-top:4px;"> <span style="font-size:13px;">I agree to the <a href="#">privacy policy</a></span>
+          </label>
+          <button class="btn btn--primary" type="submit" style="margin-top: var(--space-4);">Send message</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <a class="logo-tile" href="index.html" aria-label="Quantum-hub home" style="width:36px;height:36px;">
+        <img src="assets/quantum-logo.svg" alt="Quantum-hub">
+      </a>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="for-partners.html">For partners</a><a href="for-startups.html">For startups</a>
+        <a href="spark.html">SPARK</a><a href="industries.html">Industries</a>
+        <a href="case-studies.html">Case studies</a><a href="about.html">About</a><a href="contact.html">Contact</a>
+      </nav>
+      <a href="https://www.linkedin.com/company/quantum-hub/" aria-label="Quantum-hub on LinkedIn"><i data-lucide="linkedin" style="width:20px;height:20px;"></i></a>
+    </div>
+    <p class="footer-legal">
+      <a href="#">Accessibility</a> · <a href="#">Cookies</a> · <a href="#">Privacy</a> · <a href="#">Terms</a>
+      &nbsp;|&nbsp; Quantum © <span id="y"></span> · T.L.G-T.S Technology LTD
+    </p>
+  </div>
+</footer>
+
+<script>document.getElementById("y").textContent = new Date().getFullYear();</script>
+<script src="js/motion.js" defer></script>
+</body>
+</html>

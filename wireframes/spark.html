@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wireframe — SPARK · Quantum-hub</title>
+<link rel="stylesheet" href="_wireframe.css">
+<!-- DESIGN-SPEC §6.4 — THE canonical SPARK page. Every "Read more about SPARK" site-wide lands here.
+     Consolidates the 5 scattered SPARK descriptions found in Phase 0.
+     Signature moment: pinned 5-step process rail. Scroll progress bar active on this page. -->
+</head>
+<body>
+
+<header class="wf">
+  <div class="container">
+    <div class="ph" style="width:120px;height:36px;">logo</div>
+    <nav>
+      <a href="for-partners.html">For partners</a><a href="for-startups.html">For startups</a>
+      <a class="active" href="#">SPARK</a><a href="#">Explore ▾</a>
+    </nav>
+    <span class="utility">🌐 EN</span>
+    <a class="btn btn-primary" href="spark-register.html" style="padding:8px 18px;">Register now</a>
+  </div>
+  <div class="container" style="margin-top:8px;"><div style="height:2px; background:var(--wf-g400); width:35%;"></div>
+  <span style="font-size:10px; color:var(--wf-g400);">2px scroll progress bar (magenta in hi-fi) — long-page pages only</span></div>
+</header>
+
+<!-- 0 · DEADLINE STRIP (only when a batch is open) -->
+<div class="tint" style="padding:10px 0; text-align:center; font-size:13px;">
+  <strong>Batch [N] applications close [date]</strong> · <a href="spark-register.html">Register now →</a>
+  <span style="color:var(--wf-g400);"> — S4 magenta-tint strip, shown only when a batch is live (the page's one S4 use)</span>
+</div>
+
+<!-- 1 · HERO -->
+<section style="min-height:55vh; display:flex; align-items:center;">
+  <span class="wf-note">1 · P1 hero · S1</span>
+  <div class="container">
+    <p class="eyebrow">spark — poc runway program</p>
+    <h1>From application to industrial POC</h1>
+    <p style="font-size:18px; margin:20px 0 28px;">SPARK connects MVP+ startups with world-class corporations and runs a real proof of concept together — equity-free, fee-free, and focused on commercialization.</p>
+    <a class="btn btn-primary" href="spark-register.html">Register now</a>
+    <a class="btn btn-outline" href="#faqs">Read the FAQs</a>
+  </div>
+</section>
+
+<!-- 2 · WHAT / WHY SPLITS -->
+<section>
+  <span class="wf-note">2 · P4 splits ×2 · S1 · equity-free claim F-12 prominent (pending legal sign-off)</span>
+  <div class="container">
+    <div class="split">
+      <div>
+        <h3>What it is</h3>
+        <p>A batch-based runway where our partners — not us — select the startups whose solutions fit a concrete use case inside their companies. Quantum's team handles scouting, execution, management, and accompaniment throughout.</p>
+      </div>
+      <div class="ph" style="height:200px;">media</div>
+    </div>
+    <div class="split">
+      <div class="ph" style="height:200px;">media</div>
+      <div>
+        <h3>Why apply</h3>
+        <p>Hands-on exposure to your target industry: meetups, mentorship, and workshops fit to your stage — and a POC with at least one partner, designed to scale into full business collaboration. <strong style="color:var(--wf-ink);">Equity-free, no fees.</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 · PINNED PROCESS RAIL — signature moment -->
+<section class="subtle" style="padding:88px 0;">
+  <span class="wf-note">3 · P7 process rail · S2 · PINNED ~150vh, steps activate on scroll · SIGNATURE</span>
+  <div class="container">
+    <p class="eyebrow">how the program works</p>
+    <h2>Five steps in</h2>
+    <div class="grid cols-5" style="margin-top:36px;">
+      <div class="card"><p class="stat" style="font-size:28px;">1</p><h3 style="font-size:15px;">Apply</h3><p style="font-size:12px;">Fill the application form.</p></div>
+      <div class="card"><p class="stat" style="font-size:28px;">2</p><h3 style="font-size:15px;">Interviews & DD</h3><p style="font-size:12px;">We assess tech, team, and readiness.</p></div>
+      <div class="card"><p class="stat" style="font-size:28px;">3</p><h3 style="font-size:15px;">Screening committee</h3><p style="font-size:12px;">Partners evaluate and select.</p></div>
+      <div class="card"><p class="stat" style="font-size:28px;">4</p><h3 style="font-size:15px;">Use-case match</h3><p style="font-size:12px;">A concrete POC is scoped with a partner champion.</p></div>
+      <div class="card"><p class="stat" style="font-size:28px;">5</p><h3 style="font-size:15px;">Welcome</h3><p style="font-size:12px;">The program — and your POC — begins.</p></div>
+    </div>
+    <span class="wf-motion">motion: section pins · connector line draws left→right · steps 1→5 activate sequentially as user scrolls the pin distance · mobile = unpinned vertical list · reduced-motion = all steps shown</span>
+  </div>
+</section>
+
+<!-- 4 · WHAT YOU GET GRID -->
+<section>
+  <span class="wf-note">4 · P5 card grid · S1</span>
+  <div class="container">
+    <p class="eyebrow">inside the program</p>
+    <h2>What selected startups get</h2>
+    <div class="grid cols-4" style="margin-top:28px;">
+      <div class="card"><h3 style="font-size:16px;">A dedicated tech-project team</h3><p style="font-size:13px;">Led by Quantum, scoped to your POC.</p></div>
+      <div class="card"><h3 style="font-size:16px;">Local beta-testing sites</h3><p style="font-size:13px;">Access to the POC playground and partner facilities.</p></div>
+      <div class="card"><h3 style="font-size:16px;">Cross-industry experts</h3><p style="font-size:13px;">Mentorship and workshops matched to your stage.</p></div>
+      <div class="card"><h3 style="font-size:16px;">Alumni network</h3><p style="font-size:13px;">Continued ecosystem access after the batch ends.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · FAQS -->
+<section class="subtle" id="faqs">
+  <span class="wf-note">5 · P10 accordion · S2 · 7 Q&As from live site, kept nearly as-is</span>
+  <div class="container">
+    <p class="eyebrow">faqs</p>
+    <h2>Before you ask</h2>
+    <div style="max-width:760px; margin-top:24px;">
+      <details open><summary>What does it cost to join? Do you take equity?</summary><p style="margin-top:10px; font-size:14px;">The program is equity-free and we take no fees. <em style="color:var(--wf-g400);">(F-12 — legal sign-off pending)</em></p></details>
+      <details><summary>Who can apply?</summary><p style="margin-top:10px; font-size:14px;">MVP/beta+ product, full-time team, TRL 5+; best fit for post-seed startups.</p></details>
+      <details><summary>What are the selection criteria?</summary></details>
+      <details><summary>What if we apply and don't get in?</summary></details>
+      <details><summary>We applied to a previous batch — can we reapply?</summary></details>
+      <details><summary>What commitment is required?</summary></details>
+      <details><summary>What happens after the program?</summary></details>
+    </div>
+    <span class="wf-motion">motion: one open at a time · height ease 220ms · no scroll effects</span>
+  </div>
+</section>
+
+<!-- 6 · CONVERSION BAND -->
+<section class="inverse" style="padding:80px 0;">
+  <span class="wf-note">6 · P13 conversion band · S3 · → full register PAGE (popup abolished)</span>
+  <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap;">
+    <h2 style="font-size:34px;">Think you're SPARK material?</h2>
+    <a class="btn btn-primary" style="background:#fff; color:var(--wf-ink);" href="spark-register.html">Register now</a>
+  </div>
+</section>
+
+<footer class="wf"><div class="container"><p>footer — standard (see home.html)</p></div></footer>
+
+</body>
+</html>

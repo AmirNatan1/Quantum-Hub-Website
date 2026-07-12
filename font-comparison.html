@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Font direction comparison — dark redesign · Quantum-hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=Unbounded:wght@400;600;800&family=Manrope:wght@400;500;600&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0e1112; --ink-2:#1a2020; --ink-3:#283030;
+    --magenta:#d82b72; --magenta-soft:#f06ba0; --mist:#c2cbcb; --dim:#8a9797;
+  }
+  *{box-sizing:border-box;margin:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink); color:var(--mist); line-height:1.6;
+    font-family:"Inter",system-ui,sans-serif;
+  }
+  /* --- the dark blend background: fixed magenta glows that drift with scroll --- */
+  .bg{
+    position:fixed; inset:0; z-index:-1; pointer-events:none;
+    background:
+      radial-gradient(600px 400px at var(--gx,80%) var(--gy,10%), rgba(216,43,114,.16), transparent 70%),
+      radial-gradient(800px 600px at calc(100% - var(--gx,80%)) calc(100% - var(--gy,10%)), rgba(216,43,114,.08), transparent 70%),
+      linear-gradient(180deg, #0e1112 0%, #1a2020 50%, #14090f 100%);
+    transition:background-position .2s linear;
+  }
+  .container{max-width:1100px; margin:0 auto; padding:0 32px;}
+  section{padding:96px 0; border-bottom:1px solid rgba(194,203,203,.08);}
+  .eyebrow{font-size:12px; letter-spacing:.18em; text-transform:lowercase; color:var(--magenta); font-weight:600; display:block; margin-bottom:16px;}
+  .note{font-size:13px; color:var(--dim); max-width:60ch;}
+  .btn{
+    display:inline-block; border-radius:999px; padding:14px 32px; margin-top:28px; margin-right:12px;
+    font-size:14px; font-weight:600; text-decoration:none; cursor:pointer;
+  }
+  .btn-m{background:var(--magenta); color:#fff;}
+  .btn-m:hover{background:#b81f5e;}
+  .btn-o{border:1.5px solid rgba(194,203,203,.35); color:#fff;}
+  .kicker{position:sticky; top:0; z-index:5; background:rgba(14,17,18,.8); backdrop-filter:blur(10px);
+    padding:14px 0; border-bottom:1px solid rgba(194,203,203,.1); font-size:13px;}
+  .kicker .container{display:flex; gap:24px;}
+  .kicker a{color:var(--mist); text-decoration:none;}
+  .kicker a:hover{color:#fff;}
+  h1,h2{color:#fff;}
+  .stat{color:var(--magenta); font-weight:800;}
+  .pick{font-size:12px; color:var(--dim); border:1px dashed rgba(194,203,203,.25); border-radius:8px; padding:8px 12px; display:inline-block; margin-top:24px;}
+
+  /* --- Option A: Space Grotesk + Inter --- */
+  .A h1,.A h2,.A .stat{font-family:"Space Grotesk",sans-serif;}
+  .A h1{font-size:64px; font-weight:700; letter-spacing:-0.02em; line-height:1.05;}
+  .A h2{font-size:30px; font-weight:500; margin-top:56px;}
+  .A .stat{font-size:72px;}
+  .A p.body{font-family:"Inter",sans-serif; font-size:17px; max-width:62ch; margin-top:20px;}
+
+  /* --- Option B: Unbounded + Manrope --- */
+  .B h1,.B h2,.B .stat{font-family:"Unbounded",sans-serif;}
+  .B h1{font-size:52px; font-weight:800; line-height:1.12;}
+  .B h2{font-size:26px; font-weight:600; margin-top:56px;}
+  .B .stat{font-size:60px;}
+  .B p.body{font-family:"Manrope",sans-serif; font-size:17px; max-width:62ch; margin-top:20px;}
+
+  /* --- Option C: Syne + Inter --- */
+  .C h1,.C h2,.C .stat{font-family:"Syne",sans-serif;}
+  .C h1{font-size:62px; font-weight:800; letter-spacing:0.005em; line-height:1.06;}
+  .C h2{font-size:30px; font-weight:700; margin-top:56px;}
+  .C .stat{font-size:70px;}
+  .C p.body{font-family:"Inter",sans-serif; font-size:17px; max-width:62ch; margin-top:20px;}
+
+  @media(max-width:768px){.A h1{font-size:40px;}.B h1{font-size:32px;}.C h1{font-size:38px;}}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"></div>
+
+<div class="kicker">
+  <div class="container">
+    <strong style="color:#fff;">Font direction — pick one</strong>
+    <a href="#a">A · Space Grotesk</a>
+    <a href="#b">B · Unbounded</a>
+    <a href="#c">C · Syne</a>
+    <span style="flex:1;"></span>
+    <span style="color:var(--dim);">scroll to feel the background blend →</span>
+  </div>
+</div>
+
+<!-- OPTION A -->
+<section class="A" id="a">
+  <div class="container">
+    <span class="eyebrow">option a · space grotesk + inter</span>
+    <h1>Where industry meets innovation.</h1>
+    <p class="body">We connect industry leaders with vetted startups — and prove the fit with a real POC. Sharp, engineered, quietly confident: the typeface equivalent of a well-run pilot.</p>
+    <a class="btn btn-m" href="#">Start a POC</a><a class="btn btn-o" href="#">Apply to SPARK</a>
+    <h2>Four sectors, one connected playground</h2>
+    <p class="body">Automotive, logistics, Industry 4.0, and energy — interconnected at our beta sites, so a solution proven in one sector can travel to the next.</p>
+    <div class="stat" style="margin-top:40px;">47+</div>
+    <p class="note">POCs completed — stat numeral in display face</p>
+    <p class="pick">Feels like: precision engineering. Best if Quantum should read as technical and exact.</p>
+  </div>
+</section>
+
+<!-- OPTION B -->
+<section class="B" id="b">
+  <div class="container">
+    <span class="eyebrow">option b · unbounded + manrope</span>
+    <h1>Where industry meets innovation.</h1>
+    <p class="body">We connect industry leaders with vetted startups — and prove the fit with a real POC. Unmistakable and rounded — the only one of the three that visibly echoes the circular Q of the logo.</p>
+    <a class="btn btn-m" href="#">Start a POC</a><a class="btn btn-o" href="#">Apply to SPARK</a>
+    <h2>Four sectors, one connected playground</h2>
+    <p class="body">Automotive, logistics, Industry 4.0, and energy — interconnected at our beta sites, so a solution proven in one sector can travel to the next.</p>
+    <div class="stat" style="margin-top:40px;">47+</div>
+    <p class="note">POCs completed — stat numeral in display face</p>
+    <p class="pick">Feels like: a brand you remember. Boldest personality; headlines demand attention (and space).</p>
+  </div>
+</section>
+
+<!-- OPTION C -->
+<section class="C" id="c">
+  <div class="container">
+    <span class="eyebrow">option c · syne + inter</span>
+    <h1>Where industry meets innovation.</h1>
+    <p class="body">We connect industry leaders with vetted startups — and prove the fit with a real POC. Wide, editorial, fashion-forward — industrial content styled like a culture magazine.</p>
+    <a class="btn btn-m" href="#">Start a POC</a><a class="btn btn-o" href="#">Apply to SPARK</a>
+    <h2>Four sectors, one connected playground</h2>
+    <p class="body">Automotive, logistics, Industry 4.0, and energy — interconnected at our beta sites, so a solution proven in one sector can travel to the next.</p>
+    <div class="stat" style="margin-top:40px;">47+</div>
+    <p class="note">POCs completed — stat numeral in display face</p>
+    <p class="pick">Feels like: an art-tech studio. Most unexpected in a B2B industrial context — memorable or off-brand, you decide.</p>
+  </div>
+</section>
+
+<script>
+/* background glows drift as you scroll — the "slight blend of colours" */
+(function(){
+  var bg=document.querySelector(".bg");
+  function move(){
+    var p=document.documentElement.scrollTop/(document.documentElement.scrollHeight-document.documentElement.clientHeight||1);
+    bg.style.setProperty("--gx",(80-p*60)+"%");
+    bg.style.setProperty("--gy",(10+p*70)+"%");
+  }
+  window.addEventListener("scroll",move,{passive:true}); move();
+})();
+</script>
+</body>
+</html>

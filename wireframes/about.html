@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wireframe — About · Quantum-hub</title>
+<link rel="stylesheet" href="_wireframe.css">
+<!-- DESIGN-SPEC §6.8 — team (fresh list pending) + "What we're up to" news. LinkedIn visibility lives here. -->
+</head>
+<body>
+
+<header class="wf">
+  <div class="container">
+    <div class="ph" style="width:120px;height:36px;">logo</div>
+    <nav>
+      <a href="for-partners.html">For partners</a><a href="for-startups.html">For startups</a>
+      <a href="spark.html">SPARK</a><a class="active" href="#">Explore ▾ (About)</a>
+    </nav>
+    <span class="utility">🌐 EN</span>
+    <a class="btn btn-primary" href="contact.html" style="padding:8px 18px;">Contact us</a>
+  </div>
+</header>
+
+<!-- 1 · HERO (short) -->
+<section style="min-height:40vh; display:flex; align-items:center;">
+  <span class="wf-note">1 · P1 hero short · S1</span>
+  <div class="container">
+    <p class="eyebrow">about quantum-hub</p>
+    <h1 style="font-size:44px;">The people between industry and innovation</h1>
+  </div>
+</section>
+
+<!-- 2 · MISSION SPLIT -->
+<section>
+  <span class="wf-note">2 · P4 split · S1</span>
+  <div class="container">
+    <div class="split">
+      <div>
+        <h3>Why we exist</h3>
+        <p>[Draft] Corporations and startups want the same thing and speak different languages. We translate — and then we prove the translation works with a POC at our own playground.</p>
+      </div>
+      <div class="ph" style="height:220px;">media</div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 · TEAM GRID -->
+<section class="subtle">
+  <span class="wf-note">3 · P5 team grid · S2 · RULE: no card renders without photo+name+role+LinkedIn slots defined</span>
+  <div class="container">
+    <p class="eyebrow">our team</p>
+    <h2>Who you'll work with</h2>
+    <p style="font-size:13px; color:var(--wf-g400); margin-top:8px;">⚠ current live-site list is outdated (Phase 0) — grid below renders from a FRESH team list, pending from Quantum. Card = 1:1 photo (ph-team-NN) + name + role + LinkedIn icon. Cards without a LinkedIn URL show no dead icon.</p>
+    <div class="grid cols-4" style="margin-top:24px;">
+      <div class="card" style="text-align:center;"><div class="ph" style="height:140px; border-radius:50%; width:140px; margin:0 auto;">ph-team-01</div><h3 style="font-size:15px; margin-top:12px;">[Name]</h3><p style="font-size:12px;">[Role]</p><p style="font-size:11px; margin-top:6px;">[in]</p></div>
+      <div class="card" style="text-align:center;"><div class="ph" style="height:140px; border-radius:50%; width:140px; margin:0 auto;">ph-team-02</div><h3 style="font-size:15px; margin-top:12px;">[Name]</h3><p style="font-size:12px;">[Role]</p><p style="font-size:11px; margin-top:6px;">[in]</p></div>
+      <div class="card" style="text-align:center;"><div class="ph" style="height:140px; border-radius:50%; width:140px; margin:0 auto;">ph-team-03</div><h3 style="font-size:15px; margin-top:12px;">[Name]</h3><p style="font-size:12px;">[Role]</p><p style="font-size:11px; margin-top:6px;">[in]</p></div>
+      <div class="card" style="text-align:center;"><div class="ph" style="height:140px; border-radius:50%; width:140px; margin:0 auto;">ph-team-NN</div><h3 style="font-size:15px; margin-top:12px;">[Name]</h3><p style="font-size:12px;">[Role]</p><p style="font-size:11px; margin-top:6px;">[in]</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · WHAT WE'RE UP TO (full version) -->
+<section>
+  <span class="wf-note">4 · P11 news, full version · S1 · feeds from LinkedIn posts → visibility goal</span>
+  <div class="container">
+    <p class="eyebrow">what we're up to</p>
+    <h2>Fresh from the hub</h2>
+    <div class="grid cols-3" style="margin-top:24px;">
+      <div class="card"><div class="ph" style="height:120px;">ph-news-01</div><p style="font-size:11px; color:var(--wf-g400); margin-top:12px;">[date] · [event/news/post]</p><p style="font-size:14px; color:var(--wf-ink);">[Title — e.g. playground event, new batch, partner announcement]</p></div>
+      <div class="card"><div class="ph" style="height:120px;">ph-news-02</div><p style="font-size:11px; color:var(--wf-g400); margin-top:12px;">[date]</p><p style="font-size:14px; color:var(--wf-ink);">[Title]</p></div>
+      <div class="card"><div class="ph" style="height:120px;">ph-news-03</div><p style="font-size:11px; color:var(--wf-g400); margin-top:12px;">[date]</p><p style="font-size:14px; color:var(--wf-ink);">[Title]</p></div>
+    </div>
+    <p style="font-size:13px; margin-top:20px;"><a href="#">Follow Quantum-hub on LinkedIn →</a> <em style="font-size:11px; color:var(--wf-g400);">(prominent, per review goal — replaces stale "upcoming event" pattern forever: dated cards can't silently rot)</em></p>
+  </div>
+</section>
+
+<!-- 5 · CONVERSION BAND -->
+<section class="inverse" style="padding:72px 0;">
+  <span class="wf-note">5 · P13 · S3</span>
+  <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap;">
+    <h2 style="font-size:30px;">Come see the playground.</h2>
+    <a class="btn btn-primary" style="background:#fff; color:var(--wf-ink);" href="contact.html">Book a meeting</a>
+  </div>
+</section>
+
+<footer class="wf"><div class="container"><p>footer — standard (see home.html)</p></div></footer>
+
+</body>
+</html>

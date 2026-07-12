@@ -1,0 +1,31 @@
+/* Quantum-hub — Typography tokens (DARK V2: Syne display / Newsreader body / Inter UI) */
+:root {
+  --font-display: "Syne", system-ui, sans-serif;
+  --font-body: "Newsreader", Georgia, serif;
+  --font-ui: "Inter", system-ui, sans-serif;
+  --font-mono: ui-monospace, monospace;
+
+  --text-xs: 12px;
+  --text-sm: 13px;
+  --text-base: 17px;      /* serif body reads best slightly larger */
+  --text-md: 19px;
+  --text-lg: 22px;
+  --text-xl: 26px;
+  --text-2xl: 34px;
+  --text-3xl: 46px;
+  --text-4xl: 60px;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-heavy: 800;    /* Syne headline weight */
+
+  --leading-tight: 1.06;
+  --leading-snug: 1.3;
+  --leading-normal: 1.65;
+
+  --tracking-display: 0.005em;
+  --tracking-wide: 0.18em;
+  --tracking-normal: 0;
+}
