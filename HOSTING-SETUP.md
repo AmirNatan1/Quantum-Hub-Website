@@ -14,7 +14,7 @@ The account has to be created by the mailbox owner because Calendly requires ema
 
 The host then manages availability, bookings, cancellations, and invitee details from the Calendly dashboard. New bookings are also placed on the connected work calendar and sent to the Calendly account email.
 
-Until `calendarUrl` is configured, the contact page shows a working email fallback instead of a broken third-party widget.
+Until `calendarUrl` is configured, the contact page shows a neutral activation status instead of an email-request box or a broken third-party widget. As soon as the URL is added, visitors receive the full inline booking calendar plus a direct link to the same booking page.
 
 ## Website form notifications
 

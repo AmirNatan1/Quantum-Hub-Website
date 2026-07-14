@@ -8,7 +8,7 @@
   };
 
   if (!url) {
-    root.innerHTML = '<div class="calendar-fallback"><span class="eyebrow">' + translate("meeting calendar") + '</span><h3>' + translate("Choose a time once the host calendar is activated") + '</h3><p>' + translate("Until then, email Quantum-hub and we will arrange a suitable time directly.") + '</p><a class="btn btn--primary" style="margin-top:var(--space-5);" href="mailto:intern@quantum-hub.com?subject=Meeting%20request%20via%20quantum-hub.com">' + translate("Request a meeting by email") + "</a></div>";
+    root.innerHTML = '<div class="calendar-fallback" role="status"><span class="eyebrow">Calendly</span><h3>' + translate("Online booking is being activated") + '</h3><p>' + translate("Available startup-meeting times will appear here as soon as Quantum-hub's calendar connection is complete.") + "</p></div>";
     return;
   }
 
@@ -16,6 +16,13 @@
   widget.className = "calendly-inline-widget";
   widget.setAttribute("data-url", url + (url.indexOf("?") === -1 ? "?" : "&") + "background_color=0e1112&text_color=ffffff&primary_color=d82b72");
   root.appendChild(widget);
+  var external = document.createElement("a");
+  external.className = "calendar-external";
+  external.href = url;
+  external.target = "_blank";
+  external.rel = "noopener";
+  external.textContent = translate("Open booking page in a new tab");
+  root.appendChild(external);
   var script = document.createElement("script");
   script.src = "https://assets.calendly.com/assets/external/widget.js";
   script.async = true;
