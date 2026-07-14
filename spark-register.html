@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,7 +42,7 @@
         </div>
       </span>
     </nav>
-    <button class="utility-btn" type="button" aria-label="Change language"><i data-lucide="globe" style="width:14px;height:14px;"></i> EN</button>
+    <button class="utility-btn" type="button" aria-label="Change language"><img class="language-flag" src="assets/flags/gb.png" alt=""> EN</button>
     <!-- no CTA pill: this page IS the conversion -->
   </div>
 </header>
@@ -52,27 +52,31 @@
 <section class="hero" style="min-height:80vh; align-items:flex-start; padding-top: calc(var(--header-height) + var(--space-8));">
   <div class="container" style="max-width: 720px;">
     <div class="reveal">
-      <span class="eyebrow">spark — batch [N]</span>
+      <span class="eyebrow">spark — startup intake</span>
       <h1 class="display-l">Register for SPARK</h1>
       <p style="margin-top: var(--space-3);">Tell us who you are — the full application form follows by email. We review <em>every</em> submission, even outside batch windows.</p>
     </div>
 
-    <form class="field reveal" style="margin-top: var(--space-5);">
+    <form class="field reveal" action="https://formsubmit.co/ajax/intern@quantum-hub.com" method="POST" style="margin-top: var(--space-5);">
+      <input type="hidden" name="_subject" value="New Quantum SPARK registration">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="submission_type" value="SPARK registration">
+      <input class="form-honeypot" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
       <label for="r-name">Full name</label>
-      <input id="r-name" type="text" placeholder="Your name" autocomplete="name">
+      <input id="r-name" name="full_name" type="text" placeholder="Your name" autocomplete="name" required>
       <label for="r-email">Work email</label>
-      <input id="r-email" type="email" placeholder="you@startup.com" autocomplete="email">
+      <input id="r-email" name="email" type="email" placeholder="you@startup.com" autocomplete="email" required>
       <label for="r-company">Company name</label>
-      <input id="r-company" type="text" placeholder="Startup Ltd." autocomplete="organization">
+      <input id="r-company" name="company" type="text" placeholder="Startup Ltd." autocomplete="organization" required>
       <label for="r-stage">Product stage</label>
-      <select id="r-stage">
+      <select id="r-stage" name="product_stage" required>
         <option>MVP</option><option>Beta</option><option>In market</option>
       </select>
       <label style="font-weight:400; display:flex; gap:10px; align-items:flex-start; margin-top: var(--space-5); color: var(--q-neutral-300);">
-        <input type="checkbox" style="width:auto; height:auto; margin-top:4px;"> <span style="font-size:13px;">I agree to the <a href="#">privacy policy</a></span>
+        <input type="checkbox" name="privacy_consent" value="agreed" required style="width:auto; height:auto; margin-top:4px;"> <span style="font-size:13px;">I agree to the <a href="privacy.html">privacy policy</a></span>
       </label>
       <label style="font-weight:400; display:flex; gap:10px; align-items:flex-start; color: var(--q-neutral-300);">
-        <input type="checkbox" style="width:auto; height:auto; margin-top:4px;"> <span style="font-size:13px;">Send me updates about future batches (optional)</span>
+        <input type="checkbox" name="future_batch_updates" value="yes" style="width:auto; height:auto; margin-top:4px;"> <span style="font-size:13px;">Send me updates about future batches (optional)</span>
       </label>
       <button class="btn btn--primary" type="submit" style="margin-top: var(--space-5);">Submit application</button>
       <!-- success state replaces the form in place:
@@ -86,7 +90,7 @@
 <footer class="site-footer">
   <div class="container">
     <div class="footer-top">
-      <a class="logo-tile" href="index.html" aria-label="Quantum-hub home" style="width:36px;height:36px;">
+      <a class="logo-tile" href="index.html" aria-label="Quantum-hub home" style="width:100px;height:36px;">
         <img src="assets/quantum-logo.svg" alt="Quantum-hub">
       </a>
       <nav class="footer-nav" aria-label="Footer">
@@ -104,6 +108,7 @@
 </footer>
 
 <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
+<script src="js/i18n-runtime.js" defer></script>
 <script src="js/motion.js" defer></script>
 </body>
 </html>

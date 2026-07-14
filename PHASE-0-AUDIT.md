@@ -154,4 +154,12 @@ Naming: `ph-{page}-{slot}`. All placeholders are cool-toned neutral blocks (`--q
 | ph-case-01…05 | Corractions, Tactile Mobility, Maradin, Coreteel, Actasys | 16:9 | One hero visual per case study |
 | ph-case-champ | CHAMP case visual | 16:9 | |
 | ph-team-01…N | Team photos | 1:1 | Card = photo + name + role + LinkedIn slot. Fresh team list needed (current list outdated; 3 of 12 lack LinkedIn) |
-| ph-news-01…04 | "What we're up to" cards | 3:2 | Can be fed by Lin
+| ph-news-01…04 | "What we're up to" cards | 3:2 | Can be fed by LinkedIn posts |
+| ph-spark-steps | 5 program-overview step icons | 1:1 | Lucide |
+| ph-academy-01 | Enrichment Academy visual | 4:3 | |
+
+---
+
+## Ready for Phase 1
+
+The inventory above already implies the redirect map (old URLs → new sitemap) and the per-page briefs. Suggested next: draft the seven page content briefs, starting with Home and /spark/.

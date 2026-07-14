@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,7 +43,7 @@
         </div>
       </span>
     </nav>
-    <button class="utility-btn" type="button" aria-label="Change language"><i data-lucide="globe" style="width:14px;height:14px;"></i> EN</button>
+    <button class="utility-btn" type="button" aria-label="Change language"><img class="language-flag" src="assets/flags/gb.png" alt=""> EN</button>
     <a class="btn btn--primary btn--sm" href="spark.html">Apply to SPARK</a>
   </div>
 </header>
@@ -54,8 +54,8 @@
 <section class="hero" style="min-height:60vh;">
   <div class="container reveal">
     <span class="eyebrow">for startups</span>
-    <h1 class="display-xl">Your shortcut to industrial customers</h1>
-    <p class="lede" style="margin-top: var(--space-4);">Skip the cold outreach. We put your technology in front of corporate decision-makers with a concrete use case — and a playground to <em>prove it</em> in.</p>
+    <h1 class="display-xl">A route to real industrial use cases</h1>
+    <p class="lede" style="margin-top: var(--space-4);">Quantum introduces selected startups to decision-makers inside its four partner companies around a concrete need — with a POC environment in which to <em>prove the fit</em>.</p>
     <div style="margin-top: var(--space-6);">
       <a class="btn btn--primary" href="spark.html">Apply to SPARK</a>
       <a class="btn btn--outline" href="case-studies.html" style="margin-left: var(--space-3);">See alumni POCs</a>
@@ -71,10 +71,10 @@
       <h2 class="heading">What working with us gets you</h2>
     </div>
     <div class="grid grid--4 reveal-stagger" style="margin-top: var(--space-6);">
-      <div class="card"><i data-lucide="eye" class="icon"></i><h3>Visibility</h3><p>Reach a network of industrial partners in Israel and globally — decision-makers, not gatekeepers.</p></div>
-      <div class="card"><i data-lucide="flask-conical" class="icon"></i><h3>A real POC</h3><p>Test your technology against success criteria our partners define — the door-opener to strategic partnerships.</p></div>
+      <div class="card"><i data-lucide="eye" class="icon"></i><h3>Relevant access</h3><p>Meet decision-makers when a partner company has identified a need that your product may solve.</p></div>
+      <div class="card"><i data-lucide="flask-conical" class="icon"></i><h3>A real POC</h3><p>Test your technology against success criteria defined with the interested partner company.</p></div>
       <div class="card"><i data-lucide="compass" class="icon"></i><h3>Expert support</h3><p>Our technical team escorts you from scoping to execution to commercialization.</p></div>
-      <div class="card"><i data-lucide="network" class="icon"></i><h3>An ecosystem</h3><p>Curated events and an alumni network that keeps working for you after the program ends.</p></div>
+      <div class="card"><i data-lucide="network" class="icon"></i><h3>Continued relevance</h3><p>Alumni remain visible to Quantum when a future partner challenge matches their technology.</p></div>
     </div>
   </div>
 </section>
@@ -112,15 +112,15 @@
     </div>
     <div class="grid grid--2 reveal-stagger" style="margin-top: var(--space-6);">
       <a class="card card--interactive case-tile" href="case-study-actasys.html">
-        <div class="ph ph--169">ph-case-05 — Actasys</div>
+        <img src="assets/media/case-actasys.png" alt="Actasys logo" loading="lazy">
         <div class="body">
           <span class="tag-chip" style="pointer-events:none;"><span class="sector-dot sector-dot--automotive"></span> Automotive</span>
           <h3>Actasys — sensor cleaning for ADAS</h3>
-          <p>Proven at the playground; progressed past POC. Read the case →</p>
+          <p>Sensor-cleaning technology evaluated through Quantum's POC process. Read the case →</p>
         </div>
       </a>
       <a class="card card--interactive case-tile" href="case-studies.html">
-        <div class="ph ph--169">ph-case-02 — Tactile Mobility</div>
+        <img src="assets/media/case-tactile-mobility.png" alt="Tactile Mobility logo" loading="lazy">
         <div class="body">
           <span class="tag-chip" style="pointer-events:none;"><span class="sector-dot sector-dot--automotive"></span> Automotive</span>
           <h3>Tactile Mobility — road-sensing software</h3>
@@ -147,7 +147,7 @@
 <footer class="site-footer">
   <div class="container">
     <div class="footer-top">
-      <a class="logo-tile" href="index.html" aria-label="Quantum-hub home" style="width:36px;height:36px;">
+      <a class="logo-tile" href="index.html" aria-label="Quantum-hub home" style="width:100px;height:36px;">
         <img src="assets/quantum-logo.svg" alt="Quantum-hub">
       </a>
       <nav class="footer-nav" aria-label="Footer">
@@ -165,6 +165,7 @@
 </footer>
 
 <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
+<script src="js/i18n-runtime.js" defer></script>
 <script src="js/motion.js" defer></script>
 </body>
 </html>

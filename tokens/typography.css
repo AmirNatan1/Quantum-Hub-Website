@@ -21,8 +21,8 @@
   --weight-bold: 700;
   --weight-heavy: 800;    /* Syne headline weight */
 
-  --leading-tight: 1.06;
-  --leading-snug: 1.3;
+  --leading-tight: 1.22;   /* v2.2: Syne titles were vertically squashed at 1.06 */
+  --leading-snug: 1.35;
   --leading-normal: 1.65;
 
   --tracking-display: 0.005em;

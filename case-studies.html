@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,7 +43,7 @@
         </div>
       </span>
     </nav>
-    <button class="utility-btn" type="button" aria-label="Change language"><i data-lucide="globe" style="width:14px;height:14px;"></i> EN</button>
+    <button class="utility-btn" type="button" aria-label="Change language"><img class="language-flag" src="assets/flags/gb.png" alt=""> EN</button>
     <a class="btn btn--primary btn--sm" href="contact.html">Contact us</a>
   </div>
 </header>
@@ -63,8 +63,9 @@
 <div class="video-moment">
   <div class="vm-sticky">
     <div class="vm-frame">
-      <!-- swap in when asset arrives: <video data-loop muted loop playsinline preload="metadata"> -->
-      <div class="ph">ph-case-video-poc — muted auto-loop · expands to full screen on scroll</div>
+      <video data-loop autoplay muted loop playsinline preload="auto" poster="assets/media/poc-playground-original.png" aria-label="The POC Playground — video tour">
+        <source src="assets/poc-playground.mp4" type="video/mp4">
+      </video>
       <div class="vm-caption">
         <h2>The POC Playground</h2>
         <p>Our own beta site — where partner industries and startup technologies meet under real operating conditions.</p>
@@ -86,27 +87,27 @@
     </div>
     <div class="grid grid--3">
       <a class="card card--interactive case-tile" href="case-studies.html#corractions" data-case="automotive">
-        <div class="ph ph--169">ph-case-01</div>
+        <img src="assets/media/case-corractions.png" alt="Corractions logo" loading="lazy">
         <div class="body"><span class="sector-dot sector-dot--automotive"></span><h3>Corractions</h3><p>Real-time driver-alertness detection, tested in the field.</p></div>
       </a>
       <a class="card card--interactive case-tile" href="case-studies.html#tactile" data-case="automotive">
-        <div class="ph ph--169">ph-case-02</div>
+        <img src="assets/media/case-tactile-mobility.png" alt="Tactile Mobility logo" loading="lazy">
         <div class="body"><span class="sector-dot sector-dot--automotive"></span><h3>Tactile Mobility</h3><p>Software-only road and vehicle sensing from existing sensors.</p></div>
       </a>
       <a class="card card--interactive case-tile" href="case-studies.html#maradin" data-case="automotive">
-        <div class="ph ph--169">ph-case-03</div>
+        <img src="assets/media/case-maradin.png" alt="Maradin logo" loading="lazy">
         <div class="body"><span class="sector-dot sector-dot--automotive"></span><h3>Maradin</h3><p>MEMS-based laser scanning for road-user communication.</p></div>
       </a>
       <a class="card card--interactive case-tile" href="case-studies.html#coreteel" data-case="industry">
-        <div class="ph ph--169">ph-case-04</div>
+        <img src="assets/media/case-coreteel.png" alt="Coreteel logo" loading="lazy">
         <div class="body"><span class="sector-dot sector-dot--industry"></span><h3>Coreteel</h3><p>Room-temperature anti-corrosion coatings, applied in production.</p></div>
       </a>
       <a class="card card--interactive case-tile" href="case-study-actasys.html" data-case="automotive">
-        <div class="ph ph--169">ph-case-05</div>
+        <img src="assets/media/case-actasys.png" alt="Actasys logo" loading="lazy">
         <div class="body"><span class="sector-dot sector-dot--automotive"></span><h3>Actasys</h3><p>ActaJet sensor cleaning for ADAS and autonomous fleets.</p></div>
       </a>
       <a class="card card--interactive case-tile" href="case-studies.html#champ" data-case="logistics">
-        <div class="ph ph--169">ph-case-champ</div>
+        <img src="assets/media/quantum-event.png" alt="Quantum-hub CHAMP partner event" loading="lazy" style="object-fit:cover;padding:0;background:none;">
         <div class="body"><span class="sector-dot sector-dot--logistics"></span><h3>CHAMP program cases</h3><p>Warehouse IoT, task management, battery recycling — via partner champions.</p></div>
       </a>
     </div>
@@ -126,7 +127,7 @@
 <footer class="site-footer">
   <div class="container">
     <div class="footer-top">
-      <a class="logo-tile" href="index.html" aria-label="Quantum-hub home" style="width:36px;height:36px;">
+      <a class="logo-tile" href="index.html" aria-label="Quantum-hub home" style="width:100px;height:36px;">
         <img src="assets/quantum-logo.svg" alt="Quantum-hub">
       </a>
       <nav class="footer-nav" aria-label="Footer">
@@ -144,6 +145,7 @@
 </footer>
 
 <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
+<script src="js/i18n-runtime.js" defer></script>
 <script src="js/motion.js" defer></script>
 </body>
 </html>

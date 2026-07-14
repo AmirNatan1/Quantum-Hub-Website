@@ -34,9 +34,9 @@
 .surface-accent { background: var(--surface-accent); }
 
 /* ---------- type roles ---------- */
-.display-xl { font-size: clamp(42px, 5vw, 76px); font-weight: var(--weight-heavy); }
-.display-l  { font-size: clamp(32px, 3.6vw, 56px); font-weight: var(--weight-heavy); }
-.heading    { font-size: var(--text-2xl); font-weight: var(--weight-bold); }
+.display-xl { font-size: clamp(42px, 5vw, 76px); font-weight: var(--weight-heavy); line-height: 1.22; }
+.display-l  { font-size: clamp(32px, 3.6vw, 56px); font-weight: var(--weight-heavy); line-height: 1.25; }
+.heading    { font-size: var(--text-2xl); font-weight: var(--weight-bold); line-height: 1.34; }
 .eyebrow {
   font-family: var(--font-ui); font-size: var(--text-xs); font-weight: var(--weight-semibold);
   letter-spacing: var(--tracking-wide); text-transform: lowercase;
@@ -85,10 +85,10 @@ mark { background: none; color: var(--q-magenta-soft); font-weight: var(--weight
    transparent mark arrives (ph-global-logo note in the placeholder manifest). */
 .logo-tile {
   display: inline-flex; align-items: center; justify-content: center;
-  width: 42px; height: 42px; border-radius: var(--radius-md);
+  width: 116px; height: 42px; border-radius: var(--radius-md);
   background: #fff; overflow: hidden; flex-shrink: 0;
 }
-.logo-tile img { width: 100%; height: 100%; object-fit: contain; padding: 5px; }
+.logo-tile img { width: 100%; height: 100%; object-fit: contain; padding: 6px 8px; }
 .logo-fallback { font-family: var(--font-display); font-weight: var(--weight-heavy); color: var(--q-ink); font-size: 20px; }
 
 .nav { display: flex; gap: var(--space-5); flex: 1; font-family: var(--font-ui); }
@@ -127,6 +127,7 @@ mark { background: none; color: var(--q-magenta-soft); font-weight: var(--weight
 
 /* ---------- P1 hero ---------- */
 .hero { min-height: 65vh; display: flex; align-items: center; padding-top: calc(var(--header-height) + var(--space-7)); }
+.hero > .container { width: 100%; }
 .hero .display-xl { max-width: 18ch; }
 
 .audience { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); max-width: 920px; margin-top: var(--space-6); }
@@ -145,6 +146,7 @@ mark { background: none; color: var(--q-magenta-soft); font-weight: var(--weight
 /* ---------- P2 stat band (pinned) ---------- */
 .pin-wrap { height: 200vh; position: relative; }
 .pin-wrap > .pinned { position: sticky; top: 0; min-height: 100vh; display: flex; align-items: center; }
+.pin-wrap > .pinned > .container { width: 100%; }
 .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-6); width: 100%; }
 .stat-num { font-family: var(--font-display); font-weight: var(--weight-heavy);
   font-size: clamp(44px, 6vw, 72px); color: var(--q-magenta-soft); line-height: 1; font-variant-numeric: tabular-nums; }
@@ -160,6 +162,14 @@ mark { background: none; color: var(--q-magenta-soft); font-weight: var(--weight
 .split { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-7); align-items: center; margin-top: var(--space-7); }
 .split h3 { font-size: var(--text-xl); margin-bottom: var(--space-3); }
 .split .media { border-radius: var(--radius-lg); overflow: hidden; will-change: transform; }
+.media-image {
+  width: 100%; height: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+  border: 1px solid var(--border-default); border-radius: var(--radius-lg);
+  background: rgba(255,255,255,.035);
+}
+.media-image--contain { object-fit: contain; padding: clamp(22px, 5vw, 58px); }
+.media-image--wide { aspect-ratio: 21 / 9; }
+.media-caption { margin-top: var(--space-2); font-family: var(--font-ui); font-size: var(--text-xs); color: var(--text-muted); }
 
 /* ---------- P5/P6 cards & grids ---------- */
 .grid { display: grid; gap: var(--space-5); }
@@ -190,6 +200,9 @@ mark { background: none; color: var(--q-magenta-soft); font-weight: var(--weight
 .logo-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-5); align-items: center; }
 .logo-row .ph { height: 64px; opacity: .65; transition: opacity var(--duration-base) var(--ease-out); }
 .logo-row .ph:hover { opacity: 1; }
+.logo-row img { width: 100%; height: 82px; object-fit: contain; padding: 18px; background: rgba(255,255,255,.94); border-radius: var(--radius-md); border: 1px solid var(--border-default);
+  opacity: .8; transition: opacity var(--duration-base) var(--ease-out), border-color var(--duration-base) var(--ease-out); }
+.logo-row img:hover { opacity: 1; border-color: var(--border-strong); }
 
 /* ---------- P11 news strip ---------- */
 .news-card { padding: var(--space-4) var(--space-5); }
@@ -214,6 +227,11 @@ mark { background: none; color: var(--q-magenta-soft); font-weight: var(--weight
   transition: box-shadow var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out);
 }
 .field textarea { height: auto; padding: var(--space-3) var(--space-4); }
+.form-honeypot {
+  position: absolute !important; width: 1px !important; height: 1px !important;
+  padding: 0 !important; border: 0 !important; overflow: hidden !important;
+  clip-path: inset(50%); opacity: 0; pointer-events: none;
+}
 .field input:focus, .field textarea:focus, .field select:focus { outline: none; border-color: var(--border-focus); box-shadow: var(--shadow-focus); }
 .field ::placeholder { color: var(--q-neutral-500); }
 
@@ -296,6 +314,7 @@ mark { background: none; color: var(--q-magenta-soft); font-weight: var(--weight
 .case-tile { padding: 0; overflow: hidden; display: block; color: inherit; }
 .case-tile .body { padding: var(--space-4) var(--space-5) var(--space-5); }
 .case-tile .ph { border: none; border-radius: 0; }
+.case-tile > img { width: 100%; height: 190px; object-fit: contain; padding: 34px; background: rgba(255,255,255,.94); }
 .case-tile:hover { color: inherit; }
 
 /* ---------- video moment: pinned full-screen takeover ----------
@@ -308,6 +327,18 @@ mark { background: none; color: var(--q-magenta-soft); font-weight: var(--weight
   overflow: hidden; position: relative; will-change: width, height; }
 .video-moment .vm-frame .ph, .video-moment .vm-frame video {
   width: 100%; height: 100%; object-fit: cover; border-radius: 0; border: none; }
+.video-control {
+  position: absolute; top: var(--space-4); right: var(--space-4); z-index: 3;
+  display: inline-flex; align-items: center; gap: 7px; padding: 9px 14px;
+  border: 1px solid rgba(255,255,255,.22); border-radius: var(--radius-pill);
+  background: rgba(14,17,18,.82); color: #fff; cursor: pointer;
+  font-family: var(--font-ui); font-size: 13px; font-weight: var(--weight-semibold);
+  backdrop-filter: blur(10px);
+}
+.video-control:hover { border-color: var(--border-strong); background: rgba(14,17,18,.95); }
+.video-status { position: absolute; inset: auto var(--space-4) var(--space-4) var(--space-4); z-index: 2;
+  font-family: var(--font-ui); font-size: 13px; color: #fff; display: none; }
+.video-status.on { display: block; }
 .video-moment .vm-caption { position: absolute; left: 0; right: 0; bottom: 0;
   padding: var(--space-7) var(--container-pad);
   background: linear-gradient(180deg, transparent, rgba(14,17,18,.85));
@@ -345,6 +376,16 @@ mark { background: none; color: var(--q-magenta-soft); font-weight: var(--weight
   .logo-row { grid-template-columns: repeat(3, 1fr); }
   .site-header .btn { display: none; }          /* CTA moves into the overlay */
   .site-header .utility-btn { margin-left: auto; }
+  .logo-tile { width: 98px; }
+  .calendar-shell, .calendly-inline-widget { min-height: 760px; height: 760px; }
+}
+@media (max-width: 480px) {
+  .display-xl { font-size: clamp(28px, 8.5vw, 34px); }
+  .display-l { font-size: 30px; }
+}
+
+@media (max-width: 768px) {
+  html[dir="rtl"] .site-header .utility-btn { margin-left: 0; margin-right: auto; }
 }
 
 /* ---------- mobile menu (hamburger + full-screen overlay; injected by motion.js) ---------- */
@@ -384,7 +425,33 @@ mark { background: none; color: var(--q-magenta-soft); font-weight: var(--weight
   font-family: var(--font-ui); font-size: 14px; padding: 10px 12px; border-radius: var(--radius-sm); }
 .lang-panel button:hover { background: rgba(255,255,255,.06); color: #fff; }
 .lang-panel button.current { color: var(--q-magenta-soft); }
-.lang-panel .soon { font-size: 11px; color: var(--q-neutral-500); }
+.lang-option-label { display: inline-flex; align-items: center; gap: 9px; }
+.language-flag { width: 21px; height: 14px; border-radius: 2px; object-fit: cover; box-shadow: 0 0 0 1px rgba(255,255,255,.18); }
+.utility-btn .language-flag { width: 20px; height: 13px; }
+
+/* ---------- Calendly embed + setup fallback ---------- */
+.calendar-shell { margin-top: var(--space-4); min-height: 690px; border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg); background: rgba(255,255,255,.025); overflow: hidden; }
+.calendly-inline-widget { min-width: 280px; height: 690px; }
+.calendar-fallback { min-height: 430px; display: flex; flex-direction: column; align-items: flex-start;
+  justify-content: center; padding: clamp(28px, 6vw, 70px); }
+.calendar-fallback h3 { font-size: var(--text-xl); }
+.calendar-fallback p { max-width: 48ch; margin-top: var(--space-3); }
+
+/* ---------- Hebrew / RTL ---------- */
+html[dir="rtl"] body { direction: rtl; text-align: right; }
+html[dir="rtl"] .nav, html[dir="rtl"] .footer-nav { direction: rtl; }
+html[dir="rtl"] .site-header .container, html[dir="rtl"] .footer-top { flex-direction: row-reverse; }
+html[dir="rtl"] .explore-panel { left: auto; right: 0; }
+html[dir="rtl"] .lang-panel { right: auto; left: 0; }
+html[dir="rtl"] .form-success { text-align: right; }
+html[dir="rtl"] .form-success .dot { margin-right: 0; margin-left: var(--space-2); }
+html[dir="rtl"] .video-control { right: auto; left: var(--space-4); }
+html[dir="rtl"] .vm-caption { text-align: right; }
+html[dir="rtl"] [data-lucide="arrow-right"] { transform: scaleX(-1); }
+html[dir="rtl"] .faq summary::after { margin-right: var(--space-3); }
+html[dir="rtl"] .field input, html[dir="rtl"] .field textarea, html[dir="rtl"] .field select { text-align: right; }
+html[dir="rtl"] .eyebrow { letter-spacing: .08em; }
 
 /* ---------- form validation + success ---------- */
 .field input.invalid, .field textarea.invalid { border-color: var(--q-danger); }

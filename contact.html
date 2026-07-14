@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,7 +42,7 @@
         </div>
       </span>
     </nav>
-    <button class="utility-btn" type="button" aria-label="Change language"><i data-lucide="globe" style="width:14px;height:14px;"></i> EN</button>
+    <button class="utility-btn" type="button" aria-label="Change language"><img class="language-flag" src="assets/flags/gb.png" alt=""> EN</button>
     <!-- no Contact pill — we're here -->
   </div>
 </header>
@@ -61,28 +61,28 @@
       <div>
         <div class="card">
           <h3 style="font-size:16px;"><i data-lucide="mail" style="width:16px;height:16px;vertical-align:-3px;"></i> Email</h3>
-          <p style="font-family: var(--font-ui); font-size:15px; margin-top: var(--space-1);"><a href="mailto:company@quantum-hub.com">company@quantum-hub.com</a></p>
+          <p style="font-family: var(--font-ui); font-size:15px; margin-top: var(--space-1);"><a href="mailto:intern@quantum-hub.com">intern@quantum-hub.com</a></p>
           <h3 style="font-size:16px; margin-top: var(--space-5);"><i data-lucide="map-pin" style="width:16px;height:16px;vertical-align:-3px;"></i> Visit</h3>
           <p style="font-family: var(--font-ui); font-size:15px; margin-top: var(--space-1);">Arik Einstein 3, 8th Fl., Herzliya</p>
           <h3 style="font-size:16px; margin-top: var(--space-5);"><i data-lucide="linkedin" style="width:16px;height:16px;vertical-align:-3px;"></i> LinkedIn</h3>
           <p style="font-family: var(--font-ui); font-size:15px; margin-top: var(--space-1);"><a href="https://www.linkedin.com/company/quantum-hub/">Quantum-hub on LinkedIn →</a></p>
         </div>
-        <div class="card" style="margin-top: var(--space-4);">
-          <h3 style="font-size:16px;">Prefer to talk?</h3>
-          <p style="font-size:15px;">Pick a slot that suits you.</p>
-          <div class="ph ph--32" style="margin-top: var(--space-3);">book-a-meeting calendar embed — provider TBD</div>
-        </div>
+        <div class="card" style="margin-top: var(--space-4);"><img class="media-image" src="assets/media/quantum-event.png" alt="Quantum-hub event" loading="lazy" style="aspect-ratio:3/2;"></div>
       </div>
 
       <!-- RIGHT: email + message only -->
       <div class="card" style="padding: var(--space-6);">
-        <form class="field">
+        <form class="field" action="https://formsubmit.co/ajax/intern@quantum-hub.com" method="POST">
+          <input type="hidden" name="_subject" value="New website contact message">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="submission_type" value="Website contact form">
+          <input class="form-honeypot" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
           <label for="c-email">Email</label>
-          <input id="c-email" type="email" placeholder="you@company.com" autocomplete="email">
+          <input id="c-email" name="email" type="email" placeholder="you@company.com" autocomplete="email" required>
           <label for="c-msg">Message</label>
-          <textarea id="c-msg" rows="7" placeholder="What are you working on, and how can we help?"></textarea>
+          <textarea id="c-msg" name="message" rows="7" placeholder="What are you working on, and how can we help?" required></textarea>
           <label style="font-weight:400; display:flex; gap:10px; align-items:flex-start; margin-top: var(--space-4); color: var(--q-neutral-300);">
-            <input type="checkbox" style="width:auto; height:auto; margin-top:4px;"> <span style="font-size:13px;">I agree to the <a href="#">privacy policy</a></span>
+            <input type="checkbox" name="privacy_consent" value="agreed" required style="width:auto; height:auto; margin-top:4px;"> <span style="font-size:13px;">I agree to the <a href="privacy.html">privacy policy</a></span>
           </label>
           <button class="btn btn--primary" type="submit" style="margin-top: var(--space-4);">Send message</button>
         </form>
@@ -92,12 +92,21 @@
   </div>
 </section>
 
+<section class="section surface-subtle" id="book">
+  <div class="container reveal">
+    <span class="eyebrow">book a meeting</span>
+    <h2 class="heading">Choose a time that works</h2>
+    <p style="margin-top:var(--space-3);max-width:60ch;">The embedded Calendly calendar checks the host's connected work calendar and prevents double-booking.</p>
+    <div class="calendar-shell" data-calendar aria-label="Book a meeting with Quantum-hub"></div>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-footer">
   <div class="container">
     <div class="footer-top">
-      <a class="logo-tile" href="index.html" aria-label="Quantum-hub home" style="width:36px;height:36px;">
+      <a class="logo-tile" href="index.html" aria-label="Quantum-hub home" style="width:100px;height:36px;">
         <img src="assets/quantum-logo.svg" alt="Quantum-hub">
       </a>
       <nav class="footer-nav" aria-label="Footer">
@@ -115,6 +124,9 @@
 </footer>
 
 <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
+<script src="js/i18n-runtime.js" defer></script>
+<script src="js/site-config.js" defer></script>
+<script src="js/calendar.js" defer></script>
 <script src="js/motion.js" defer></script>
 </body>
 </html>

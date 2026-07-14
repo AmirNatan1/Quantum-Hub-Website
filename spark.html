@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SPARK — POC runway program · Quantum-hub</title>
-<meta name="description" content="SPARK connects MVP+ startups with world-class corporations and runs a real POC together — equity-free, fee-free, focused on commercialization.">
+<meta name="description" content="SPARK connects MVP+ startups with Quantum-hub's corporate partners and develops partner-defined POCs — equity-free, fee-free, and focused on business collaboration.">
 <link rel="stylesheet" href="styles.css">
 <link rel="icon" type="image/svg+xml" href="assets/quantum-logo.svg">
 <link rel="canonical" href="https://quantum-hub.com/spark.html">
 <meta property="og:type" content="website">
 <meta property="og:title" content="SPARK — POC runway program · Quantum-hub">
-<meta property="og:description" content="SPARK connects MVP+ startups with world-class corporations and runs a real POC together — equity-free, fee-free, focused on commercialization.">
+<meta property="og:description" content="SPARK connects MVP+ startups with Quantum-hub's corporate partners and develops partner-defined POCs.">
 <meta property="og:url" content="https://quantum-hub.com/spark.html">
 <meta property="og:image" content="https://quantum-hub.com/assets/quantum-logo.svg">
 <meta name="twitter:card" content="summary">
@@ -43,15 +43,10 @@
         </div>
       </span>
     </nav>
-    <button class="utility-btn" type="button" aria-label="Change language"><i data-lucide="globe" style="width:14px;height:14px;"></i> EN</button>
+    <button class="utility-btn" type="button" aria-label="Change language"><img class="language-flag" src="assets/flags/gb.png" alt=""> EN</button>
     <a class="btn btn--primary btn--sm" href="spark-register.html">Register now</a>
   </div>
 </header>
-
-<!-- deadline strip: render only when a batch is open -->
-<div class="deadline-strip">
-  <strong>Batch [N] applications close [date]</strong> · <a href="spark-register.html">Register now →</a>
-</div>
 
 <main>
 
@@ -60,7 +55,7 @@
   <div class="container reveal">
     <span class="eyebrow">spark — poc runway program</span>
     <h1 class="display-xl">From application to industrial POC</h1>
-    <p class="lede" style="margin-top: var(--space-4);">SPARK connects MVP+ startups with world-class corporations and runs a real proof of concept together — <em>equity-free, fee-free</em>, and focused on commercialization.</p>
+    <p class="lede" style="margin-top: var(--space-4);">SPARK connects MVP+ startups with Quantum's partner companies and develops a proof of concept around a need chosen by a partner — <em>equity-free and fee-free</em>, with business collaboration as the goal.</p>
     <div style="margin-top: var(--space-6);">
       <a class="btn btn--primary" href="spark-register.html">Register now</a>
       <a class="btn btn--outline" href="#faqs" style="margin-left: var(--space-3);">Read the FAQs</a>
@@ -77,10 +72,10 @@
         <h3>Partners pick. We execute.</h3>
         <p>A batch-based runway where our partners — not us — select the startups whose solutions fit a concrete use case inside their companies. Quantum's team handles scouting, execution, management, and accompaniment throughout.</p>
       </div>
-      <div class="media" data-parallax="20"><div class="ph ph--43">media</div></div>
+      <div class="media" data-parallax="20"><img class="media-image media-image--contain" src="assets/media/spark-logo.png" alt="Quantum SPARK program mark" loading="lazy"></div>
     </div>
     <div class="split reveal">
-      <div class="media" data-parallax="20"><div class="ph ph--43">media</div></div>
+      <div class="media" data-parallax="20"><img class="media-image" src="assets/media/poc-playground-original.png" alt="Vehicle technology test at the Quantum POC playground" loading="lazy"></div>
       <div>
         <span class="eyebrow">why apply</span>
         <h3>Exposure with a deliverable</h3>
@@ -177,7 +172,7 @@
 <footer class="site-footer">
   <div class="container">
     <div class="footer-top">
-      <a class="logo-tile" href="index.html" aria-label="Quantum-hub home" style="width:36px;height:36px;">
+      <a class="logo-tile" href="index.html" aria-label="Quantum-hub home" style="width:100px;height:36px;">
         <img src="assets/quantum-logo.svg" alt="Quantum-hub">
       </a>
       <nav class="footer-nav" aria-label="Footer">
@@ -195,6 +190,7 @@
 </footer>
 
 <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
+<script src="js/i18n-runtime.js" defer></script>
 <script src="js/motion.js" defer></script>
 </body>
 </html>

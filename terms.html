@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -47,7 +47,7 @@
         </div>
       </span>
     </nav>
-    <button class="utility-btn" type="button" aria-label="Change language"><i data-lucide="globe" style="width:14px;height:14px;"></i> EN</button>
+    <button class="utility-btn" type="button" aria-label="Change language"><img class="language-flag" src="assets/flags/gb.png" alt=""> EN</button>
     <a class="btn btn--primary btn--sm" href="contact.html">Contact us</a>
   </div>
 </header>
@@ -57,8 +57,16 @@
   <div class="container legal">
     <span class="eyebrow">legal</span>
     <h1 class="display-l">Terms of use</h1>
-    <p class="muted" style="font-family: var(--font-ui); font-size: 13px; margin-top: var(--space-3);">⚠ Placeholder — the previous site's "Terms of use" link pointed to a duplicate of the privacy policy, so no real terms text exists. This page needs content from Quantum's legal counsel before launch.</p>
-    <p style="margin-top: var(--space-5);">Terms of use for quantum-hub.com, operated by T.L.G – T.S TECHNOLOGIES LTD, Herzliya, Israel. Until the final text is supplied, questions may be directed to <a href="mailto:company@quantum-hub.com">company@quantum-hub.com</a>.</p>
+    <p class="muted" style="font-family: var(--font-ui); font-size: 13px; margin-top: var(--space-3);">Last updated: July 14, 2026</p>
+    <p style="margin-top: var(--space-5);">This website is operated by T.L.G – T.S TECHNOLOGIES LTD, Herzliya, Israel. By using the website, you agree to use it lawfully and not to interfere with its operation or security.</p>
+    <h2>Website content</h2>
+    <p>Content is provided for general information about Quantum-hub, its partner programs, and startup intake. It does not constitute an investment offer, professional advice, or a guarantee that an application, introduction, POC, or commercial collaboration will proceed.</p>
+    <h2>Third-party services</h2>
+    <p>The website may link to or embed third-party services, including LinkedIn, FormSubmit, and Calendly. Those services operate under their own terms and privacy notices.</p>
+    <h2>Intellectual property</h2>
+    <p>Unless otherwise stated, the website content, Quantum-hub branding, and program materials may not be copied or reused without permission. Third-party names and marks belong to their respective owners.</p>
+    <h2>Contact</h2>
+    <p>Questions about these terms may be directed to <a href="mailto:intern@quantum-hub.com">intern@quantum-hub.com</a>.</p>
   </div>
 </section>
 </main>
@@ -73,6 +81,7 @@
 </footer>
 
 <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
+<script src="js/i18n-runtime.js" defer></script>
 <script src="js/motion.js" defer></script>
 </body>
 </html>

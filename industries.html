@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,7 +43,7 @@
         </div>
       </span>
     </nav>
-    <button class="utility-btn" type="button" aria-label="Change language"><i data-lucide="globe" style="width:14px;height:14px;"></i> EN</button>
+    <button class="utility-btn" type="button" aria-label="Change language"><img class="language-flag" src="assets/flags/gb.png" alt=""> EN</button>
     <a class="btn btn--primary btn--sm" href="contact.html">Contact us</a>
   </div>
 </header>
@@ -81,7 +81,7 @@
       <a class="card card--interactive" href="#energy" style="display:block;color:inherit;padding:var(--space-6);">
         <span class="sector-dot sector-dot--energy"></span>
         <h3>Energy</h3>
-        <p>Refining, hydrogen, storage, and grid tech — with Israel's largest refinery group in the consortium.</p>
+        <p>Process efficiency, hydrogen, storage, and lower-impact energy systems — connected to an energy partner in the consortium.</p>
       </a>
     </div>
   </div>
@@ -97,10 +97,10 @@
         <p>Driver monitoring, sensor cleaning and calibration, road-condition intelligence, MEMS and laser applications.</p>
         <p style="margin-top: var(--space-3);">Proven here: <a href="case-study-actasys.html">Actasys — ActaJet sensor cleaning →</a></p>
       </div>
-      <div class="media" data-parallax="20"><div class="ph ph--43">sector media</div></div>
+      <div class="media" data-parallax="20"><img class="media-image" src="assets/media/poc-playground-original.png" alt="Automotive technology test at the Quantum POC playground" loading="lazy"></div>
     </div>
     <div class="split reveal" id="logistics">
-      <div class="media" data-parallax="20"><div class="ph ph--43">sector media</div></div>
+      <div class="media" data-parallax="20"><img class="media-image" src="assets/media/quantum-event.png" alt="Quantum-hub cross-industry partner event" loading="lazy"></div>
       <div>
         <span class="eyebrow"><span class="sector-dot sector-dot--logistics" style="width:8px;height:8px;"></span> logistics</span>
         <h3>What we scout in logistics</h3>
@@ -115,10 +115,10 @@
         <p>Corrosion prevention, automation, quality assurance, industrial data platforms.</p>
         <p style="margin-top: var(--space-3);">Proven here: <a href="case-studies.html">Coreteel — corrosion prevention →</a></p>
       </div>
-      <div class="media" data-parallax="20"><div class="ph ph--43">sector media</div></div>
+      <div class="media" data-parallax="20"><img class="media-image media-image--contain" src="assets/media/case-coreteel.png" alt="Coreteel industrial POC alumnus logo" loading="lazy"></div>
     </div>
     <div class="split reveal" id="energy">
-      <div class="media" data-parallax="20"><div class="ph ph--43">sector media</div></div>
+      <div class="media" data-parallax="20"><img class="media-image media-image--contain" src="assets/media/industry-playground.png" alt="Quantum-hub's connected industrial playground" loading="lazy"></div>
       <div>
         <span class="eyebrow"><span class="sector-dot sector-dot--energy" style="width:8px;height:8px;"></span> energy</span>
         <h3>What we scout in energy</h3>
@@ -152,7 +152,7 @@
 <footer class="site-footer">
   <div class="container">
     <div class="footer-top">
-      <a class="logo-tile" href="index.html" aria-label="Quantum-hub home" style="width:36px;height:36px;">
+      <a class="logo-tile" href="index.html" aria-label="Quantum-hub home" style="width:100px;height:36px;">
         <img src="assets/quantum-logo.svg" alt="Quantum-hub">
       </a>
       <nav class="footer-nav" aria-label="Footer">
@@ -170,6 +170,7 @@
 </footer>
 
 <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
+<script src="js/i18n-runtime.js" defer></script>
 <script src="js/motion.js" defer></script>
 </body>
 </html>

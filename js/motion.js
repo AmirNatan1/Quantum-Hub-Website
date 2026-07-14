@@ -1,102 +1,113 @@
-/* Quantum-hub — motion.js
-   Implements DESIGN-SPEC §5 motion tiers T2–T4 in vanilla JS.
-   Single reduced-motion switch: everything degrades to static/final states. */
+/* Quantum-hub interaction layer. Motion follows DESIGN-SPEC.md and stops when
+   the visitor requests reduced motion. */
 (function () {
   "use strict";
-  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ---------- T2 · reveals (once, 20% in view) ---------- */
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var t = function (english) {
+    return window.QuantumI18n ? window.QuantumI18n.translate(english) : english;
+  };
+
+  /* Reveals */
   var revealEls = document.querySelectorAll(".reveal, .reveal-stagger");
-  if (reduced) {
+  if (reduced || !("IntersectionObserver" in window)) {
     revealEls.forEach(function (el) { el.classList.add("in"); });
-  } else if (revealEls.length) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+  } else {
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in");
+          revealObserver.unobserve(entry.target);
+        }
       });
     }, { threshold: 0.2 });
-    revealEls.forEach(function (el) { io.observe(el); });
+    revealEls.forEach(function (el) { revealObserver.observe(el); });
   }
 
-  /* ---------- header: hide on down, show on up, slim on return ---------- */
+  /* Header */
   var header = document.querySelector(".site-header");
   var lastY = 0;
   if (header) {
     window.addEventListener("scroll", function () {
       var y = window.scrollY;
-      if (y > 200 && y > lastY) header.classList.add("is-hidden");
-      else header.classList.remove("is-hidden");
+      header.classList.toggle("is-hidden", y > 200 && y > lastY);
       header.classList.toggle("is-slim", y > 200);
       lastY = y;
     }, { passive: true });
   }
 
-  /* ---------- explore dropdown ---------- */
+  /* Explore dropdown */
   var exploreBtn = document.querySelector("[data-explore-toggle]");
   var explorePanel = document.querySelector(".explore-panel");
   if (exploreBtn && explorePanel) {
-    exploreBtn.addEventListener("click", function (ev) {
-      ev.stopPropagation();
+    exploreBtn.addEventListener("click", function (event) {
+      event.preventDefault();
+      event.stopPropagation();
       explorePanel.classList.toggle("is-open");
-      exploreBtn.setAttribute("aria-expanded", explorePanel.classList.contains("is-open"));
+      exploreBtn.setAttribute("aria-expanded", String(explorePanel.classList.contains("is-open")));
     });
-    document.addEventListener("click", function (ev) {
-      if (!explorePanel.contains(ev.target)) explorePanel.classList.remove("is-open");
+    document.addEventListener("click", function (event) {
+      if (!explorePanel.contains(event.target)) {
+        explorePanel.classList.remove("is-open");
+        exploreBtn.setAttribute("aria-expanded", "false");
+      }
     });
-    document.addEventListener("keydown", function (ev) {
-      if (ev.key === "Escape") explorePanel.classList.remove("is-open");
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        explorePanel.classList.remove("is-open");
+        exploreBtn.setAttribute("aria-expanded", "false");
+      }
     });
   }
 
-  /* ---------- count-ups (once, in view; AT gets final value: it's in the DOM) ---------- */
-  var counters = document.querySelectorAll("[data-count]");
+  /* Counters */
   function runCount(el) {
     var target = parseFloat(el.getAttribute("data-count"));
     var suffix = el.getAttribute("data-suffix") || "";
-    if (isNaN(target)) return; // placeholder like "[N]" — leave as-is
+    if (isNaN(target)) return;
     if (reduced) { el.textContent = target + suffix; return; }
-    var t0 = null, dur = 1400;
-    function step(t) {
-      if (!t0) t0 = t;
-      var p = Math.min((t - t0) / dur, 1);
-      p = 1 - Math.pow(1 - p, 3); /* ease-out cubic */
-      el.textContent = Math.round(target * p) + suffix;
-      if (p < 1) requestAnimationFrame(step);
+    var started = null;
+    function step(now) {
+      if (!started) started = now;
+      var progress = Math.min((now - started) / 1400, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(target * eased) + suffix;
+      if (progress < 1) requestAnimationFrame(step);
     }
     requestAnimationFrame(step);
   }
-  if (counters.length) {
-    var cio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { runCount(e.target); cio.unobserve(e.target); }
+  var counters = document.querySelectorAll("[data-count]");
+  if (counters.length && "IntersectionObserver" in window) {
+    var countObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          runCount(entry.target);
+          countObserver.unobserve(entry.target);
+        }
       });
     }, { threshold: 0.6 });
-    counters.forEach(function (el) { cio.observe(el); });
+    counters.forEach(function (el) { countObserver.observe(el); });
   }
 
-  /* ---------- T3 · scroll-linked: parallax + word scrub + progress bar ---------- */
+  /* Scroll-linked moments */
   var parallaxEls = Array.prototype.slice.call(document.querySelectorAll("[data-parallax]"));
   var claims = Array.prototype.slice.call(document.querySelectorAll(".big-claim"));
-  var progress = document.querySelector(".progress");
-
-  /* wrap each word of big claims in a span */
-  claims.forEach(function (c) {
-    var words = c.textContent.trim().split(/\s+/);
-    c.innerHTML = words.map(function (w) { return '<span class="w">' + w + "</span>"; }).join(" ");
-    if (reduced) c.querySelectorAll(".w").forEach(function (w) { w.classList.add("on"); });
+  var progressBar = document.querySelector(".progress");
+  claims.forEach(function (claim) {
+    var words = claim.textContent.trim().split(/\s+/);
+    claim.innerHTML = words.map(function (word) { return '<span class="w">' + word + "</span>"; }).join(" ");
+    if (reduced) claim.querySelectorAll(".w").forEach(function (word) { word.classList.add("on"); });
   });
 
-  /* dark v2.1: glow positions are LERPED toward their scroll target every frame,
-     so the background drifts smoothly instead of jumping with the scroll wheel. */
   var blendBg = document.querySelector(".bg");
   if (blendBg && !reduced) {
-    var gx = 80, gy = 10;
+    var gx = 80;
+    var gy = 10;
     (function drift() {
-      var doc0 = document.documentElement;
-      var sp = doc0.scrollTop / (doc0.scrollHeight - doc0.clientHeight || 1);
-      var tx = 80 - sp * 60, ty = 10 + sp * 70;
-      gx += (tx - gx) * 0.045;                    /* easing factor: lower = smoother/slower */
-      gy += (ty - gy) * 0.045;
+      var doc = document.documentElement;
+      var scrollProgress = doc.scrollTop / (doc.scrollHeight - doc.clientHeight || 1);
+      gx += ((80 - scrollProgress * 60) - gx) * 0.045;
+      gy += ((10 + scrollProgress * 70) - gy) * 0.045;
       blendBg.style.setProperty("--gx", gx + "%");
       blendBg.style.setProperty("--gy", gy + "%");
       requestAnimationFrame(drift);
@@ -104,28 +115,27 @@
   }
 
   function onScroll() {
-    var vh = window.innerHeight;
+    var viewportHeight = window.innerHeight;
     if (!reduced) {
       parallaxEls.forEach(function (el) {
-        var r = el.getBoundingClientRect();
-        if (r.bottom < 0 || r.top > vh) return;
-        var mid = r.top + r.height / 2 - vh / 2;         /* px from viewport center */
-        var amt = parseFloat(el.getAttribute("data-parallax")) || 20;
-        el.style.transform = "translateY(" + (-mid / vh) * amt + "px)";
+        var rect = el.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > viewportHeight) return;
+        var middle = rect.top + rect.height / 2 - viewportHeight / 2;
+        var amount = parseFloat(el.getAttribute("data-parallax")) || 20;
+        el.style.transform = "translateY(" + (-middle / viewportHeight) * amount + "px)";
       });
-      claims.forEach(function (c) {
-        var r = c.getBoundingClientRect();
-        var p = 1 - (r.top - vh * 0.2) / (vh * 0.6);      /* 0→1 as claim crosses viewport */
-        p = Math.max(0, Math.min(1, p));
-        var ws = c.querySelectorAll(".w");
-        var n = Math.round(p * ws.length);
-        ws.forEach(function (w, i) { w.classList.toggle("on", i < n); });
+      claims.forEach(function (claim) {
+        var rect = claim.getBoundingClientRect();
+        var claimProgress = 1 - (rect.top - viewportHeight * 0.2) / (viewportHeight * 0.6);
+        claimProgress = Math.max(0, Math.min(1, claimProgress));
+        var words = claim.querySelectorAll(".w");
+        var active = Math.round(claimProgress * words.length);
+        words.forEach(function (word, index) { word.classList.toggle("on", index < active); });
       });
     }
-    if (progress) {
+    if (progressBar) {
       var doc = document.documentElement;
-      var pct = doc.scrollTop / (doc.scrollHeight - doc.clientHeight);
-      progress.style.width = pct * 100 + "%";
+      progressBar.style.width = (doc.scrollTop / (doc.scrollHeight - doc.clientHeight || 1)) * 100 + "%";
     }
   }
   var ticking = false;
@@ -137,166 +147,261 @@
   }, { passive: true });
   onScroll();
 
-  /* ---------- video: play only in viewport ---------- */
-  var vids = document.querySelectorAll("video[data-loop]");
-  if (vids.length) {
-    var vio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) e.target.play().catch(function () {});
-        else e.target.pause();
-      });
-    }, { threshold: 0.3 });
-    vids.forEach(function (v) { vio.observe(v); });
+  /* Video: autoplay while visible, retry after load/interaction, and always expose
+     a visible play/pause control. This fixes browsers that ignored the old silent
+     play() failure. */
+  var videos = document.querySelectorAll("video[data-loop]");
+  function updateVideoButton(video, button) {
+    var paused = video.paused;
+    button.setAttribute("aria-label", t(paused ? "Play video" : "Pause video"));
+    button.innerHTML = '<i data-lucide="' + (paused ? "play" : "pause") + '" style="width:15px;height:15px;"></i><span>' + t(paused ? "Play" : "Pause") + "</span>";
+    if (window.lucide) window.lucide.createIcons();
   }
+  function attemptPlay(video, button) {
+    if (reduced || video.dataset.userPaused === "true") return;
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+    var promise = video.play();
+    if (promise && promise.catch) {
+      promise.then(function () { updateVideoButton(video, button); }).catch(function () {
+        updateVideoButton(video, button);
+      });
+    }
+  }
+  videos.forEach(function (video) {
+    video.muted = true;
+    video.defaultMuted = true;
+    video.loop = true;
+    video.playsInline = true;
+    video.setAttribute("muted", "");
+    video.setAttribute("playsinline", "");
+    video.setAttribute("webkit-playsinline", "");
+    video.setAttribute("autoplay", "");
 
-  /* ---------- audience preference (who-are-you split) ---------- */
+    var frame = video.parentElement;
+    var button = document.createElement("button");
+    button.className = "video-control";
+    button.type = "button";
+    frame.appendChild(button);
+    updateVideoButton(video, button);
+
+    button.addEventListener("click", function () {
+      if (video.paused) {
+        video.dataset.userPaused = "false";
+        video.play().catch(function () {});
+      } else {
+        video.dataset.userPaused = "true";
+        video.pause();
+      }
+    });
+    video.addEventListener("play", function () { updateVideoButton(video, button); });
+    video.addEventListener("pause", function () { updateVideoButton(video, button); });
+    video.addEventListener("canplay", function () {
+      if (video.dataset.inView === "true") attemptPlay(video, button);
+    }, { once: true });
+
+    if (video.readyState === 0) video.load();
+    if ("IntersectionObserver" in window) {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          video.dataset.inView = String(entry.isIntersecting);
+          if (entry.isIntersecting) attemptPlay(video, button);
+          else video.pause();
+        });
+      }, { threshold: 0.2 });
+      observer.observe(video);
+    } else {
+      video.dataset.inView = "true";
+      attemptPlay(video, button);
+    }
+  });
+  document.addEventListener("visibilitychange", function () {
+    if (!document.hidden) {
+      videos.forEach(function (video) {
+        var button = video.parentElement.querySelector(".video-control");
+        if (button && video.dataset.inView === "true") attemptPlay(video, button);
+      });
+    }
+  });
+
+  /* Audience preference */
   document.querySelectorAll("[data-audience]").forEach(function (el) {
     el.addEventListener("click", function () {
-      try { sessionStorage.setItem("qh-audience", el.getAttribute("data-audience")); } catch (e) {}
+      try { sessionStorage.setItem("qh-audience", el.getAttribute("data-audience")); } catch (error) {}
     });
   });
-  /* context CTA swap in header */
   try {
-    var aud = sessionStorage.getItem("qh-audience");
-    var cta = document.querySelector("[data-context-cta]");
-    if (aud === "startup" && cta) { cta.textContent = "Apply to SPARK"; cta.setAttribute("href", "spark.html"); }
-  } catch (e) {}
+    var audience = sessionStorage.getItem("qh-audience");
+    var contextCta = document.querySelector("[data-context-cta]");
+    if (audience === "startup" && contextCta) {
+      contextCta.textContent = t("Apply to SPARK");
+      contextCta.setAttribute("href", "spark.html");
+    }
+  } catch (error) {}
 
-  /* ---------- video moment: frame expands to full screen while pinned ---------- */
-  var vms = Array.prototype.slice.call(document.querySelectorAll(".video-moment"));
-  function vmUpdate() {
-    vms.forEach(function (wrap) {
+  /* Video expansion */
+  var videoMoments = Array.prototype.slice.call(document.querySelectorAll(".video-moment"));
+  function updateVideoMoment() {
+    videoMoments.forEach(function (wrap) {
       var frame = wrap.querySelector(".vm-frame");
       var caption = wrap.querySelector(".vm-caption");
       if (!frame) return;
-      var r = wrap.getBoundingClientRect();
-      var total = r.height - window.innerHeight;
-      var p = Math.max(0, Math.min(1, -r.top / (total || 1)));
-      if (reduced || window.innerWidth < 768) p = 1;
-      /* expand over the first 45% of the pin, hold full-screen after */
-      var e = Math.min(1, p / 0.45);
-      e = 1 - Math.pow(1 - e, 3);
-      frame.style.width = (62 + 38 * e) + "vw";
-      frame.style.height = (60 + 40 * e) + "vh";
-      frame.style.borderRadius = (18 * (1 - e)) + "px";
-      if (caption) caption.classList.toggle("on", e > 0.85);
+      var rect = wrap.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      var value = Math.max(0, Math.min(1, -rect.top / (total || 1)));
+      if (reduced || window.innerWidth < 768) value = 1;
+      var expanded = Math.min(1, value / 0.45);
+      expanded = 1 - Math.pow(1 - expanded, 3);
+      frame.style.width = (62 + 38 * expanded) + "vw";
+      frame.style.height = (60 + 40 * expanded) + "vh";
+      frame.style.borderRadius = (18 * (1 - expanded)) + "px";
+      if (caption) caption.classList.toggle("on", expanded > 0.85);
     });
   }
-  if (vms.length && !(reduced || window.innerWidth < 768)) {
-    window.addEventListener("scroll", function () { requestAnimationFrame(vmUpdate); }, { passive: true });
-    vmUpdate();
+  if (videoMoments.length && !(reduced || window.innerWidth < 768)) {
+    window.addEventListener("scroll", function () { requestAnimationFrame(updateVideoMoment); }, { passive: true });
+    updateVideoMoment();
   }
 
-  /* ---------- P7 pinned process rail: steps activate by scroll progress ---------- */
+  /* Pinned process rail */
   var railWrap = document.querySelector(".rail-wrap");
   if (railWrap) {
     var steps = railWrap.querySelectorAll(".rail-step");
     var railLine = railWrap.querySelector(".rail-line");
-    function railUpdate() {
-      var r = railWrap.getBoundingClientRect();
-      var total = r.height - window.innerHeight;
-      var p = Math.max(0, Math.min(1, -r.top / (total || 1)));
-      if (reduced) p = 1;
-      var n = Math.max(1, Math.ceil(p * steps.length));
-      steps.forEach(function (s, i) { s.classList.toggle("active", i < n); });
-      if (railLine) railLine.style.width = (p * 92) + "%";
+    function updateRail() {
+      var rect = railWrap.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      var value = Math.max(0, Math.min(1, -rect.top / (total || 1)));
+      if (reduced) value = 1;
+      var active = Math.max(1, Math.ceil(value * steps.length));
+      steps.forEach(function (step, index) { step.classList.toggle("active", index < active); });
+      if (railLine) railLine.style.width = value * 92 + "%";
     }
-    if (reduced) railUpdate();
-    else { window.addEventListener("scroll", railUpdate, { passive: true }); railUpdate(); }
+    window.addEventListener("scroll", updateRail, { passive: true });
+    updateRail();
   }
 
-  /* ---------- case filters (index): chips show/hide tiles ---------- */
+  /* Filters and accordions */
   var chips = document.querySelectorAll("[data-filter]");
-  if (chips.length) {
-    chips.forEach(function (chip) {
-      chip.addEventListener("click", function () {
-        chips.forEach(function (c) { c.classList.remove("selected"); });
-        chip.classList.add("selected");
-        var f = chip.getAttribute("data-filter");
-        document.querySelectorAll("[data-case]").forEach(function (tile) {
-          tile.classList.toggle("is-hidden", f !== "all" && tile.getAttribute("data-case") !== f);
-        });
+  chips.forEach(function (chip) {
+    chip.addEventListener("click", function () {
+      chips.forEach(function (other) { other.classList.remove("selected"); });
+      chip.classList.add("selected");
+      var filter = chip.getAttribute("data-filter");
+      document.querySelectorAll("[data-case]").forEach(function (tile) {
+        tile.classList.toggle("is-hidden", filter !== "all" && tile.getAttribute("data-case") !== filter);
       });
     });
-  }
-
-  /* ---------- accordion: one open at a time ---------- */
+  });
   var faqs = document.querySelectorAll("details.faq");
-  faqs.forEach(function (d) {
-    d.addEventListener("toggle", function () {
-      if (d.open) faqs.forEach(function (o) { if (o !== d) o.open = false; });
+  faqs.forEach(function (detail) {
+    detail.addEventListener("toggle", function () {
+      if (detail.open) faqs.forEach(function (other) { if (other !== detail) other.open = false; });
     });
   });
 
-  /* ---------- mobile menu: hamburger + overlay built from the existing nav ---------- */
-  var headerEl = document.querySelector(".site-header .container");
-  var navEl = document.querySelector(".site-header .nav");
-  if (headerEl && navEl) {
-    var mBtn = document.createElement("button");
-    mBtn.className = "menu-btn";
-    mBtn.setAttribute("aria-label", "Open menu");
-    mBtn.innerHTML = '<i data-lucide="menu" style="width:24px;height:24px;"></i>';
-    headerEl.appendChild(mBtn);
+  /* Mobile menu */
+  var headerContainer = document.querySelector(".site-header .container");
+  var nav = document.querySelector(".site-header .nav");
+  if (headerContainer && nav) {
+    var menuButton = document.createElement("button");
+    menuButton.className = "menu-btn";
+    menuButton.setAttribute("aria-label", t("Open menu"));
+    menuButton.innerHTML = '<i data-lucide="menu" style="width:24px;height:24px;"></i>';
+    headerContainer.appendChild(menuButton);
 
     var overlay = document.createElement("div");
     overlay.className = "mobile-overlay";
     overlay.setAttribute("role", "dialog");
-    overlay.setAttribute("aria-label", "Menu");
+    overlay.setAttribute("aria-modal", "true");
+    overlay.setAttribute("aria-label", t("Menu"));
     var links = [
       ["For partners", "for-partners.html"], ["For startups", "for-startups.html"],
       ["SPARK", "spark.html"], ["Industries", "industries.html"],
       ["Case studies", "case-studies.html"], ["About", "about.html"], ["Contact", "contact.html"]
     ];
-    overlay.innerHTML = links.map(function (l) {
-      return '<a href="' + l[1] + '">' + l[0] + "</a>";
+    overlay.innerHTML = links.map(function (link) {
+      return '<a href="' + link[1] + '">' + t(link[0]) + "</a>";
     }).join("") +
-      '<a class="btn btn--primary" href="contact.html">Contact us</a>' +
-      '<button class="close-btn" aria-label="Close menu"><i data-lucide="x" style="width:26px;height:26px;"></i></button>';
+      '<a class="btn btn--primary" href="contact.html">' + t("Contact us") + "</a>" +
+      '<button class="close-btn" aria-label="' + t("Close menu") + '"><i data-lucide="x" style="width:26px;height:26px;"></i></button>';
     document.body.appendChild(overlay);
-    mBtn.addEventListener("click", function () { overlay.classList.add("is-open"); });
+    menuButton.addEventListener("click", function () { overlay.classList.add("is-open"); });
     overlay.querySelector(".close-btn").addEventListener("click", function () { overlay.classList.remove("is-open"); });
-    document.addEventListener("keydown", function (ev) { if (ev.key === "Escape") overlay.classList.remove("is-open"); });
+    document.addEventListener("keydown", function (event) { if (event.key === "Escape") overlay.classList.remove("is-open"); });
   }
 
-  /* ---------- language selector dropdown ---------- */
-  var langBtn = document.querySelector(".utility-btn");
-  if (langBtn) {
-    var wrap = document.createElement("span");
-    wrap.className = "lang-wrap";
-    langBtn.parentNode.insertBefore(wrap, langBtn);
-    wrap.appendChild(langBtn);
-    var panel = document.createElement("div");
-    panel.className = "lang-panel";
-    panel.innerHTML =
-      '<button type="button" class="current">English <span>✓</span></button>' +
-      '<button type="button" disabled>עברית <span class="soon">soon</span></button>';
-    wrap.appendChild(panel);
-    langBtn.addEventListener("click", function (ev) {
-      ev.stopPropagation();
-      panel.classList.toggle("is-open");
+  /* Language selector with real flag assets */
+  var languageButton = document.querySelector(".utility-btn");
+  if (languageButton) {
+    var currentLanguage = window.QuantumI18n ? window.QuantumI18n.current() : "en";
+    var languageWrap = document.createElement("span");
+    languageWrap.className = "lang-wrap";
+    languageButton.parentNode.insertBefore(languageWrap, languageButton);
+    languageWrap.appendChild(languageButton);
+    languageButton.innerHTML = '<img class="language-flag" src="assets/flags/' + (currentLanguage === "he" ? "il" : "gb") + '.png" alt=""><span>' + (currentLanguage === "he" ? "HE" : "EN") + "</span>";
+
+    var languagePanel = document.createElement("div");
+    languagePanel.className = "lang-panel";
+    languagePanel.innerHTML =
+      '<button type="button" data-language="en"><span class="lang-option-label"><img class="language-flag" src="assets/flags/gb.png" alt="">English</span><span aria-hidden="true">' + (currentLanguage === "en" ? "✓" : "") + "</span></button>" +
+      '<button type="button" data-language="he"><span class="lang-option-label"><img class="language-flag" src="assets/flags/il.png" alt="">עברית</span><span aria-hidden="true">' + (currentLanguage === "he" ? "✓" : "") + "</span></button>";
+    languageWrap.appendChild(languagePanel);
+    languagePanel.querySelector('[data-language="' + currentLanguage + '"]').classList.add("current");
+
+    languageButton.addEventListener("click", function (event) {
+      event.stopPropagation();
+      languagePanel.classList.toggle("is-open");
     });
-    document.addEventListener("click", function (ev) {
-      if (!wrap.contains(ev.target)) panel.classList.remove("is-open");
+    languagePanel.querySelectorAll("[data-language]").forEach(function (option) {
+      option.addEventListener("click", function () {
+        if (window.QuantumI18n) window.QuantumI18n.set(option.getAttribute("data-language"));
+      });
+    });
+    document.addEventListener("click", function (event) {
+      if (!languageWrap.contains(event.target)) languagePanel.classList.remove("is-open");
     });
   }
 
-  /* ---------- forms: validate email, swap to success state in place ---------- */
+  /* AJAX forms send submissions to the configured FormSubmit endpoint, which
+     emails intern@quantum-hub.com after one-time inbox confirmation. */
   document.querySelectorAll("form.field").forEach(function (form) {
-    form.addEventListener("submit", function (ev) {
-      ev.preventDefault();
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
       var email = form.querySelector('input[type="email"]');
-      var ok = email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value);
-      if (email) email.classList.toggle("invalid", !ok);
-      if (!ok) { if (email) email.focus(); return; }
-      /* TODO development phase: POST to the form backend here before showing success */
-      form.innerHTML =
-        '<div class="form-success">' +
-        '<h3><span class="dot"></span>Message received</h3>' +
-        '<p style="margin-top: var(--space-3);">Thanks — we’ll get back to you shortly at <strong style="color:#fff;">' +
-        email.value.replace(/</g, "&lt;") + "</strong>.</p></div>";
+      var validEmail = email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value);
+      if (email) email.classList.toggle("invalid", !validEmail);
+      if (!validEmail || !form.checkValidity()) {
+        if (email && !validEmail) email.focus();
+        else form.reportValidity();
+        return;
+      }
+
+      var submit = form.querySelector('[type="submit"]');
+      var originalText = submit ? submit.textContent : "";
+      if (submit) { submit.disabled = true; submit.textContent = t("Sending…"); }
+      fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" }
+      }).then(function (response) {
+        if (!response.ok) throw new Error("Submission failed");
+        var emailValue = email.value.replace(/</g, "&lt;");
+        form.innerHTML = '<div class="form-success"><h3><span class="dot"></span>' + t("Message received") + '</h3><p style="margin-top:var(--space-3);">' + t("Thanks — we'll get back to you shortly at") + ' <strong style="color:#fff;">' + emailValue + "</strong>.</p></div>";
+      }).catch(function () {
+        if (submit) { submit.disabled = false; submit.textContent = originalText; }
+        var error = form.querySelector(".form-error");
+        if (!error) {
+          error = document.createElement("p");
+          error.className = "form-error";
+          error.style.cssText = "margin-top:12px;color:var(--q-danger);font-family:var(--font-ui);font-size:13px;";
+          form.appendChild(error);
+        }
+        error.innerHTML = t("We couldn't send this form. Please email us directly at") + ' <a href="mailto:intern@quantum-hub.com">intern@quantum-hub.com</a>.';
+      });
     });
   });
 
-  /* ---------- lucide icons ---------- */
   if (window.lucide) window.lucide.createIcons();
 })();

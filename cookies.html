@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -48,7 +48,7 @@
         </div>
       </span>
     </nav>
-    <button class="utility-btn" type="button" aria-label="Change language"><i data-lucide="globe" style="width:14px;height:14px;"></i> EN</button>
+    <button class="utility-btn" type="button" aria-label="Change language"><img class="language-flag" src="assets/flags/gb.png" alt=""> EN</button>
     <a class="btn btn--primary btn--sm" href="contact.html">Contact us</a>
   </div>
 </header>
@@ -58,23 +58,23 @@
   <div class="container legal">
     <span class="eyebrow">legal</span>
     <h1 class="display-l">Cookie declaration</h1>
-    <p class="muted" style="font-family: var(--font-ui); font-size: 13px; margin-top: var(--space-3);">⚠ Draft — the final list depends on which analytics/booking tools the team chooses for the new site. Update before launch.</p>
+    <p class="muted" style="font-family: var(--font-ui); font-size: 13px; margin-top: var(--space-3);">Last updated: July 14, 2026</p>
 
     <h2>What cookies are</h2>
     <p>Cookies are small files placed on your device by a website, used to remember your preferences and to understand how the site is used. Details of how we handle the data involved are in our <a href="privacy.html">privacy policy</a>.</p>
 
     <h2>Cookies this site uses</h2>
     <ul>
-      <li><strong>Strictly necessary:</strong> session cookies required for core site functions (e.g. remembering a submitted form state within a visit).</li>
-      <li><strong>Functionality:</strong> your language preference and your Partners/Startups choice on the home page, stored locally so the site can tailor what it emphasizes.</li>
-      <li><strong>Analytics (if enabled):</strong> third-party analytics such as Google Analytics, to understand site usage. You can opt out via browser settings or the vendor's opt-out tools.</li>
+      <li><strong>Local preferences:</strong> the site stores your language choice in local storage and your Partners/Startups choice in session storage. These are browser-storage records, not advertising cookies.</li>
+      <li><strong>Calendly:</strong> if the host activates the embedded meeting calendar, Calendly may use cookies or similar technologies when the booking widget loads. Calendly's own privacy and cookie terms apply inside that service.</li>
+      <li><strong>No analytics currently installed:</strong> this version of the site does not load Google Analytics or another analytics tracker.</li>
     </ul>
 
     <h2>Managing cookies</h2>
     <p>You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. If you do not accept cookies, some parts of the site may not function fully.</p>
 
     <h2>Contact</h2>
-    <p>Questions about this declaration: <a href="mailto:company@quantum-hub.com">company@quantum-hub.com</a></p>
+    <p>Questions about this declaration: <a href="mailto:intern@quantum-hub.com">intern@quantum-hub.com</a></p>
   </div>
 </section>
 </main>
@@ -89,6 +89,7 @@
 </footer>
 
 <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
+<script src="js/i18n-runtime.js" defer></script>
 <script src="js/motion.js" defer></script>
 </body>
 </html>
