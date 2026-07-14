@@ -187,7 +187,7 @@ mark { background: none; color: var(--q-magenta-soft); font-weight: var(--weight
 .card .icon { color: #fff; width: 26px; height: 26px; }
 
 /* ---------- P9 logo row ---------- */
-.logo-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-5); align-items: center; }
+.logo-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-5); align-items: center; }
 .logo-row .ph { height: 64px; opacity: .65; transition: opacity var(--duration-base) var(--ease-out); }
 .logo-row .ph:hover { opacity: 1; }
 

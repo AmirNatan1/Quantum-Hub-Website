@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /wireframes/
+Disallow: /font-comparison.html
+Disallow: /font-comparison-2.html
+
+Sitemap: https://quantum-hub.com/sitemap.xml

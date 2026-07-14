@@ -7,9 +7,18 @@
 <meta name="description" content="The people between industry and innovation.">
 <link rel="stylesheet" href="styles.css">
 <link rel="icon" type="image/svg+xml" href="assets/quantum-logo.svg">
+<link rel="canonical" href="https://quantum-hub.com/about.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="About — Quantum-hub">
+<meta property="og:description" content="The people between industry and innovation.">
+<meta property="og:url" content="https://quantum-hub.com/about.html">
+<meta property="og:image" content="https://quantum-hub.com/assets/quantum-logo.svg">
+<meta name="twitter:card" content="summary">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js" defer></script>
 <style>
   .team-card { text-align: center; }
+  .team-card .photo { width: 132px; height: 132px; border-radius: 50%; margin: 0 auto;
+    object-fit: cover; border: 1px solid var(--border-default); }
   .team-card .ph { width: 132px; height: 132px; border-radius: 50%; margin: 0 auto; }
   .team-card h3 { font-size: 17px; margin-top: var(--space-4); }
   .team-card p { font-family: var(--font-ui); font-size: 13px; color: var(--text-muted); }
@@ -78,64 +87,15 @@
     <div class="reveal">
       <span class="eyebrow">our team</span>
       <h2 class="heading">Who you'll work with</h2>
-      <p class="muted" style="font-family: var(--font-ui); font-size: 13px; margin-top: var(--space-2);">Renders from the fresh team list (pending from Quantum). Card = photo + name + role + LinkedIn; no card ships incomplete.</p>
     </div>
     <div class="grid grid--4 reveal-stagger" style="margin-top: var(--space-6);">
-      <div class="card team-card"><div class="ph">ph-team-01</div><h3>[Name]</h3><p>[Role]</p><span class="li"><i data-lucide="linkedin" style="width:16px;height:16px;color:var(--q-magenta-soft);"></i></span></div>
-      <div class="card team-card"><div class="ph">ph-team-02</div><h3>[Name]</h3><p>[Role]</p><span class="li"><i data-lucide="linkedin" style="width:16px;height:16px;color:var(--q-magenta-soft);"></i></span></div>
-      <div class="card team-card"><div class="ph">ph-team-03</div><h3>[Name]</h3><p>[Role]</p><span class="li"><i data-lucide="linkedin" style="width:16px;height:16px;color:var(--q-magenta-soft);"></i></span></div>
-      <div class="card team-card"><div class="ph">ph-team-04</div><h3>[Name]</h3><p>[Role]</p><span class="li"><i data-lucide="linkedin" style="width:16px;height:16px;color:var(--q-magenta-soft);"></i></span></div>
-    </div>
-  </div>
-</section>
-
-<!-- 4 · NEWS -->
-<section class="section" id="news">
-  <div class="container">
-    <div class="reveal">
-      <span class="eyebrow">what we're up to</span>
-      <h2 class="heading">Fresh from the hub</h2>
-    </div>
-    <div class="grid grid--3 reveal-stagger" style="margin-top: var(--space-6);">
-      <article class="card news-card"><div class="ph ph--32" style="margin-bottom: var(--space-3);">ph-news-01</div><time>[date]</time><p>[Title — event, batch, partner announcement]</p></article>
-      <article class="card news-card"><div class="ph ph--32" style="margin-bottom: var(--space-3);">ph-news-02</div><time>[date]</time><p>[Title]</p></article>
-      <article class="card news-card"><div class="ph ph--32" style="margin-bottom: var(--space-3);">ph-news-03</div><time>[date]</time><p>[Title]</p></article>
-    </div>
-    <p style="margin-top: var(--space-5);"><a href="https://www.linkedin.com/company/quantum-hub/">Follow Quantum-hub on LinkedIn <i data-lucide="arrow-right" style="width:14px;height:14px;vertical-align:-2px;"></i></a></p>
-  </div>
-</section>
-
-<!-- 5 · CONVERSION -->
-<section class="section surface-inverse section--compressed">
-  <div class="container convert reveal">
-    <h2>Come see the playground.</h2>
-    <a class="btn btn--primary" href="contact.html">Book a meeting</a>
-  </div>
-</section>
-
-</main>
-
-<footer class="site-footer">
-  <div class="container">
-    <div class="footer-top">
-      <a class="logo-tile" href="index.html" aria-label="Quantum-hub home" style="width:36px;height:36px;">
-        <img src="assets/quantum-logo.svg" alt="Quantum-hub">
-      </a>
-      <nav class="footer-nav" aria-label="Footer">
-        <a href="for-partners.html">For partners</a><a href="for-startups.html">For startups</a>
-        <a href="spark.html">SPARK</a><a href="industries.html">Industries</a>
-        <a href="case-studies.html">Case studies</a><a href="about.html">About</a><a href="contact.html">Contact</a>
-      </nav>
-      <a href="https://www.linkedin.com/company/quantum-hub/" aria-label="Quantum-hub on LinkedIn"><i data-lucide="linkedin" style="width:20px;height:20px;"></i></a>
-    </div>
-    <p class="footer-legal">
-      <a href="#">Accessibility</a> · <a href="#">Cookies</a> · <a href="#">Privacy</a> · <a href="#">Terms</a>
-      &nbsp;|&nbsp; Quantum © <span id="y"></span> · T.L.G-T.S Technology LTD
-    </p>
-  </div>
-</footer>
-
-<script>document.getElementById("y").textContent = new Date().getFullYear();</script>
-<script src="js/motion.js" defer></script>
-</body>
-</html>
+      <div class="card team-card"><img class="photo" src="assets/team/shay-livnat.jpg" alt="Shay Livnat" loading="lazy"><h3>Shay Livnat</h3><p>Chairman</p><a class="li" href="https://www.linkedin.com/in/shay-livnat-73193/" aria-label="Shay Livnat on LinkedIn"><i data-lucide="linkedin" style="width:16px;height:16px;color:var(--q-magenta-soft);"></i></a></div>
+      <div class="card team-card"><img class="photo" src="assets/team/liav-ben-rubi.jpg" alt="Liav Ben Rubi" loading="lazy"><h3>Liav Ben Rubi</h3><p>CEO</p><a class="li" href="https://www.linkedin.com/in/liav-ben-rubi/" aria-label="Liav Ben Rubi on LinkedIn"><i data-lucide="linkedin" style="width:16px;height:16px;color:var(--q-magenta-soft);"></i></a></div>
+      <div class="card team-card"><img class="photo" src="assets/team/dana-taigman-koren.jpg" alt="Dana Taigman Koren" loading="lazy"><h3>Dana Taigman Koren</h3><p>CBO</p><a class="li" href="https://www.linkedin.com/in/danataigmankoren/" aria-label="Dana Taigman Koren on LinkedIn"><i data-lucide="linkedin" style="width:16px;height:16px;color:var(--q-magenta-soft);"></i></a></div>
+      <div class="card team-card"><img class="photo" src="assets/team/dalia-damary.jpg" alt="Dalia Damary" loading="lazy"><h3>Dalia Damary</h3><p>CFO</p><a class="li" href="https://www.linkedin.com/in/dalia-damary-4964271a5/" aria-label="Dalia Damary on LinkedIn"><i data-lucide="linkedin" style="width:16px;height:16px;color:var(--q-magenta-soft);"></i></a></div>
+      <div class="card team-card"><img class="photo" src="assets/team/neta-fuchs.jpg" alt="Neta Fuchs" loading="lazy"><h3>Neta Fuchs</h3><p>Automotive &amp; Logistics Domain Manager</p><a class="li" href="https://www.linkedin.com/in/neta-fuchs-3702163b0/" aria-label="Neta Fuchs on LinkedIn"><i data-lucide="linkedin" style="width:16px;height:16px;color:var(--q-magenta-soft);"></i></a></div>
+      <div class="card team-card"><img class="photo" src="assets/team/din-shalit.jpg" alt="Din Shalit" loading="lazy"><h3>Din Shalit</h3><p>Industry 4.0, Energy &amp; Defense Domain Manager</p><a class="li" href="https://www.linkedin.com/in/din-shalit-405267173/" aria-label="Din Shalit on LinkedIn"><i data-lucide="linkedin" style="width:16px;height:16px;color:var(--q-magenta-soft);"></i></a></div>
+      <div class="card team-card"><img class="photo" src="assets/team/yuval-asayag.jpg" alt="Yuval Asayag" loading="lazy"><h3>Yuval Asayag</h3><p>Operations &amp; Marketing Lead</p><a class="li" href="https://www.linkedin.com/in/yuval-asayag/" aria-label="Yuval Asayag on LinkedIn"><i data-lucide="linkedin" style="width:16px;height:16px;color:var(--q-magenta-soft);"></i></a></div>
+      <div class="card team-card"><img class="photo" src="assets/team/oz-dekel.jpg" alt="Oz Dekel" loading="lazy"><h3>Oz Dekel</h3><p>Junior Full Stack Developer</p><a class="li" href="https://www.linkedin.com/in/oz-dekel-789ab326a/" aria-label="Oz Dekel on LinkedIn"><i data-lucide="linkedin" style="width:16px;height:16px;color:var(--q-magenta-soft);"></i></a></div>
+      <div class="card team-card"><img class="photo" src="assets/team/yael-silberbusch.jpg" alt="Yael Silberbusch" loading="lazy"><h3>Yael Silberbusch</h3><p>Office Manager</p><a class="li" href="https://www.linkedin.com/in/yael-silberbusch-44a1723a4/" aria-label="Yael Silberbusch on LinkedIn"><i data-lucide="linkedin" style="width:16px;height:16px;color:var(--q-magenta-soft);"></i></a></div>
+      <div class="card team-card"><img class="photo" src="assets/team/evyatar-ben-ishay.jpg" alt="Evyatar Ben-Ishay" loading="lazy"><h3>Evyatar Ben

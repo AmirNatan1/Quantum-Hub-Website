@@ -133,7 +133,9 @@ Every number/claim found on the site. Status: ✅ verified externally · ⚠️ 
 | F-11 | Address: "Arik Einstein 3, 8th FI, Herzliya Hills" | Contact | Typo "FI" → "8th Fl." | Internal | ⚠️ fix + confirm current |
 | F-12 | "The program is equity-free, and we are not taking any fees" | Startups FAQ | Contractual claim | Internal | ❓ legal sign-off |
 
-**Open items for Quantum team (blocking Phase 3, not Phase 1–2):** F-01 framing decision, F-04–F-08 numbers, F-11 address, F-12 sign-off.
+**Register updates (2026-07-14, per Amir):** F-04 moot — **Talcar/Kia is no longer a partner; removed site-wide (partner count is now four)**. F-07 testimonials confirmed. F-11 address confirmed (Arik Einstein 3, 8th Fl., Herzliya). F-12 equity-free claim confirmed. Team roster replaced with fresh 11-person list from The Team.pdf (photos extracted; Liron Ben Zaken has no LinkedIn URL yet).
+
+**Still open:** F-01 framing decision, F-08 stat values (POCs completed etc. — Amir to supply).
 
 ---
 
@@ -152,12 +154,4 @@ Naming: `ph-{page}-{slot}`. All placeholders are cool-toned neutral blocks (`--q
 | ph-case-01…05 | Corractions, Tactile Mobility, Maradin, Coreteel, Actasys | 16:9 | One hero visual per case study |
 | ph-case-champ | CHAMP case visual | 16:9 | |
 | ph-team-01…N | Team photos | 1:1 | Card = photo + name + role + LinkedIn slot. Fresh team list needed (current list outdated; 3 of 12 lack LinkedIn) |
-| ph-news-01…04 | "What we're up to" cards | 3:2 | Can be fed by LinkedIn posts |
-| ph-spark-steps | 5 program-overview step icons | 1:1 | Lucide |
-| ph-academy-01 | Enrichment Academy visual | 4:3 | |
-
----
-
-## Ready for Phase 1
-
-The inventory above already implies the redirect map (old URLs → new sitemap) and the per-page briefs. Suggested next: draft the seven page content briefs, starting with Home and /spark/.
+| ph-news-01…04 | "What we're up to" cards | 3:2 | Can be fed by Lin

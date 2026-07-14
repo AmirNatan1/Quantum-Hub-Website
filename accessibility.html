@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accessibility statement — Quantum-hub</title>
+<meta name="description" content="Quantum-hub accessibility statement — WCAG 2.1 AA.">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/svg+xml" href="assets/quantum-logo.svg">
+<link rel="canonical" href="https://quantum-hub.com/accessibility.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Accessibility statement — Quantum-hub">
+<meta property="og:description" content="Quantum-hub accessibility statement — WCAG 2.1 AA.">
+<meta property="og:url" content="https://quantum-hub.com/accessibility.html">
+<meta property="og:image" content="https://quantum-hub.com/assets/quantum-logo.svg">
+<meta name="twitter:card" content="summary">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js" defer></script>
+<style>
+  .legal { max-width: 800px; }
+  .legal h2 { font-size: var(--text-xl); margin: var(--space-7) 0 var(--space-3); }
+  .legal p, .legal li { font-size: 16px; margin-bottom: var(--space-3); }
+  .legal ul { padding-left: var(--space-5); }
+</style>
+</head>
+<body>
+
+<div class="bg" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="container">
+    <a class="logo-tile" href="index.html" aria-label="Quantum-hub home">
+      <img src="assets/quantum-logo.svg" alt="Quantum-hub">
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="for-partners.html">For partners</a>
+      <a href="for-startups.html">For startups</a>
+      <a href="spark.html">SPARK</a>
+      <span class="explore">
+        <a href="#" data-explore-toggle aria-expanded="false" aria-haspopup="true">Explore</a>
+        <div class="explore-panel" role="menu">
+          <div>
+            <a href="industries.html" role="menuitem">Industries</a>
+            <a href="case-studies.html" role="menuitem">Case studies</a>
+            <a href="about.html" role="menuitem">About</a>
+            <a href="about.html#news" role="menuitem">What we're up to</a>
+          </div>
+          <a class="explore-feature" href="case-studies.html">Featured: the POC Playground</a>
+        </div>
+      </span>
+    </nav>
+    <button class="utility-btn" type="button" aria-label="Change language"><i data-lucide="globe" style="width:14px;height:14px;"></i> EN</button>
+    <a class="btn btn--primary btn--sm" href="contact.html">Contact us</a>
+  </div>
+</header>
+
+<main>
+<section class="section" style="padding-top: calc(var(--header-height) + var(--space-8));">
+  <div class="container legal">
+    <span class="eyebrow">legal</span>
+    <h1 class="display-l">Accessibility statement</h1>
+    <p class="muted" style="font-family: var(--font-ui); font-size: 13px; margin-top: var(--space-3);">⚠ Draft rewritten for the new site (the previous statement described a third-party accessibility widget this site does not use). Pending review — and a decision on whether to reinstate such a widget.</p>
+
+    <h2>Our commitment</h2>
+    <p>We believe the internet should be available and accessible to anyone, and we are committed to providing a website that is accessible to the broadest possible audience, regardless of ability. This website aims to conform to the World Wide Web Consortium's <strong>Web Content Accessibility Guidelines 2.1 at level AA</strong>.</p>
+
+    <h2>What this site does</h2>
+    <ul>
+      <li><strong>Keyboard navigation:</strong> every interactive element — navigation, dropdowns, accordions, filters, and forms — is operable by keyboard, with a clearly visible focus indicator on every focusable element. Dropdowns and overlays close with Esc.</li>
+      <li><strong>Reduced motion:</strong> all scroll animations, pinned sections, count-ups, and background effects are disabled automatically for users whose system requests reduced motion (<code>prefers-reduced-motion</code>); content renders in its final state.</li>
+      <li><strong>Screen readers:</strong> semantic landmarks (header, nav, main, footer), a single H1 per page, labeled form fields, ARIA attributes on menus and dialogs, and alt text on images. Animated statistics expose their final values as static text.</li>
+      <li><strong>Color and contrast:</strong> text colors on the dark theme are chosen to meet WCAG AA contrast ratios; color is never the only carrier of meaning.</li>
+      <li><strong>Video:</strong> background video plays muted, never autoplays audio, and offers a pause control.</li>
+      <li><strong>Touch targets:</strong> interactive elements meet minimum touch-target sizes on mobile.</li>
+    </ul>
+
+    <h2>Known limitations</h2>
+    <p>Despite our best efforts, some pages or sections may not yet be fully accessible, may be in the process of becoming accessible, or may lack an adequate technological solution. We are continually improving.</p>
+
+    <h2>Feedback</h2>
+    <p>If you encounter an accessibility barrier on this website, please tell us and we will do our best to fix it: <a href="mailto:company@quantum-hub.com">company@quantum-hub.com</a></p>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="footer-legal">
+      <a href="accessibility.html">Accessibility</a> · <a href="cookies.html">Cookies</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a>
+      &nbsp;|&nbsp; Quantum © <span id="y"></span> · T.L.G-T.S Technology LTD &nbsp;|&nbsp; <a href="index.html">← Back to site</a>
+    </p>
+  </div>
+</footer>
+
+<script>document.getElementById("y").textContent = new Date().getFullYear();</script>
+<script src="js/motion.js" defer></script>
+</body>
+</html>
