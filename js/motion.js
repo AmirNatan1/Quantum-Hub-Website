@@ -160,6 +160,68 @@
   var blendBg = document.querySelector(".bg");
   var homeVideoBg = document.querySelector(".home-video-bg");
   var homeVideoTransition = document.querySelector(".home-video-transition");
+  var processWrap = document.querySelector("[data-process-story]");
+  var processSteps = processWrap ? Array.prototype.slice.call(processWrap.querySelectorAll("[data-process-step]")) : [];
+  var processVisuals = processWrap ? Array.prototype.slice.call(processWrap.querySelectorAll("[data-process-visual]")) : [];
+  var processLine = processWrap ? processWrap.querySelector(".rail-line") : null;
+  var processMobile = window.matchMedia("(max-width: 768px)");
+  var processIndex = -1;
+  var processWasStatic = null;
+
+  function setProcessStep(index, staticLayout) {
+    if (!processSteps.length) return;
+    index = Math.max(0, Math.min(processSteps.length - 1, index));
+    if (index === processIndex && staticLayout === processWasStatic) return;
+    processIndex = index;
+    processWasStatic = staticLayout;
+    processSteps.forEach(function (step, stepIndex) {
+      var active = stepIndex === index;
+      step.classList.toggle("active", active);
+      step.classList.toggle("is-complete", !staticLayout && stepIndex < index);
+      step.setAttribute("aria-pressed", String(active));
+    });
+    processVisuals.forEach(function (visual, visualIndex) {
+      var active = visualIndex === index;
+      visual.classList.toggle("active", active);
+      visual.setAttribute("aria-hidden", String(!staticLayout && !active));
+    });
+    if (processLine) {
+      var completion = processSteps.length > 1 ? index / (processSteps.length - 1) : 1;
+      processLine.style.width = (completion * 92) + "%";
+    }
+  }
+
+  function updateProcessStory(viewportHeight) {
+    if (!processWrap || !processSteps.length) return;
+    var staticLayout = reduced || processMobile.matches;
+    if (staticLayout) {
+      setProcessStep(Math.max(0, processIndex), true);
+      return;
+    }
+    var rect = processWrap.getBoundingClientRect();
+    var headerHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-height")) || 72;
+    var stickyHeight = Math.max(1, viewportHeight - headerHeight);
+    var travel = Math.max(1, processWrap.offsetHeight - stickyHeight);
+    var progress = Math.max(0, Math.min(1, (headerHeight - rect.top) / travel));
+    var index = Math.min(processSteps.length - 1, Math.floor(progress * processSteps.length));
+    setProcessStep(index, false);
+  }
+
+  processSteps.forEach(function (step, index) {
+    step.addEventListener("click", function () {
+      if (reduced || processMobile.matches) {
+        setProcessStep(index, true);
+        return;
+      }
+      var viewportHeight = window.innerHeight;
+      var headerHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-height")) || 72;
+      var stickyHeight = Math.max(1, viewportHeight - headerHeight);
+      var travel = Math.max(1, processWrap.offsetHeight - stickyHeight);
+      var storyTop = window.scrollY + processWrap.getBoundingClientRect().top;
+      var completion = processSteps.length > 1 ? index / (processSteps.length - 1) : 0;
+      window.scrollTo({ top: storyTop - headerHeight + travel * completion, behavior: "smooth" });
+    });
+  });
 
   function onScroll() {
     var viewportHeight = window.innerHeight;
@@ -197,6 +259,7 @@
       homeVideoBg.style.opacity = String(1 - exitProgress);
       homeVideoBg.classList.toggle("is-exited", exitProgress >= 0.999);
     }
+    updateProcessStory(viewportHeight);
   }
   var ticking = false;
   window.addEventListener("scroll", function () {
@@ -205,6 +268,7 @@
       ticking = true;
     }
   }, { passive: true });
+  window.addEventListener("resize", function () { requestAnimationFrame(onScroll); }, { passive: true });
   onScroll();
 
   /* Video: autoplay while visible, retry after load/interaction, and always expose
@@ -311,13 +375,6 @@
     var caption = wrap.querySelector(".vm-caption");
     if (caption) caption.classList.add("on");
   });
-
-  /* Process rail is fully readable in normal page flow. */
-  var railWrap = document.querySelector(".rail-wrap");
-  if (railWrap) {
-    var railLine = railWrap.querySelector(".rail-line");
-    if (railLine) railLine.style.width = "92%";
-  }
 
   /* Filters and accordions */
   var chips = document.querySelectorAll("[data-filter]");

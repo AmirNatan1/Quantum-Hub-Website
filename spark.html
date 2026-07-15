@@ -86,19 +86,43 @@
 </section>
 
 <!-- 3 · PINNED PROCESS RAIL — signature moment -->
-<div class="rail-wrap surface-subtle">
-  <section class="pinned">
+<div class="rail-wrap surface-subtle" data-process-story>
+  <section class="pinned" aria-label="Interactive five-step SPARK process">
     <div class="container">
       <span class="eyebrow">how the program works</span>
       <h2 class="heading">Five steps in</h2>
       <div class="rail">
         <div class="rail-line" aria-hidden="true"></div>
-        <div class="rail-step"><div class="num">1</div><h3>Apply</h3><p>Fill the application form.</p></div>
-        <div class="rail-step"><div class="num">2</div><h3>Interviews &amp; DD</h3><p>We assess tech, team, and readiness.</p></div>
-        <div class="rail-step"><div class="num">3</div><h3>Screening committee</h3><p>Partners evaluate and select.</p></div>
-        <div class="rail-step"><div class="num">4</div><h3>Use-case match</h3><p>A concrete POC is scoped with a partner champion.</p></div>
-        <div class="rail-step"><div class="num">5</div><h3>Welcome</h3><p>The program — and your POC — begins.</p></div>
+        <button class="rail-step active" data-process-step="0" type="button" aria-pressed="true"><span class="num">1</span><span class="rail-step-copy"><strong>Apply</strong><span>Fill the application form.</span></span></button>
+        <button class="rail-step" data-process-step="1" type="button" aria-pressed="false"><span class="num">2</span><span class="rail-step-copy"><strong>Interviews &amp; DD</strong><span>We assess tech, team, and readiness.</span></span></button>
+        <button class="rail-step" data-process-step="2" type="button" aria-pressed="false"><span class="num">3</span><span class="rail-step-copy"><strong>Screening committee</strong><span>Partners evaluate and select.</span></span></button>
+        <button class="rail-step" data-process-step="3" type="button" aria-pressed="false"><span class="num">4</span><span class="rail-step-copy"><strong>Use-case match</strong><span>A concrete POC is scoped with a partner champion.</span></span></button>
+        <button class="rail-step" data-process-step="4" type="button" aria-pressed="false"><span class="num">5</span><span class="rail-step-copy"><strong>Welcome</strong><span>The program — and your POC — begins.</span></span></button>
       </div>
+
+      <div class="process-visual-stage" aria-live="polite" aria-label="Current program step visual">
+        <figure class="process-visual process-visual--symbol active" data-process-visual="0">
+          <div class="process-visual-media"><img src="assets/media/spark-step-application.png" alt="Original Quantum-hub startup-program application symbol" loading="eager"></div>
+          <figcaption><span class="process-visual-kicker">Step 1 · Application</span><h3>Show us the working product</h3><p>Start with the essentials: the problem, the product, the team, and the industrial fit.</p></figcaption>
+        </figure>
+        <figure class="process-visual process-visual--photo" data-process-visual="1">
+          <div class="process-visual-media"><img src="assets/media/quantum-event.png" alt="Quantum-hub partner audience reviewing an innovation presentation" loading="lazy"></div>
+          <figcaption><span class="process-visual-kicker">Step 2 · Interviews &amp; DD</span><h3>Pressure-test the fit</h3><p>We dig into technology, readiness, team, and the conditions needed to run a credible POC.</p></figcaption>
+        </figure>
+        <figure class="process-visual process-visual--symbol" data-process-visual="2">
+          <div class="process-visual-media"><img src="assets/media/spark-step-committee.png" alt="Original Quantum-hub connected-network symbol for partner screening" loading="lazy"></div>
+          <figcaption><span class="process-visual-kicker">Step 3 · Screening committee</span><h3>Partners make the selection</h3><p>The companies that own the operational need evaluate the match and decide what moves forward.</p></figcaption>
+        </figure>
+        <figure class="process-visual process-visual--map" data-process-visual="3">
+          <div class="process-visual-media"><img src="assets/media/industry-playground.png" alt="Quantum-hub connected industry playground map used to scope use cases" loading="lazy"></div>
+          <figcaption><span class="process-visual-kicker">Step 4 · Use-case match</span><h3>Turn interest into a measurable test</h3><p>Quantum, the startup, and a partner champion define scope, site, owners, and success criteria.</p></figcaption>
+        </figure>
+        <figure class="process-visual process-visual--photo" data-process-visual="4">
+          <div class="process-visual-media"><img src="assets/media/actasys-video-poster.jpg" alt="Quantum-hub POC team preparing a field technology demonstration" loading="lazy"></div>
+          <figcaption><span class="process-visual-kicker">Step 5 · Welcome</span><h3>Move from selection to execution</h3><p>The program begins with a clear project team and a POC ready to enter the field.</p></figcaption>
+        </figure>
+      </div>
+      <p class="process-scroll-cue"><i data-lucide="mouse" aria-hidden="true"></i><span>Scroll to move through the five steps</span></p>
     </div>
   </section>
 </div>
