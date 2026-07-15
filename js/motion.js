@@ -158,19 +158,8 @@
   });
 
   var blendBg = document.querySelector(".bg");
-  if (blendBg && !reduced) {
-    var gx = 80;
-    var gy = 10;
-    (function drift() {
-      var doc = document.documentElement;
-      var scrollProgress = doc.scrollTop / (doc.scrollHeight - doc.clientHeight || 1);
-      gx += ((80 - scrollProgress * 60) - gx) * 0.045;
-      gy += ((10 + scrollProgress * 70) - gy) * 0.045;
-      blendBg.style.setProperty("--gx", gx + "%");
-      blendBg.style.setProperty("--gy", gy + "%");
-      requestAnimationFrame(drift);
-    })();
-  }
+  var homeVideoBg = document.querySelector(".home-video-bg");
+  var homeVideoTransition = document.querySelector(".home-video-transition");
 
   function onScroll() {
     var viewportHeight = window.innerHeight;
@@ -193,7 +182,20 @@
     }
     if (progressBar) {
       var doc = document.documentElement;
-      progressBar.style.width = (doc.scrollTop / (doc.scrollHeight - doc.clientHeight || 1)) * 100 + "%";
+      var pageProgress = doc.scrollTop / (doc.scrollHeight - doc.clientHeight || 1);
+      progressBar.style.transform = "scaleX(" + Math.max(0, Math.min(1, pageProgress)) + ")";
+    }
+    if (blendBg && !reduced) {
+      var backgroundDoc = document.documentElement;
+      var scrollProgress = backgroundDoc.scrollTop / (backgroundDoc.scrollHeight - backgroundDoc.clientHeight || 1);
+      blendBg.style.setProperty("--gx", (80 - scrollProgress * 60) + "%");
+      blendBg.style.setProperty("--gy", (10 + scrollProgress * 70) + "%");
+    }
+    if (homeVideoBg && homeVideoTransition) {
+      var transitionRect = homeVideoTransition.getBoundingClientRect();
+      var exitProgress = Math.max(0, Math.min(1, -transitionRect.top / Math.max(1, transitionRect.height)));
+      homeVideoBg.style.opacity = String(1 - exitProgress);
+      homeVideoBg.classList.toggle("is-exited", exitProgress >= 0.999);
     }
   }
   var ticking = false;
@@ -303,58 +305,38 @@
     }
   } catch (error) {}
 
-  /* Video expansion */
+  /* Video moments now remain cinematic without holding the visitor's scroll. */
   var videoMoments = Array.prototype.slice.call(document.querySelectorAll(".video-moment"));
-  function updateVideoMoment() {
-    videoMoments.forEach(function (wrap) {
-      var frame = wrap.querySelector(".vm-frame");
-      var caption = wrap.querySelector(".vm-caption");
-      if (!frame) return;
-      var rect = wrap.getBoundingClientRect();
-      var total = rect.height - window.innerHeight;
-      var value = Math.max(0, Math.min(1, -rect.top / (total || 1)));
-      if (reduced || window.innerWidth < 768) value = 1;
-      var expanded = Math.min(1, value / 0.45);
-      expanded = 1 - Math.pow(1 - expanded, 3);
-      frame.style.width = (62 + 38 * expanded) + "vw";
-      frame.style.height = (60 + 40 * expanded) + "vh";
-      frame.style.borderRadius = (18 * (1 - expanded)) + "px";
-      if (caption) caption.classList.toggle("on", expanded > 0.85);
-    });
-  }
-  if (videoMoments.length && !(reduced || window.innerWidth < 768)) {
-    window.addEventListener("scroll", function () { requestAnimationFrame(updateVideoMoment); }, { passive: true });
-    updateVideoMoment();
-  }
+  videoMoments.forEach(function (wrap) {
+    var caption = wrap.querySelector(".vm-caption");
+    if (caption) caption.classList.add("on");
+  });
 
-  /* Pinned process rail */
+  /* Process rail is fully readable in normal page flow. */
   var railWrap = document.querySelector(".rail-wrap");
   if (railWrap) {
-    var steps = railWrap.querySelectorAll(".rail-step");
     var railLine = railWrap.querySelector(".rail-line");
-    function updateRail() {
-      var rect = railWrap.getBoundingClientRect();
-      var total = rect.height - window.innerHeight;
-      var value = Math.max(0, Math.min(1, -rect.top / (total || 1)));
-      if (reduced) value = 1;
-      var active = Math.max(1, Math.ceil(value * steps.length));
-      steps.forEach(function (step, index) { step.classList.toggle("active", index < active); });
-      if (railLine) railLine.style.width = value * 92 + "%";
-    }
-    window.addEventListener("scroll", updateRail, { passive: true });
-    updateRail();
+    if (railLine) railLine.style.width = "92%";
   }
 
   /* Filters and accordions */
   var chips = document.querySelectorAll("[data-filter]");
   chips.forEach(function (chip) {
+    chip.setAttribute("aria-pressed", String(chip.classList.contains("selected")));
+  });
+  chips.forEach(function (chip) {
     chip.addEventListener("click", function () {
-      chips.forEach(function (other) { other.classList.remove("selected"); });
+      chips.forEach(function (other) {
+        other.classList.remove("selected");
+        other.setAttribute("aria-pressed", "false");
+      });
       chip.classList.add("selected");
+      chip.setAttribute("aria-pressed", "true");
       var filter = chip.getAttribute("data-filter");
       document.querySelectorAll("[data-case]").forEach(function (tile) {
         tile.classList.toggle("is-hidden", filter !== "all" && tile.getAttribute("data-case") !== filter);
       });
+      window.dispatchEvent(new CustomEvent("quantum:case-filter", { detail: { filter: filter } }));
     });
   });
   var faqs = document.querySelectorAll("details.faq");

@@ -162,17 +162,23 @@ mark { background: none; color: var(--q-magenta-soft); font-weight: var(--weight
 /* Home: the original POC Playground video stays visible until Who we are. */
 .home-video-story { position: relative; isolation: isolate; background: #0e1112; }
 .home-video-bg {
-  position: sticky; top: 0; z-index: 0; width: 100%; height: 100vh; height: 100svh;
-  margin-bottom: -100vh; margin-bottom: -100svh; overflow: hidden; background: #0e1112;
+  position: fixed; inset: 0; z-index: 0; width: 100%; height: 100vh; height: 100svh;
+  overflow: hidden; background: #0e1112; pointer-events: none;
 }
+.home-video-bg.is-exited { display: none; }
 .home-video-bg video { width: 100%; height: 100%; object-fit: cover; filter: saturate(.82) contrast(1.05) brightness(.78); }
 .home-video-shade { position: absolute; inset: 0; z-index: 1; background: rgba(14,17,18,.58); pointer-events: none; }
-.home-video-bg .video-control { z-index: 3; top: calc(var(--header-height) + var(--space-3)); bottom: auto; }
-.home-video-story > .hero, .home-video-story > .pin-wrap { position: relative; z-index: 2; }
+.home-video-bg .video-control { z-index: 3; top: calc(var(--header-height) + var(--space-3)); bottom: auto; pointer-events: auto; }
+.home-video-story > .hero, .home-video-story > .pin-wrap, .home-video-story > .home-video-transition { position: relative; z-index: 2; }
 .home-video-hero { min-height: 100vh; min-height: 100svh; }
 .home-video-story .lede, .home-video-story .display-xl { text-shadow: 0 3px 24px rgba(0,0,0,.72); }
 .home-video-story .audience-panel { background: rgba(14,17,18,.76); border-color: rgba(255,255,255,.14); backdrop-filter: blur(10px); }
 .home-story-stats > .pinned { background: rgba(14,17,18,.24); }
+.home-video-transition {
+  height: clamp(220px, 45vh, 460px);
+  background: linear-gradient(180deg, rgba(14,17,18,0), #0e1112 92%);
+}
+.home-video-story + #who-we-are { background: #0e1112; }
 
 .audience { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); max-width: 920px; margin-top: var(--space-6); }
 .audience-panel {
@@ -187,9 +193,9 @@ mark { background: none; color: var(--q-magenta-soft); font-weight: var(--weight
 .audience-panel p { font-size: var(--text-base); }
 .audience-panel .btn { margin-top: var(--space-4); }
 
-/* ---------- P2 stat band (pinned) ---------- */
-.pin-wrap { height: 200vh; position: relative; }
-.pin-wrap > .pinned { position: sticky; top: 0; min-height: 100vh; display: flex; align-items: center; }
+/* ---------- P2 stat band — normal flow; no artificial scroll hold ---------- */
+.pin-wrap { min-height: clamp(500px, 72vh, 760px); position: relative; }
+.pin-wrap > .pinned { position: relative; min-height: inherit; display: flex; align-items: center; padding: var(--space-8) 0; }
 .pin-wrap > .pinned > .container { width: 100%; }
 .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-6); width: 100%; }
 .stat-num { font-family: var(--font-display); font-weight: var(--weight-heavy);
@@ -247,6 +253,9 @@ mark { background: none; color: var(--q-magenta-soft); font-weight: var(--weight
 .logo-row img { width: 100%; height: 82px; object-fit: contain; padding: 18px; background: rgba(255,255,255,.94); border-radius: var(--radius-md); border: 1px solid var(--border-default);
   opacity: .8; transition: opacity var(--duration-base) var(--ease-out), border-color var(--duration-base) var(--ease-out); }
 .logo-row img:hover { opacity: 1; border-color: var(--border-strong); }
+.partner-logo-link { display: block; border-radius: var(--radius-md); }
+.partner-logo-link:hover img { opacity: 1; border-color: rgba(216,43,114,.48); }
+.partner-logo-link:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
 
 /* ---------- P11 news strip ---------- */
 .news-card { padding: var(--space-4) var(--space-5); }
@@ -309,17 +318,19 @@ mark { background: none; color: var(--q-magenta-soft); font-weight: var(--weight
 .reveal-stagger.in > *:nth-child(4) { transition-delay: 180ms; }
 .reveal-stagger.in > *:nth-child(5) { transition-delay: 240ms; }
 
-.progress { position: fixed; top: 0; left: 0; height: 2px; background: var(--accent-primary); width: 0; z-index: 101; }
+.progress { position: fixed; top: 0; left: 0; height: 2px; background: var(--accent-primary); width: 100%; z-index: 101;
+  transform: scaleX(0); transform-origin: left center; will-change: transform; }
+html[dir="rtl"] .progress { transform-origin: right center; }
 
-/* ---------- P7 process rail (pinned; steps activate on scroll) ---------- */
-.rail-wrap { height: 250vh; position: relative; }
-.rail-wrap > .pinned { position: sticky; top: 0; min-height: 100vh; display: flex; align-items: center; }
+/* ---------- P7 process rail — readable in one continuous pass ---------- */
+.rail-wrap { height: auto; position: relative; }
+.rail-wrap > .pinned { position: relative; min-height: 0; display: flex; align-items: center; padding: var(--space-9) 0; }
 .rail { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-4); position: relative; margin-top: var(--space-6); }
 .rail::before { content: ""; position: absolute; top: 30px; left: 4%; right: 4%; height: 1px;
   background: var(--border-default); z-index: 0; }
-.rail-line { position: absolute; top: 30px; left: 4%; height: 1px; width: 0;
+.rail-line { position: absolute; top: 30px; left: 4%; height: 1px; width: 92%;
   background: var(--accent-primary); z-index: 1; transition: width 200ms linear; }
-.rail-step { position: relative; z-index: 2; opacity: .3; transform: translateY(8px);
+.rail-step { position: relative; z-index: 2; opacity: 1; transform: none;
   transition: opacity var(--duration-slow) var(--ease-out), transform var(--duration-slow) var(--ease-out); }
 .rail-step.active { opacity: 1; transform: none; }
 .rail-step .num { font-family: var(--font-display); font-weight: var(--weight-heavy); font-size: 26px;
@@ -369,14 +380,63 @@ mark { background: none; color: var(--q-magenta-soft); font-weight: var(--weight
 .case-tile > img { width: 100%; height: 190px; object-fit: contain; padding: 34px; background: rgba(255,255,255,.94); }
 .case-tile:hover { color: inherit; }
 
-/* ---------- video moment: pinned full-screen takeover ----------
-   The frame starts inset, expands to fill the viewport as you scroll,
-   holds full-screen while the loop plays, then releases. */
-.video-moment { height: 280vh; position: relative; }
-.video-moment .vm-sticky { position: sticky; top: 0; height: 100vh;
-  display: flex; align-items: center; justify-content: center; overflow: hidden; }
-.video-moment .vm-frame { width: 62vw; height: 60vh; border-radius: var(--radius-lg);
-  overflow: hidden; position: relative; will-change: width, height; }
+/* ---------- drifting gallery ---------- */
+.drift-gallery-section { overflow: hidden; --drift-energy: 0; }
+.drift-gallery-heading { max-width: 760px; }
+.drift-toolbar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; }
+.drift-filters { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+.drift-instruction { font-family: var(--font-ui); font-size: var(--text-xs); color: var(--text-muted); }
+.drift-viewport {
+  position: relative; width: 100%; overflow-x: auto; overflow-y: hidden; padding: var(--space-7) 0 var(--space-8);
+  cursor: grab; touch-action: pan-y; scrollbar-width: thin; scrollbar-color: rgba(216,43,114,.45) transparent;
+}
+.drift-viewport:focus-visible { outline: none; box-shadow: inset var(--shadow-focus); }
+.drift-viewport.is-enhanced { overflow: hidden; user-select: none; -webkit-user-select: none; scrollbar-width: none; }
+.drift-viewport.is-enhanced::-webkit-scrollbar { display: none; }
+.drift-viewport.is-dragging { cursor: grabbing; }
+.drift-track {
+  display: flex; direction: ltr; align-items: stretch; gap: var(--space-5); width: max-content;
+  padding: var(--space-3) var(--space-5); will-change: transform;
+}
+.drift-card-physics {
+  flex: 0 0 clamp(292px, 28vw, 370px); min-width: 0; contain: layout style;
+  transform: translate3d(0,0,0); will-change: transform;
+}
+.drift-card {
+  height: 100%; overflow: hidden; background: var(--surface-card); border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg); color: inherit;
+  transition: border-color 180ms var(--ease-out), box-shadow 180ms var(--ease-out), transform 180ms var(--ease-out);
+}
+.drift-card-physics.is-grabbed .drift-card {
+  transform: scale(1.025); border-color: rgba(216,43,114,.62); box-shadow: 0 0 32px rgba(216,43,114,.2);
+}
+.drift-card-physics:hover .drift-card { border-color: rgba(216,43,114,.42); }
+.drift-card > img { width: 100%; height: 210px; object-fit: contain; padding: 34px; background: rgba(255,255,255,.065); }
+.drift-card > img.drift-card-photo { object-fit: cover; padding: 0; }
+.drift-card .body { padding: var(--space-4) var(--space-5) var(--space-5); }
+.drift-card h3 { margin: var(--space-3) 0 var(--space-2); font-size: var(--text-lg); }
+.drift-card p { font-size: var(--text-base); }
+.sector-label { display: inline-flex; align-items: center; gap: var(--space-2); font-family: var(--font-ui); font-size: var(--text-xs); color: var(--text-muted); }
+.drift-case-link { display: inline-flex; margin-top: var(--space-4); font-family: var(--font-ui); font-size: var(--text-sm); }
+.drift-grain {
+  position: absolute; inset: 0; z-index: 3; width: 100%; height: 100%; pointer-events: none;
+  image-rendering: pixelated; mix-blend-mode: soft-light; opacity: .12;
+}
+.drift-viewport::after {
+  content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background: rgba(216,43,114,.18); opacity: calc(var(--drift-energy) * .34); mix-blend-mode: screen;
+  transition: opacity 140ms linear;
+}
+.drift-empty { margin: var(--space-7) var(--container-pad); padding: var(--space-6); text-align: center;
+  border: 1px solid var(--border-default); border-radius: var(--radius-lg); background: var(--surface-card); font-family: var(--font-ui); }
+html[dir="rtl"] .drift-card { direction: rtl; text-align: right; }
+
+/* ---------- video moment — cinematic without scroll trapping ---------- */
+.video-moment { height: auto; position: relative; padding: var(--space-7) 0; }
+.video-moment .vm-sticky { position: relative; height: auto;
+  display: flex; align-items: center; justify-content: center; overflow: visible; }
+.video-moment .vm-frame { width: min(92vw, 1400px); height: auto; aspect-ratio: 16 / 9; border-radius: var(--radius-lg);
+  overflow: hidden; position: relative; }
 .video-moment .vm-frame .ph, .video-moment .vm-frame video {
   width: 100%; height: 100%; object-fit: cover; border-radius: 0; border: none; }
 .video-control {
@@ -393,16 +453,19 @@ mark { background: none; color: var(--q-magenta-soft); font-weight: var(--weight
 .video-status.on { display: block; }
 .video-moment .vm-caption { position: absolute; left: 0; right: 0; bottom: 0;
   padding: var(--space-7) var(--container-pad);
-  background: linear-gradient(180deg, transparent, rgba(14,17,18,.85));
-  opacity: 0; transition: opacity var(--duration-slow) var(--ease-out); pointer-events: none; }
+  background: rgba(14,17,18,.82);
+  opacity: 1; transition: opacity var(--duration-slow) var(--ease-out); pointer-events: auto; }
 .video-moment .vm-caption.on { opacity: 1; pointer-events: auto; }
 .video-moment .vm-caption h2 { font-size: clamp(26px, 3vw, 40px); }
 .video-moment .vm-caption p { font-family: var(--font-ui); font-size: 15px; max-width: 60ch; }
 @media (max-width: 768px) {
-  .video-moment { height: auto; }
+  .video-moment { padding: var(--space-5) var(--container-pad) var(--space-8); }
   .video-moment .vm-sticky { position: static; height: auto; }
-  .video-moment .vm-frame { width: 100%; height: auto; aspect-ratio: 16/9; }
+  .video-moment .vm-frame { width: 100%; height: auto; aspect-ratio: auto; }
+  .video-moment .vm-frame video { height: auto; aspect-ratio: 16/9; display: block; }
   .video-moment .vm-caption { opacity: 1; position: static; background: none; padding: var(--space-4) 0 0; }
+  .drift-card-physics { flex-basis: min(82vw, 330px); }
+  .drift-track { gap: var(--space-4); padding-right: var(--space-4); padding-left: var(--space-4); }
 }
 
 /* deadline strip (S4 — shown only when a batch is live) */
@@ -528,4 +591,8 @@ html[dir="rtl"] .eyebrow { letter-spacing: .08em; }
     transform: none; letter-spacing: normal;
   }
   .nav-orbit { display: none; }
+  .drift-viewport { overflow-x: auto; scroll-snap-type: x mandatory; }
+  .drift-track { transform: none !important; will-change: auto; }
+  .drift-card-physics { transform: none !important; will-change: auto; scroll-snap-align: center; }
+  .drift-grain, .drift-viewport::after { display: none; }
 }
