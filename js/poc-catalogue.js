@@ -57,14 +57,19 @@
     "autotrust": {
       sector: "automotive", image: "assets/media/poc-autotrust.jpeg", imageAlt: "AutoTrust logo",
       source: "https://quantum-hub.com/portfolio/siraj/"
+    },
+    "thermo terra": {
+      sector: "industry", image: "assets/media/poc-thermoterra.png", imageAlt: "ThermoTerra logo",
+      source: "https://quantum-hub.com/portfolio/thermoterra/"
     }
   };
 
   var fallbackRecords = [
     "Coreteel@ MedOne", "Coreteel@ Laktechniek", "Coreteel@ Bazan",
-    "Tactile mobility @ Hyundai", "CorrActions @ Hyundai", "Maradin Hyundai",
-    "Actasys Hyundai", "Autotrust Hyundai Mobis", "SafeMode Galil Maaravi",
-    "SafeMode Negev Arava", "SafeMode UTI", "SafeMode Emek Hayarden"
+    "Thermo Terra @ Venta", "Tactile mobility @ Hyundai", "CorrActions @ Hyundai",
+    "Autotrust Hyundai Mobis", "SafeMode Galil Maaravi", "SafeMode Negev Arava",
+    "SafeMode UTI", "SafeMode Emek Hayarden", "Maradin Hyundai", "SafeMode Taavura Tours",
+    "Movilit SafeMode", "SafeMode Tashtit", "Actasys Hyundai"
   ];
 
   var exactCorrections = {
@@ -82,7 +87,8 @@
     "Self ai": "Self AI",
     "brain space": "Brain.Space",
     "Eyenet-mobile": "Eye-Net Mobile",
-    "Gvanim-sensing": "Gvanim Sensing"
+    "Gvanim-sensing": "Gvanim Sensing",
+    "Apallo Power": "Apollo Power"
   };
 
   var suffixes = [
@@ -90,6 +96,7 @@
     "Emek Hayarden", "Negev Arava", "Ganei Hadas", "Hyundai Mobis",
     "Galil Maaravi", "Mast Solutions", "Grand Auto", "Defen Tec", "Masof Hamitanim",
     "Logisticare", "Laktechniek", "ProCollege", "Tikshoov", "Shmerling", "Smerling",
+    "Mast Solution", "Nedcar",
     "Tashtit", "Tadiran", "MedOne", "Hyundai", "Bazan", "TalCar", "Talcar",
     "Taavura", "Maman", "Laufer", "Weweler", "Tifzoret", "Movilit", "SEEU", "VDL", "UTI",
     "UPS", "ETS", "E.M.I", "E.Μ.Ι", "EMI", "GA"
@@ -132,6 +139,7 @@
       "Quantum <> MPcheck": ["Quantum-hub", "MPcheck"],
       "UTI Quantum": ["UTI", "Quantum-hub"],
       "Maman Quantum": ["Maman", "Quantum-hub"],
+      "Movilit SafeMode": ["SafeMode", "Movilit"],
       "eSelf a ProCollege": ["eSelf", "ProCollege"]
     };
     return special[raw] || null;
@@ -263,8 +271,8 @@
     });
 
     if (resultCount) {
-      if (language === "he") resultCount.textContent = visible + " מתוך " + records.length + " רשומות מוצגות";
-      else resultCount.textContent = visible + " of " + records.length + " supplied records shown";
+      if (language === "he") resultCount.textContent = visible + " מתוך " + records.length + " ניסויי POC מוצגים";
+      else resultCount.textContent = visible + " of " + records.length + " POCs shown";
     }
     window.dispatchEvent(new CustomEvent("quantum:case-filter", { detail: { filter: activeFilter, query: query } }));
   }
