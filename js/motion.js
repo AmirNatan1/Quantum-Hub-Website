@@ -160,6 +160,15 @@
   var blendBg = document.querySelector(".bg");
   var homeVideoBg = document.querySelector(".home-video-bg");
   var homeVideoTransition = document.querySelector(".home-video-transition");
+  var sparkFlipWrap = document.querySelector("[data-spark-flip]");
+  var sparkFlipStage = sparkFlipWrap ? sparkFlipWrap.querySelector(".spark-flip-stage") : null;
+  var sparkFlipCards = sparkFlipWrap ? Array.prototype.slice.call(sparkFlipWrap.querySelectorAll("[data-flip-card]")) : [];
+  var sparkFlipProgress = sparkFlipWrap ? sparkFlipWrap.querySelector(".spark-flip-progress > span") : null;
+  var sparkFlipMobile = window.matchMedia("(max-width: 900px)");
+  var sparkFlipTarget = 0;
+  var sparkFlipCurrent = 0;
+  var sparkFlipFrame = 0;
+  var sparkFlipStatic = null;
   var processWrap = document.querySelector("[data-process-story]");
   var processSteps = processWrap ? Array.prototype.slice.call(processWrap.querySelectorAll("[data-process-step]")) : [];
   var processVisuals = processWrap ? Array.prototype.slice.call(processWrap.querySelectorAll("[data-process-visual]")) : [];
@@ -167,6 +176,83 @@
   var processMobile = window.matchMedia("(max-width: 768px)");
   var processIndex = -1;
   var processWasStatic = null;
+
+  function clearSparkFlip() {
+    if (!sparkFlipWrap) return;
+    sparkFlipWrap.classList.remove("is-enhanced");
+    sparkFlipCards.forEach(function (card) {
+      card.style.removeProperty("transform");
+      card.style.removeProperty("opacity");
+      card.style.removeProperty("z-index");
+      card.style.removeProperty("--flip-copy");
+      card.style.removeProperty("--flip-copy-y");
+    });
+    if (sparkFlipProgress) sparkFlipProgress.style.removeProperty("transform");
+    if (sparkFlipFrame) cancelAnimationFrame(sparkFlipFrame);
+    sparkFlipFrame = 0;
+  }
+
+  function renderSparkFlip(progress) {
+    if (!sparkFlipWrap || !sparkFlipStage || !sparkFlipWrap.classList.contains("is-enhanced")) return;
+    var stageWidth = sparkFlipStage.offsetWidth;
+    var stageHeight = sparkFlipStage.offsetHeight;
+    if (!stageWidth || !stageHeight || !sparkFlipCards.length) return;
+    var cardWidth = sparkFlipCards[0].offsetWidth;
+    var cardHeight = sparkFlipCards[0].offsetHeight;
+    var startX = [-18, 11, -8, 16];
+    var startY = [5, -11, 13, -5];
+    var startRotation = [-8, 6, -4, 9];
+    var stagger = .055;
+    var available = 1 - stagger * (sparkFlipCards.length - 1);
+
+    sparkFlipCards.forEach(function (card, index) {
+      var local = Math.max(0, Math.min(1, (progress - index * stagger) / available));
+      var eased = 1 - Math.pow(1 - local, 3);
+      var column = index % 2;
+      var row = Math.floor(index / 2);
+      var endX = (column ? 1 : -1) * (stageWidth - cardWidth) / 2;
+      var endY = (row ? 1 : -1) * (stageHeight - cardHeight) / 2;
+      var x = startX[index] * (1 - eased) + endX * eased;
+      var y = startY[index] * (1 - eased) + endY * eased;
+      var rotation = startRotation[index] * (1 - eased);
+      var scale = .9 + .1 * eased;
+      var copy = index === 0 ? 1 : Math.max(.18, Math.min(1, (local - .18) / .52));
+      card.style.transform = "translate(calc(-50% + " + x.toFixed(2) + "px), calc(-50% + " + y.toFixed(2) + "px)) rotate(" + rotation.toFixed(2) + "deg) scale(" + scale.toFixed(3) + ")";
+      card.style.opacity = String(.76 + .24 * eased);
+      card.style.zIndex = String(sparkFlipCards.length - index);
+      card.style.setProperty("--flip-copy", copy.toFixed(3));
+      card.style.setProperty("--flip-copy-y", ((1 - copy) * 8).toFixed(2) + "px");
+    });
+    if (sparkFlipProgress) sparkFlipProgress.style.transform = "scaleX(" + progress.toFixed(4) + ")";
+  }
+
+  function animateSparkFlip() {
+    sparkFlipCurrent += (sparkFlipTarget - sparkFlipCurrent) * .16;
+    if (Math.abs(sparkFlipTarget - sparkFlipCurrent) < .001) sparkFlipCurrent = sparkFlipTarget;
+    renderSparkFlip(sparkFlipCurrent);
+    if (sparkFlipCurrent !== sparkFlipTarget) sparkFlipFrame = requestAnimationFrame(animateSparkFlip);
+    else sparkFlipFrame = 0;
+  }
+
+  function updateSparkFlip(viewportHeight) {
+    if (!sparkFlipWrap || !sparkFlipCards.length) return;
+    var staticLayout = reduced || sparkFlipMobile.matches;
+    if (staticLayout) {
+      if (sparkFlipStatic !== true) clearSparkFlip();
+      sparkFlipStatic = true;
+      return;
+    }
+    if (sparkFlipStatic !== false) {
+      sparkFlipWrap.classList.add("is-enhanced");
+      sparkFlipStatic = false;
+    }
+    var rect = sparkFlipWrap.getBoundingClientRect();
+    var headerHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-height")) || 72;
+    var stickyHeight = Math.max(1, viewportHeight - headerHeight);
+    var travel = Math.max(1, sparkFlipWrap.offsetHeight - stickyHeight);
+    sparkFlipTarget = Math.max(0, Math.min(1, (headerHeight - rect.top) / travel));
+    if (!sparkFlipFrame) sparkFlipFrame = requestAnimationFrame(animateSparkFlip);
+  }
 
   function setProcessStep(index, staticLayout) {
     if (!processSteps.length) return;
@@ -259,6 +345,7 @@
       homeVideoBg.style.opacity = String(1 - exitProgress);
       homeVideoBg.classList.toggle("is-exited", exitProgress >= 0.999);
     }
+    updateSparkFlip(viewportHeight);
     updateProcessStory(viewportHeight);
   }
   var ticking = false;
