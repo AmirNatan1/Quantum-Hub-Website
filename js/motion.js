@@ -333,6 +333,10 @@
       chip.classList.add("selected");
       chip.setAttribute("aria-pressed", "true");
       var filter = chip.getAttribute("data-filter");
+      if (window.QuantumPocCatalogue && document.querySelector("[data-poc-catalogue]")) {
+        window.QuantumPocCatalogue.setFilter(filter);
+        return;
+      }
       document.querySelectorAll("[data-case]").forEach(function (tile) {
         tile.classList.toggle("is-hidden", filter !== "all" && tile.getAttribute("data-case") !== filter);
       });

@@ -3,6 +3,8 @@
 (function () {
   "use strict";
 
+  function init() {
+
   var viewport = document.querySelector("[data-drift-gallery]");
   if (!viewport) return;
 
@@ -97,6 +99,8 @@
     clone.setAttribute("aria-hidden", "true");
     clone.classList.remove("is-in-drift-view", "is-grabbed");
     clone.style.transform = "";
+    clone.querySelectorAll("[id]").forEach(function (element) { element.removeAttribute("id"); });
+    clone.querySelectorAll("[aria-labelledby]").forEach(function (element) { element.removeAttribute("aria-labelledby"); });
     clone.dataset.driftOrder = String(parseInt(seed.dataset.driftOrder, 10) + cloneIndex * originalCards.length);
     clone.querySelectorAll("a, button, input, select, textarea, [tabindex]").forEach(function (interactive) {
       interactive.setAttribute("tabindex", "-1");
@@ -369,5 +373,14 @@
     viewport.classList.add("is-enhanced");
     ensureTrackCoverage();
     window.requestAnimationFrame(frame);
+  }
+
+  }
+
+  var catalogueViewport = document.querySelector("[data-poc-catalogue]");
+  if (catalogueViewport && catalogueViewport.dataset.pocReady !== "true") {
+    window.addEventListener("quantum:poc-ready", init, { once: true });
+  } else {
+    init();
   }
 })();
