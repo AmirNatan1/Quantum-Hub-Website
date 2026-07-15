@@ -7,6 +7,7 @@
   var t = function (english) {
     return window.QuantumI18n ? window.QuantumI18n.translate(english) : english;
   };
+  var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
   /* Reveals */
   var revealEls = document.querySelectorAll(".reveal, .reveal-stagger");
@@ -22,6 +23,105 @@
       });
     }, { threshold: 0.2 });
     revealEls.forEach(function (el) { revealObserver.observe(el); });
+  }
+
+  /* A restrained word reveal for the primary marketing headlines. The split is
+     created after translation so Hebrew and English animate their own words. */
+  if (!reduced) {
+    var textRevealHeadings = Array.prototype.slice.call(document.querySelectorAll("main h1.display-xl"))
+      .filter(function (heading) { return heading.children.length === 0; });
+    textRevealHeadings.forEach(function (heading) {
+      var label = heading.textContent.trim();
+      if (!label) return;
+      var fragment = document.createDocumentFragment();
+      label.split(/\s+/).forEach(function (word, index) {
+        var clip = document.createElement("span");
+        var inner = document.createElement("span");
+        clip.className = "text-reveal-word";
+        clip.setAttribute("aria-hidden", "true");
+        clip.style.setProperty("--word-delay", Math.min(index * 38, 304) + "ms");
+        inner.textContent = word;
+        clip.appendChild(inner);
+        fragment.appendChild(clip);
+      });
+      heading.textContent = "";
+      heading.appendChild(fragment);
+      heading.classList.add("text-reveal-heading");
+      heading.setAttribute("aria-label", label);
+    });
+    if (!("IntersectionObserver" in window)) {
+      textRevealHeadings.forEach(function (heading) { heading.classList.add("is-text-revealed"); });
+    } else {
+      var textRevealObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-text-revealed");
+          textRevealObserver.unobserve(entry.target);
+        });
+      }, { threshold: .35, rootMargin: "0px 0px -4% 0px" });
+      textRevealHeadings.forEach(function (heading) { textRevealObserver.observe(heading); });
+    }
+  }
+
+  /* Magnetic CTAs borrow a few pixels of pointer movement, then settle back. */
+  if (!reduced && finePointer) {
+    document.querySelectorAll(".btn").forEach(function (button) {
+      button.classList.add("is-magnetic");
+      button.addEventListener("pointermove", function (event) {
+        var rect = button.getBoundingClientRect();
+        var x = (event.clientX - rect.left - rect.width / 2) / Math.max(rect.width / 2, 1);
+        var y = (event.clientY - rect.top - rect.height / 2) / Math.max(rect.height / 2, 1);
+        button.style.setProperty("--magnet-x", (x * 6).toFixed(2) + "px");
+        button.style.setProperty("--magnet-y", (y * 5).toFixed(2) + "px");
+      });
+      function releaseMagnet() {
+        button.style.setProperty("--magnet-x", "0px");
+        button.style.setProperty("--magnet-y", "0px");
+      }
+      button.addEventListener("pointerleave", releaseMagnet);
+      button.addEventListener("pointercancel", releaseMagnet);
+      button.addEventListener("blur", releaseMagnet);
+    });
+  }
+
+  /* Footer color field reveals as it enters and gently follows a fine pointer. */
+  var gradientFooter = document.querySelector(".site-footer");
+  if (gradientFooter) {
+    if (reduced || !("IntersectionObserver" in window)) {
+      gradientFooter.classList.add("is-gradient-visible");
+    } else {
+      var footerObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-gradient-visible");
+          footerObserver.unobserve(entry.target);
+        });
+      }, { threshold: .12 });
+      footerObserver.observe(gradientFooter);
+    }
+    if (!reduced && finePointer) {
+      var footerFrame = 0;
+      var footerPointer = null;
+      gradientFooter.addEventListener("pointermove", function (event) {
+        footerPointer = event;
+        if (footerFrame) return;
+        footerFrame = requestAnimationFrame(function () {
+          var rect = gradientFooter.getBoundingClientRect();
+          var x = Math.max(8, Math.min(92, ((footerPointer.clientX - rect.left) / Math.max(rect.width, 1)) * 100));
+          var y = Math.max(12, Math.min(88, ((footerPointer.clientY - rect.top) / Math.max(rect.height, 1)) * 100));
+          var energy = Math.min(1, Math.abs(x - 50) / 50 + Math.abs(y - 50) / 70);
+          gradientFooter.style.setProperty("--footer-x", x.toFixed(2) + "%");
+          gradientFooter.style.setProperty("--footer-y", y.toFixed(2) + "%");
+          gradientFooter.style.setProperty("--footer-glow-opacity", (.17 + energy * .07).toFixed(3));
+          footerFrame = 0;
+        });
+      });
+      gradientFooter.addEventListener("pointerleave", function () {
+        gradientFooter.style.setProperty("--footer-x", "72%");
+        gradientFooter.style.setProperty("--footer-y", "48%");
+        gradientFooter.style.setProperty("--footer-glow-opacity", ".18");
+      });
+    }
   }
 
   /* Header */

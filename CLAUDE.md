@@ -9,6 +9,6 @@ Before creating or editing any HTML/CSS/design work in this project, read `Quant
 - Logo: actual image `assets/quantum-logo.jpg` top-left in a rounded white tile (`.logo-tile`) until a transparent mark arrives. The magenta dot motif — max one per composition. No emoji; Lucide icons via CDN.
 - Motion: scroll-storytelling per DESIGN-SPEC.md §5 (reveals, pins, parallax, count-ups), micro-interactions 140–220ms ease-out, hard `prefers-reduced-motion` fallback. Focus = 3px soft magenta ring.
 - Voice: pragmatic matchmaker between corporates and startups; POC/pilot/value-chain vocabulary.
-- Facts: no unverified numbers — see `PHASE-0-AUDIT.md` fact register. "Partners Login" must not exist anywhere.
+- Facts: no unverified numbers — see `PHASE-0-AUDIT.md` fact register. Do not introduce a partner login.
 
 Repo: https://github.com/AmirNatan1/Quantum-Hub-Website.git (user pushes from their own machine).
