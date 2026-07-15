@@ -52,44 +52,53 @@
 
 <main>
 
-<!-- 1 · HERO — compact; next section peeks above the fold -->
-<section class="hero">
-  <div class="container reveal">
-    <span class="eyebrow">corporate innovation consortium</span>
-    <h1 class="display-xl">Operational needs. Proven technology.</h1>
-    <p class="lede" style="margin-top: var(--space-4);">Quantum-hub works for four corporate partners: we translate their operational needs into startup searches, then design and run partner-defined POCs.</p>
-    <div class="audience reveal-stagger">
-      <a class="audience-panel" href="for-partners.html" data-audience="partner">
-        <h3>I'm part of a partner company</h3>
-        <p>Bring an operational challenge to Quantum and evaluate a vetted solution before committing to rollout.</p>
-        <span class="btn btn--secondary btn--sm">Bring a challenge</span>
-      </a>
-      <a class="audience-panel" href="for-startups.html" data-audience="startup">
-        <h3>I'm a startup</h3>
-        <p>Validate your product against a real use case with decision-makers inside Quantum's partner companies.</p>
-        <span class="btn btn--outline btn--sm">Apply to SPARK</span>
-      </a>
-    </div>
+<!-- 1–2 · HOME VIDEO STORY — the POC Playground stays behind the hero and proof band. -->
+<div class="home-video-story">
+  <div class="home-video-bg">
+    <video data-loop autoplay muted loop playsinline preload="auto" poster="assets/media/poc-playground-original.png" aria-label="The POC Playground — video tour">
+      <source src="assets/poc-playground.mp4" type="video/mp4">
+    </video>
+    <div class="home-video-shade" aria-hidden="true"></div>
   </div>
-</section>
 
-<!-- 2 · VERIFIED MODEL BAND — no unsupported metrics. -->
-<div class="pin-wrap surface-inverse">
-  <section class="pinned">
-    <div class="container">
-      <span class="eyebrow">built around partner needs</span>
-      <div class="stats" style="margin-top: var(--space-6);">
-        <div><div class="stat-num" data-count="4">4</div><div class="stat-label">corporate partners served</div></div>
-        <div><div class="stat-num" data-count="4">4</div><div class="stat-label">connected operating sectors</div></div>
-        <div><div class="stat-num" aria-hidden="true">01</div><div class="stat-label">partner need comes first</div></div>
-        <div><div class="stat-num" aria-hidden="true">POC</div><div class="stat-label">success criteria are agreed before testing</div></div>
+  <section class="hero home-video-hero">
+    <div class="container reveal">
+      <span class="eyebrow">corporate innovation consortium</span>
+      <h1 class="display-xl">Operational needs. Proven technology.</h1>
+      <p class="lede" style="margin-top: var(--space-4);">Quantum-hub works for four corporate partners: we translate their operational needs into startup searches, then design and run partner-defined POCs.</p>
+      <div class="audience reveal-stagger">
+        <a class="audience-panel" href="for-partners.html" data-audience="partner">
+          <h3>I'm part of a partner company</h3>
+          <p>Bring an operational challenge to Quantum and evaluate a vetted solution before committing to rollout.</p>
+          <span class="btn btn--secondary btn--sm">Bring a challenge</span>
+        </a>
+        <a class="audience-panel" href="for-startups.html" data-audience="startup">
+          <h3>I'm a startup</h3>
+          <p>Validate your product against a real use case with decision-makers inside Quantum's partner companies.</p>
+          <span class="btn btn--outline btn--sm">Apply to SPARK</span>
+        </a>
       </div>
     </div>
   </section>
+
+  <!-- Verified by Quantum-hub on 15 July 2026. -->
+  <div class="pin-wrap home-story-stats">
+    <section class="pinned">
+      <div class="container">
+        <span class="eyebrow">built around partner needs</span>
+        <div class="stats" style="margin-top: var(--space-6);">
+          <div><div class="stat-num" data-count="4">4</div><div class="stat-label">corporate partners served</div></div>
+          <div><div class="stat-num" data-count="110">110</div><div class="stat-label">POCs across all partners</div></div>
+          <div><div class="stat-num" data-count="29">29</div><div class="stat-label">group-wide implementations</div></div>
+          <div><div class="stat-num" data-count="4">4</div><div class="stat-label">connected operating sectors</div></div>
+        </div>
+      </div>
+    </section>
+  </div>
 </div>
 
 <!-- 3 · WHO WE ARE + logo proof row — proof stays still -->
-<section class="section">
+<section class="section" id="who-we-are">
   <div class="container">
     <div class="reveal">
       <span class="eyebrow">who we are</span>
@@ -211,12 +220,12 @@
 <div class="video-moment">
   <div class="vm-sticky">
     <div class="vm-frame">
-      <video data-loop autoplay muted loop playsinline preload="auto" poster="assets/media/poc-playground-original.png" aria-label="The POC Playground — video tour">
-        <source src="assets/poc-playground.mp4" type="video/mp4">
+      <video data-loop autoplay muted loop playsinline preload="metadata" poster="assets/media/actasys-video-poster.jpg" aria-label="Actasys POC case video">
+        <source src="assets/actasys-video.mp4" type="video/mp4">
       </video>
       <div class="vm-caption">
-        <h2>The POC Playground</h2>
-        <p>Our own beta site — where partner industries meet startup technology under real operating conditions.</p>
+        <h2>Actasys: sensor cleaning under test</h2>
+        <p>See ActaJet tested across cameras, lidar, vehicle positions, speeds, driving scenarios, weather, and light conditions.</p>
         <a class="btn btn--primary btn--sm" href="case-studies.html" style="margin-top: var(--space-3);">Explore all case studies</a>
       </div>
     </div>

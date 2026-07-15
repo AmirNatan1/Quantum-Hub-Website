@@ -127,7 +127,7 @@ Every number/claim found on the site. Status: ✅ verified externally · ⚠️ 
 | F-05 | Taavura-Livnat: "over 100 subsidiaries" | Partners, Startups | — | Internal | ❓ confirm |
 | F-06 | Bazan: "largest refinery… in Israel", "up to 8 tons hydrogen per hour" | Partners, Startups | — | Internal/Bazan | ❓ confirm with Bazan page |
 | F-07 | CHAMP testimonials (Globus ×2, Tashtit) | Partners | Named people + employers — need sign-off that quotes and titles are still accurate | Internal | ❓ reconfirm before reuse |
-| F-08 | Stats band: "Partners' Assessment 500 · Portfolio Companies 0 · POCs done 0 · Commercial Discussions 0" | POC Playground | Broken rendering; true values unknown. New site rule: count-up band uses only numbers Quantum can substantiate (suggested set: POCs completed, startups assessed, corporate partners, countries) | Internal | ❓ supply real numbers |
+| F-08 | Stats band: "Partners' Assessment 500 · Portfolio Companies 0 · POCs done 0 · Commercial Discussions 0" | POC Playground / Home | Original rendering was broken. Confirmed replacement values: **110 POCs across all partners** and **29 group-wide implementations**. | Amir, 2026-07-15 | ✅ internally verified |
 | F-09 | Event: "Quantum & Hyundai Playground event 10\|02\|2024" | Home | 2+ years stale | — | ⚠️ remove |
 | F-10 | Footer: "Quantum 2024" | All pages | Current year | — | ⚠️ auto-year |
 | F-11 | Address: "Arik Einstein 3, 8th FI, Herzliya Hills" | Contact | Typo "FI" → "8th Fl." | Internal | ⚠️ fix + confirm current |
@@ -135,7 +135,9 @@ Every number/claim found on the site. Status: ✅ verified externally · ⚠️ 
 
 **Register updates (2026-07-14, per Amir):** F-04 moot — **Talcar/Kia is no longer a partner; removed site-wide (partner count is now four)**. F-07 testimonials confirmed. F-11 address confirmed (Arik Einstein 3, 8th Fl., Herzliya). F-12 equity-free claim confirmed. Team roster replaced with fresh 11-person list from The Team.pdf (photos extracted; Liron Ben Zaken has no LinkedIn URL yet).
 
-**Still open:** F-01 framing decision, F-08 stat values (POCs completed etc. — Amir to supply).
+**Register update (2026-07-15, per Amir):** F-08 resolved — 110 POCs across all partners and 29 group-wide implementations are confirmed for publication.
+
+**Still open:** F-01 framing decision.
 
 ---
 

@@ -70,16 +70,25 @@ mark { background: none; color: var(--q-magenta-soft); font-weight: var(--weight
 .btn--sm { padding: 8px 18px; font-size: 13px; }
 .btn[disabled] { opacity: .45; pointer-events: none; }
 
-/* ---------- header — dark glass, 3 tiers ---------- */
+/* ---------- header — floating glass capsule with a responsive hover orbit ---------- */
 .site-header {
   position: fixed; inset: 0 0 auto 0; z-index: 100; height: var(--header-height);
-  background: rgba(14, 17, 18, 0.72); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--border-default);
-  transition: transform var(--duration-base) var(--ease-out), height var(--duration-base) var(--ease-out);
+  padding: 8px clamp(10px, 2vw, 28px); pointer-events: none;
+  transition: transform var(--duration-base) var(--ease-out), height var(--duration-base) var(--ease-out),
+              padding var(--duration-base) var(--ease-out);
 }
 .site-header.is-hidden { transform: translateY(-100%); }
-.site-header.is-slim { height: 60px; }
-.site-header .container { display: flex; align-items: center; gap: var(--space-5); height: 100%; }
+.site-header.is-slim { height: 64px; padding-top: 6px; padding-bottom: 6px; }
+.site-header .container {
+  display: flex; align-items: center; gap: var(--space-4); height: 100%; padding: 6px 10px;
+  background: rgba(14,17,18,.78); border: 1px solid rgba(255,255,255,.12);
+  border-radius: var(--radius-pill); box-shadow: 0 16px 46px rgba(0,0,0,.28);
+  backdrop-filter: blur(18px) saturate(125%); -webkit-backdrop-filter: blur(18px) saturate(125%);
+  pointer-events: auto;
+  transition: background var(--duration-base) var(--ease-out), border-color var(--duration-base) var(--ease-out),
+              box-shadow var(--duration-base) var(--ease-out);
+}
+.site-header .container:hover { background: rgba(14,17,18,.88); border-color: rgba(255,255,255,.18); }
 
 /* the actual logo, top-left. JPG-on-white sits in a rounded white tile until a
    transparent mark arrives (ph-global-logo note in the placeholder manifest). */
@@ -91,12 +100,32 @@ mark { background: none; color: var(--q-magenta-soft); font-weight: var(--weight
 .logo-tile img { width: 100%; height: 100%; object-fit: contain; padding: 6px 8px; }
 .logo-fallback { font-family: var(--font-display); font-weight: var(--weight-heavy); color: var(--q-ink); font-size: 20px; }
 
-.nav { display: flex; gap: var(--space-5); flex: 1; font-family: var(--font-ui); }
-.nav a { font-size: 14px; font-weight: var(--weight-medium); color: var(--q-neutral-300); position: relative; }
-.nav a:hover { color: #fff; }
-.nav a.active { color: var(--q-magenta-soft); }
-.nav a.active::after { content: ""; position: absolute; left: 50%; bottom: -8px; transform: translateX(-50%);
+.nav {
+  display: flex; align-items: center; gap: 2px; flex: 1; width: max-content; padding: 4px;
+  position: relative; isolation: isolate; border-radius: var(--radius-pill);
+  background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.07);
+  font-family: var(--font-ui);
+}
+.nav > a, .nav > .explore > a {
+  display: block; padding: 8px 13px; border-radius: var(--radius-pill);
+  font-size: 14px; font-weight: var(--weight-medium); color: var(--q-neutral-300); position: relative; z-index: 2;
+  transform: translateY(0) scale(1); transform-origin: center; will-change: transform;
+  transition: color 180ms var(--ease-out), transform 200ms var(--ease-out), letter-spacing 200ms var(--ease-out);
+}
+.nav > a:hover, .nav > a:focus-visible, .nav > .explore > a:hover, .nav > .explore > a:focus-visible {
+  color: #fff; transform: translateY(-2px) scale(1.08); letter-spacing: .015em;
+}
+.nav > a.active, .nav > .explore > a.active { color: var(--q-magenta-soft); }
+.nav > a.active::after, .nav > .explore > a.active::after { content: ""; position: absolute; left: 50%; bottom: 2px; transform: translateX(-50%);
   width: 5px; height: 5px; border-radius: 50%; background: var(--accent-primary); }
+.nav-orbit {
+  position: absolute; top: 4px; left: 0; z-index: 0; height: calc(100% - 8px);
+  width: var(--nav-orbit-w, 0); border-radius: var(--radius-pill);
+  background: rgba(216,43,114,.13); border: 1px solid rgba(240,107,160,.25);
+  opacity: 0; pointer-events: none; transform: translateX(var(--nav-orbit-x, 0));
+  transition: transform 220ms var(--ease-out), width 220ms var(--ease-out), opacity 140ms var(--ease-out);
+}
+.nav.nav-orbit-on .nav-orbit { opacity: 1; }
 .utility-btn {
   display: inline-flex; align-items: center; gap: 6px; font-size: var(--text-sm); color: var(--text-muted);
   background: none; border: 1px solid var(--border-default); border-radius: var(--radius-pill);
@@ -104,7 +133,7 @@ mark { background: none; color: var(--q-magenta-soft); font-weight: var(--weight
   transition: background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
 }
 .utility-btn:hover { background: rgba(255,255,255,.06); color: #fff; }
-.explore { position: relative; }
+.explore { position: relative; z-index: 2; }
 .explore-panel {
   position: absolute; top: calc(100% + 14px); left: 0; width: 480px;
   background: var(--q-neutral-900); border: 1px solid var(--border-default); border-radius: var(--radius-lg);
@@ -129,6 +158,21 @@ mark { background: none; color: var(--q-magenta-soft); font-weight: var(--weight
 .hero { min-height: 65vh; display: flex; align-items: center; padding-top: calc(var(--header-height) + var(--space-7)); }
 .hero > .container { width: 100%; }
 .hero .display-xl { max-width: 18ch; }
+
+/* Home: the original POC Playground video stays visible until Who we are. */
+.home-video-story { position: relative; isolation: isolate; background: #0e1112; }
+.home-video-bg {
+  position: sticky; top: 0; z-index: 0; width: 100%; height: 100vh; height: 100svh;
+  margin-bottom: -100vh; margin-bottom: -100svh; overflow: hidden; background: #0e1112;
+}
+.home-video-bg video { width: 100%; height: 100%; object-fit: cover; filter: saturate(.82) contrast(1.05) brightness(.78); }
+.home-video-shade { position: absolute; inset: 0; z-index: 1; background: rgba(14,17,18,.58); pointer-events: none; }
+.home-video-bg .video-control { z-index: 3; top: calc(var(--header-height) + var(--space-3)); bottom: auto; }
+.home-video-story > .hero, .home-video-story > .pin-wrap { position: relative; z-index: 2; }
+.home-video-hero { min-height: 100vh; min-height: 100svh; }
+.home-video-story .lede, .home-video-story .display-xl { text-shadow: 0 3px 24px rgba(0,0,0,.72); }
+.home-video-story .audience-panel { background: rgba(14,17,18,.76); border-color: rgba(255,255,255,.14); backdrop-filter: blur(10px); }
+.home-story-stats > .pinned { background: rgba(14,17,18,.24); }
 
 .audience { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); max-width: 920px; margin-top: var(--space-6); }
 .audience-panel {
@@ -372,6 +416,8 @@ mark { background: none; color: var(--q-magenta-soft); font-weight: var(--weight
   .grid--4 { grid-template-columns: repeat(2, 1fr); }
   .split { grid-template-columns: 1fr; }
   .split .media { order: -1; }
+  .site-header .container { gap: var(--space-3); }
+  .nav > a, .nav > .explore > a { padding-right: 9px; padding-left: 9px; }
 }
 @media (max-width: 768px) {
   .section { padding: var(--space-8) 0; }
@@ -384,7 +430,11 @@ mark { background: none; color: var(--q-magenta-soft); font-weight: var(--weight
   .logo-row { grid-template-columns: repeat(3, 1fr); }
   .site-header .btn { display: none; }          /* CTA moves into the overlay */
   .site-header .utility-btn { margin-left: auto; }
+  .site-header { padding: 8px 10px; }
+  .site-header .container { border-radius: 28px; }
   .logo-tile { width: 98px; }
+  .home-video-bg .video-control { top: calc(var(--header-height) + var(--space-3)); }
+  .home-story-stats > .pinned { padding: var(--space-8) 0; }
   .calendar-shell { min-height: 760px; }
   .calendly-inline-widget { min-height: 760px; height: 760px; }
   .footer-nav { flex: 1 1 100%; }
@@ -474,4 +524,8 @@ html[dir="rtl"] .eyebrow { letter-spacing: .08em; }
 @media (prefers-reduced-motion: reduce) {
   .reveal, .reveal-stagger > * { opacity: 1 !important; transform: none !important; }
   .big-claim .w { opacity: 1 !important; }
+  .nav > a:hover, .nav > a:focus-visible, .nav > .explore > a:hover, .nav > .explore > a:focus-visible {
+    transform: none; letter-spacing: normal;
+  }
+  .nav-orbit { display: none; }
 }
