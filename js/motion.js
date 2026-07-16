@@ -106,20 +106,27 @@
         footerPointer = event;
         if (footerFrame) return;
         footerFrame = requestAnimationFrame(function () {
+          if (!footerPointer) {
+            footerFrame = 0;
+            return;
+          }
           var rect = gradientFooter.getBoundingClientRect();
           var x = Math.max(8, Math.min(92, ((footerPointer.clientX - rect.left) / Math.max(rect.width, 1)) * 100));
           var y = Math.max(12, Math.min(88, ((footerPointer.clientY - rect.top) / Math.max(rect.height, 1)) * 100));
           var energy = Math.min(1, Math.abs(x - 50) / 50 + Math.abs(y - 50) / 70);
           gradientFooter.style.setProperty("--footer-x", x.toFixed(2) + "%");
           gradientFooter.style.setProperty("--footer-y", y.toFixed(2) + "%");
-          gradientFooter.style.setProperty("--footer-glow-opacity", (.17 + energy * .07).toFixed(3));
+          gradientFooter.style.setProperty("--footer-glow-opacity", (.22 + energy * .12).toFixed(3));
           footerFrame = 0;
         });
       });
       gradientFooter.addEventListener("pointerleave", function () {
+        footerPointer = null;
+        if (footerFrame) cancelAnimationFrame(footerFrame);
+        footerFrame = 0;
         gradientFooter.style.setProperty("--footer-x", "72%");
         gradientFooter.style.setProperty("--footer-y", "48%");
-        gradientFooter.style.setProperty("--footer-glow-opacity", ".18");
+        gradientFooter.style.setProperty("--footer-glow-opacity", ".24");
       });
     }
   }
@@ -276,6 +283,8 @@
   var processMobile = window.matchMedia("(max-width: 768px)");
   var processIndex = -1;
   var processWasStatic = null;
+  var processWheelLocked = false;
+  var processWheelTimer = 0;
 
   function clearSparkFlip() {
     if (!sparkFlipWrap) return;
@@ -384,13 +393,67 @@
       setProcessStep(Math.max(0, processIndex), true);
       return;
     }
+    if (processWheelLocked) return;
     var rect = processWrap.getBoundingClientRect();
     var headerHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-height")) || 72;
     var stickyHeight = Math.max(1, viewportHeight - headerHeight);
     var travel = Math.max(1, processWrap.offsetHeight - stickyHeight);
     var progress = Math.max(0, Math.min(1, (headerHeight - rect.top) / travel));
-    var index = Math.min(processSteps.length - 1, Math.floor(progress * processSteps.length));
+    var index = Math.min(processSteps.length - 1, Math.round(progress * (processSteps.length - 1)));
     setProcessStep(index, false);
+  }
+
+  function processMetrics() {
+    var viewportHeight = window.innerHeight;
+    var headerHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-height")) || 72;
+    var stickyHeight = Math.max(1, viewportHeight - headerHeight);
+    return {
+      headerHeight: headerHeight,
+      travel: Math.max(1, processWrap.offsetHeight - stickyHeight),
+      storyTop: window.scrollY + processWrap.getBoundingClientRect().top
+    };
+  }
+
+  function lockProcessStory() {
+    processWheelLocked = true;
+    if (processWheelTimer) window.clearTimeout(processWheelTimer);
+    processWheelTimer = window.setTimeout(function () {
+      processWheelLocked = false;
+      processWheelTimer = 0;
+      requestAnimationFrame(onScroll);
+    }, 680);
+  }
+
+  function scrollToProcessStep(index) {
+    var metrics = processMetrics();
+    var completion = processSteps.length > 1 ? index / (processSteps.length - 1) : 0;
+    setProcessStep(index, false);
+    lockProcessStory();
+    window.scrollTo({
+      top: metrics.storyTop - metrics.headerHeight + metrics.travel * completion,
+      behavior: "smooth"
+    });
+  }
+
+  function processStoryIsPinned() {
+    if (!processWrap) return false;
+    var rect = processWrap.getBoundingClientRect();
+    var headerHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-height")) || 72;
+    return rect.top <= headerHeight + 2 && rect.bottom >= window.innerHeight - 2;
+  }
+
+  function moveProcessStep(direction, event) {
+    if (reduced || processMobile.matches || !processStoryIsPinned()) return false;
+    if (processWheelLocked) {
+      if (event) event.preventDefault();
+      return true;
+    }
+    var current = Math.max(0, processIndex);
+    var next = current + direction;
+    if (next < 0 || next >= processSteps.length) return false;
+    if (event) event.preventDefault();
+    scrollToProcessStep(next);
+    return true;
   }
 
   processSteps.forEach(function (step, index) {
@@ -399,15 +462,25 @@
         setProcessStep(index, true);
         return;
       }
-      var viewportHeight = window.innerHeight;
-      var headerHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-height")) || 72;
-      var stickyHeight = Math.max(1, viewportHeight - headerHeight);
-      var travel = Math.max(1, processWrap.offsetHeight - stickyHeight);
-      var storyTop = window.scrollY + processWrap.getBoundingClientRect().top;
-      var completion = processSteps.length > 1 ? index / (processSteps.length - 1) : 0;
-      window.scrollTo({ top: storyTop - headerHeight + travel * completion, behavior: "smooth" });
+      scrollToProcessStep(index);
     });
   });
+
+  if (processWrap) {
+    window.addEventListener("wheel", function (event) {
+      if (event.ctrlKey || Math.abs(event.deltaY) < Math.abs(event.deltaX) || event.deltaY === 0) return;
+      moveProcessStep(event.deltaY > 0 ? 1 : -1, event);
+    }, { passive: false });
+
+    window.addEventListener("keydown", function (event) {
+      var target = event.target;
+      if (target && /INPUT|TEXTAREA|SELECT|BUTTON/.test(target.tagName)) return;
+      var direction = 0;
+      if (event.key === "ArrowDown" || event.key === "PageDown" || (event.key === " " && !event.shiftKey)) direction = 1;
+      if (event.key === "ArrowUp" || event.key === "PageUp" || (event.key === " " && event.shiftKey)) direction = -1;
+      if (direction) moveProcessStep(direction, event);
+    });
+  }
 
   function onScroll() {
     var viewportHeight = window.innerHeight;
@@ -458,27 +531,17 @@
   window.addEventListener("resize", function () { requestAnimationFrame(onScroll); }, { passive: true });
   onScroll();
 
-  /* Video: autoplay while visible, retry after load/interaction, and always expose
-     a visible play/pause control. This fixes browsers that ignored the old silent
-     play() failure. */
+  /* Videos are ambient, muted loops. They resume whenever the page becomes visible
+     and deliberately expose no playback controls. */
   var videos = document.querySelectorAll("video[data-loop]");
-  function updateVideoButton(video, button) {
-    var paused = video.paused;
-    button.setAttribute("aria-label", t(paused ? "Play video" : "Pause video"));
-    button.innerHTML = '<i data-lucide="' + (paused ? "play" : "pause") + '" style="width:15px;height:15px;"></i><span>' + t(paused ? "Play" : "Pause") + "</span>";
-    if (window.lucide) window.lucide.createIcons();
-  }
-  function attemptPlay(video, button) {
-    if (reduced || video.dataset.userPaused === "true") return;
+  function attemptPlay(video) {
+    if (reduced) return;
     video.muted = true;
     video.defaultMuted = true;
+    video.loop = true;
     video.playsInline = true;
     var promise = video.play();
-    if (promise && promise.catch) {
-      promise.then(function () { updateVideoButton(video, button); }).catch(function () {
-        updateVideoButton(video, button);
-      });
-    }
+    if (promise && promise.catch) promise.catch(function () {});
   }
   videos.forEach(function (video) {
     video.muted = true;
@@ -486,6 +549,7 @@
     video.loop = true;
     video.playsInline = true;
     video.setAttribute("muted", "");
+    video.setAttribute("loop", "");
     video.setAttribute("playsinline", "");
     video.setAttribute("webkit-playsinline", "");
     if (reduced) {
@@ -495,50 +559,19 @@
       video.setAttribute("autoplay", "");
     }
 
-    var frame = video.parentElement;
-    var button = document.createElement("button");
-    button.className = "video-control";
-    button.type = "button";
-    frame.appendChild(button);
-    updateVideoButton(video, button);
-
-    button.addEventListener("click", function () {
-      if (video.paused) {
-        video.dataset.userPaused = "false";
-        video.play().catch(function () {});
-      } else {
-        video.dataset.userPaused = "true";
-        video.pause();
-      }
-    });
-    video.addEventListener("play", function () { updateVideoButton(video, button); });
-    video.addEventListener("pause", function () { updateVideoButton(video, button); });
     video.addEventListener("canplay", function () {
-      if (video.dataset.inView === "true") attemptPlay(video, button);
-    }, { once: true });
+      attemptPlay(video);
+    });
+    video.addEventListener("ended", function () {
+      video.currentTime = 0;
+      attemptPlay(video);
+    });
 
     if (video.readyState === 0) video.load();
-    if ("IntersectionObserver" in window) {
-      var observer = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          video.dataset.inView = String(entry.isIntersecting);
-          if (entry.isIntersecting) attemptPlay(video, button);
-          else video.pause();
-        });
-      }, { threshold: 0.2 });
-      observer.observe(video);
-    } else {
-      video.dataset.inView = "true";
-      attemptPlay(video, button);
-    }
+    attemptPlay(video);
   });
   document.addEventListener("visibilitychange", function () {
-    if (!document.hidden) {
-      videos.forEach(function (video) {
-        var button = video.parentElement.querySelector(".video-control");
-        if (button && video.dataset.inView === "true") attemptPlay(video, button);
-      });
-    }
+    if (!document.hidden) videos.forEach(attemptPlay);
   });
 
   /* Audience preference */
