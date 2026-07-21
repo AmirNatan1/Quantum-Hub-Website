@@ -170,57 +170,72 @@
   if (header) {
     window.addEventListener("scroll", function () {
       var y = window.scrollY;
-      header.classList.toggle("is-hidden", y > 200 && y > lastY);
+      header.classList.toggle("is-hidden", !header.classList.contains("mega-open") && y > 200 && y > lastY);
       header.classList.toggle("is-slim", y > 200);
       lastY = y;
     }, { passive: true });
   }
 
-  /* One direction-aware mega panel grows and shrinks between menu groups. Its
-     150ms open and 200ms close buffers mirror the intentional hover behavior
-     studied on Annnimate, while the visual system remains native to Quantum. */
+  /* The navigation row and its menu are one continuous surface. Hovering the
+     row unfolds the complete directory; moving into the directory keeps it
+     open. The short intent delays follow the Annnimate mega-menu reference. */
+  var headerShell = document.querySelector(".site-header .container");
+  var headerRow = null;
+  if (headerShell) {
+    headerRow = document.createElement("div");
+    headerRow.className = "header-main-row";
+    while (headerShell.firstChild) headerRow.appendChild(headerShell.firstChild);
+    headerShell.appendChild(headerRow);
+  }
+
   var navBar = document.querySelector(".site-header .nav");
   var megaGroups = [
     {
-      label: "Partners", files: ["for-partners.html"],
-      kicker: "For operating companies", title: "Turn a live constraint into a testable brief.",
-      links: [["Partner overview", "for-partners.html", "How Quantum works inside the consortium"], ["Bring a challenge", "contact.html", "Start with the operating question"]]
+      label: "Partners", href: "for-partners.html", files: ["for-partners.html", "industries.html", "contact.html"],
+      links: [["For partners", "for-partners.html"], ["Industries", "industries.html"], ["Contact", "contact.html"]]
     },
     {
-      label: "Startups", files: ["for-startups.html", "spark.html", "spark-register.html"],
-      kicker: "For technology teams", title: "Enter through a use case, not a pitch queue.",
-      links: [["Startup pathway", "for-startups.html", "Understand the route into a partner POC"], ["SPARK program", "spark.html", "Build toward a partner-selected trial"], ["Apply to SPARK", "spark-register.html", "Submit the technology for review"]]
+      label: "Startups", href: "for-startups.html", files: ["for-startups.html", "spark.html", "spark-register.html"],
+      links: [["For startups", "for-startups.html"], ["SPARK", "spark.html"], ["Apply to SPARK", "spark-register.html"]]
     },
     {
-      label: "POCs", files: ["pocs.html", "case-studies.html", "case-study-actasys.html"],
-      kicker: "Proof in the field", title: "See how promising technology becomes usable evidence.",
-      links: [["Why POCs matter", "pocs.html", "Explore the decisions a strong trial unlocks"], ["POC catalogue", "case-studies.html", "Browse all 110 supplied collaborations"], ["Actasys case", "case-study-actasys.html", "Follow one sensor-cleaning test in detail"]]
+      label: "POCs", href: "pocs.html", files: ["pocs.html", "case-studies.html", "case-study-actasys.html"],
+      links: [["POCs", "pocs.html"], ["Actasys case", "case-study-actasys.html"]]
     },
     {
-      label: "Explore", files: ["industries.html", "about.html", "updates.html", "contact.html"],
-      kicker: "Inside Quantum-hub", title: "Meet the network around every field test.",
-      links: [["Industries", "industries.html", "Four connected operating environments"], ["Company", "about.html", "The people translating between both sides"], ["Hub updates", "updates.html", "Verified notes from the work in motion"], ["Contact", "contact.html", "Choose the right starting point"]]
+      label: "Explore", href: "about.html", files: ["index.html", "about.html", "updates.html"],
+      links: [["Home", "index.html"], ["About", "about.html"], ["Hub updates", "updates.html"]]
     }
   ];
+  var legalLinks = [["Accessibility", "accessibility.html"], ["Cookies", "cookies.html"], ["Privacy", "privacy.html"], ["Terms", "terms.html"]];
 
-  if (navBar) {
+  if (navBar && headerShell && headerRow) {
     navBar.classList.add("mega-nav");
     navBar.innerHTML = megaGroups.map(function (group, index) {
-      return '<button class="mega-trigger" type="button" data-mega-index="' + index + '" aria-expanded="false" aria-controls="quantum-mega-panel">' + t(group.label) + '<i data-lucide="chevron-down" aria-hidden="true"></i></button>';
+      return '<a class="mega-trigger" href="' + group.href + '" data-mega-index="' + index + '" aria-haspopup="true" aria-expanded="false" aria-controls="quantum-mega-panel">' + t(group.label) + '<i data-lucide="chevron-down" aria-hidden="true"></i></a>';
     }).join("") + '<span class="nav-orbit" aria-hidden="true"></span>';
 
     var megaPanel = document.createElement("div");
     megaPanel.id = "quantum-mega-panel";
     megaPanel.className = "mega-panel";
     megaPanel.setAttribute("aria-hidden", "true");
-    megaPanel.innerHTML = '<div class="mega-panel-inner"></div>';
-    navBar.appendChild(megaPanel);
+    megaPanel.setAttribute("aria-label", t("All pages"));
+    var megaLinkIndex = 0;
+    megaPanel.innerHTML = '<div class="mega-panel-inner"><div class="mega-menu-columns">' + megaGroups.map(function (group) {
+      return '<section class="mega-menu-group"><span class="mega-menu-label">' + t(group.label) + '</span><div>' + group.links.map(function (link) {
+        var delay = megaLinkIndex * 40;
+        megaLinkIndex += 1;
+        return '<a href="' + link[1] + '" style="--mega-stagger:' + delay + 'ms"><span>' + t(link[0]) + '</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></a>';
+      }).join("") + '</div></section>';
+    }).join("") + '<a class="mega-menu-feature" href="case-studies.html" style="--mega-stagger:' + (megaLinkIndex * 40) + 'ms"><span class="eyebrow">' + t("POC catalogue") + '</span><strong>' + t("110 POCs") + '</strong><span>' + t("Browse the complete catalogue") + '</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></a></div>' +
+      '<div class="mega-menu-utility"><span>' + t("Legal and access") + '</span><nav aria-label="' + t("Legal and access") + '">' + legalLinks.map(function (link) {
+        return '<a href="' + link[1] + '">' + t(link[0]) + '</a>';
+      }).join("") + '</nav></div></div>';
+    headerShell.appendChild(megaPanel);
 
-    var megaInner = megaPanel.querySelector(".mega-panel-inner");
     var navTargets = Array.prototype.slice.call(navBar.querySelectorAll(".mega-trigger"));
     var currentFile = window.location.pathname.split("/").pop() || "index.html";
     var activeMegaIndex = -1;
-    var renderedMegaIndex = -1;
     var openMegaTimer = 0;
     var closeMegaTimer = 0;
     var orbitTarget = null;
@@ -241,27 +256,23 @@
       orbitTarget = target;
     }
 
-    function renderMega(index) {
-      var group = megaGroups[index];
-      var direction = renderedMegaIndex < 0 || index >= renderedMegaIndex ? 1 : -1;
-      megaInner.style.setProperty("--mega-direction", direction);
-      megaInner.innerHTML = '<div class="mega-copy"><span class="eyebrow">' + t(group.kicker) + '</span><p>' + t(group.title) + '</p></div><div class="mega-links">' + group.links.map(function (link, linkIndex) {
-        return '<a href="' + link[1] + '" style="--mega-stagger:' + (linkIndex * 40) + 'ms"><span><strong>' + t(link[0]) + '</strong><small>' + t(link[2]) + '</small></span><i data-lucide="arrow-up-right" aria-hidden="true"></i></a>';
-      }).join("") + '</div>';
-      megaPanel.style.setProperty("--mega-w", [570, 630, 660, 700][index] + "px");
-      megaPanel.style.setProperty("--mega-h", (megaInner.scrollHeight + 48) + "px");
-      renderedMegaIndex = index;
-      if (window.lucide) window.lucide.createIcons();
+    function measureMega() {
+      if (window.innerWidth <= 768) return;
+      headerShell.style.setProperty("--mega-expanded-height", (headerRow.offsetHeight + megaPanel.scrollHeight + 13) + "px");
     }
 
     function openMega(index) {
+      if (window.innerWidth <= 768) return;
       window.clearTimeout(closeMegaTimer);
-      if (activeMegaIndex !== index) renderMega(index);
       activeMegaIndex = index;
       navTargets.forEach(function (trigger, triggerIndex) {
         trigger.setAttribute("aria-expanded", String(triggerIndex === index));
       });
       moveOrbit(navTargets[index]);
+      measureMega();
+      header.classList.remove("is-hidden");
+      header.classList.add("mega-open");
+      document.body.classList.add("mega-menu-open");
       megaPanel.classList.add("is-open");
       megaPanel.setAttribute("aria-hidden", "false");
     }
@@ -276,6 +287,8 @@
       window.clearTimeout(openMegaTimer);
       closeMegaTimer = window.setTimeout(function () {
         activeMegaIndex = -1;
+        header.classList.remove("mega-open");
+        document.body.classList.remove("mega-menu-open");
         megaPanel.classList.remove("is-open");
         megaPanel.setAttribute("aria-hidden", "true");
         navTargets.forEach(function (trigger) { trigger.setAttribute("aria-expanded", "false"); });
@@ -287,18 +300,18 @@
     navTargets.forEach(function (trigger, index) {
       trigger.addEventListener("mouseenter", function () { queueMega(index); });
       trigger.addEventListener("focus", function () { queueMega(index); });
-      trigger.addEventListener("click", function () {
-        if (activeMegaIndex === index && megaPanel.classList.contains("is-open")) closeMega();
-        else openMega(index);
-      });
     });
-    navBar.addEventListener("mouseleave", closeMega);
-    navBar.addEventListener("mouseenter", function () { window.clearTimeout(closeMegaTimer); });
-    navBar.addEventListener("focusout", function (event) {
-      if (!navBar.contains(event.relatedTarget)) closeMega();
+    navBar.addEventListener("mouseenter", function () {
+      window.clearTimeout(closeMegaTimer);
+      if (activeMegaIndex < 0) queueMega(0);
+    });
+    headerShell.addEventListener("mouseenter", function () { window.clearTimeout(closeMegaTimer); });
+    headerShell.addEventListener("mouseleave", closeMega);
+    headerShell.addEventListener("focusout", function (event) {
+      if (!headerShell.contains(event.relatedTarget)) closeMega();
     });
     document.addEventListener("click", function (event) {
-      if (!navBar.contains(event.target) && activeMegaIndex >= 0) closeMega();
+      if (!headerShell.contains(event.target) && activeMegaIndex >= 0) closeMega();
     });
     document.addEventListener("keydown", function (event) {
       if (event.key === "Escape" && activeMegaIndex >= 0) {
@@ -308,8 +321,18 @@
       }
     });
     window.addEventListener("resize", function () {
-      if (orbitTarget) window.requestAnimationFrame(function () { moveOrbit(orbitTarget); });
+      if (window.innerWidth <= 768 && activeMegaIndex >= 0) {
+        window.clearTimeout(closeMegaTimer);
+        activeMegaIndex = -1;
+        header.classList.remove("mega-open");
+        document.body.classList.remove("mega-menu-open");
+        megaPanel.classList.remove("is-open");
+        megaPanel.setAttribute("aria-hidden", "true");
+      }
+      if (orbitTarget) window.requestAnimationFrame(function () { moveOrbit(orbitTarget); measureMega(); });
     }, { passive: true });
+    measureMega();
+    if (window.lucide) window.lucide.createIcons();
   }
 
   /* Counters */
@@ -974,7 +997,7 @@
     menuButton.className = "menu-btn";
     menuButton.setAttribute("aria-label", t("Open menu"));
     menuButton.innerHTML = '<i data-lucide="menu" style="width:24px;height:24px;"></i>';
-    headerContainer.appendChild(menuButton);
+    (headerRow || headerContainer).appendChild(menuButton);
 
     var overlay = document.createElement("div");
     overlay.className = "mobile-overlay";
@@ -982,11 +1005,14 @@
     overlay.setAttribute("aria-modal", "true");
     overlay.setAttribute("aria-label", t("Menu"));
     overlay.innerHTML = '<div class="mobile-menu-head"><span class="eyebrow">' + t("Navigate Quantum-hub") + '</span></div><div class="mobile-menu-groups">' + megaGroups.map(function (group, groupIndex) {
-      return '<section class="mobile-menu-group"><button type="button" aria-expanded="false" aria-controls="mobile-menu-group-' + groupIndex + '"><span>' + t(group.label) + '</span><i data-lucide="plus" aria-hidden="true"></i></button><div class="mobile-menu-group-panel" id="mobile-menu-group-' + groupIndex + '">' + group.links.map(function (link) {
-        return '<a href="' + link[1] + '"><strong>' + t(link[0]) + '</strong><small>' + t(link[2]) + '</small></a>';
+      var mobileLinks = group.links.concat(group.label === "POCs" ? [["POC catalogue", "case-studies.html"]] : []);
+      return '<section class="mobile-menu-group"><button type="button" aria-expanded="false" aria-controls="mobile-menu-group-' + groupIndex + '"><span>' + t(group.label) + '</span><i data-lucide="plus" aria-hidden="true"></i></button><div class="mobile-menu-group-panel" id="mobile-menu-group-' + groupIndex + '">' + mobileLinks.map(function (link) {
+        return '<a href="' + link[1] + '"><strong>' + t(link[0]) + '</strong></a>';
       }).join("") + '</div></section>';
     }).join("") + '</div>' +
-      '<a class="btn btn--primary mobile-menu-contact" href="contact.html">' + t("Contact us") + "</a>" +
+      '<nav class="mobile-menu-legal" aria-label="' + t("Legal and access") + '">' + legalLinks.map(function (link) {
+        return '<a href="' + link[1] + '">' + t(link[0]) + '</a>';
+      }).join("") + '</nav>' +
       '<button class="close-btn" aria-label="' + t("Close menu") + '"><i data-lucide="x" style="width:26px;height:26px;"></i></button>';
     document.body.appendChild(overlay);
     var mobileGroupButtons = Array.prototype.slice.call(overlay.querySelectorAll(".mobile-menu-group > button"));

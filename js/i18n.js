@@ -757,7 +757,12 @@
     "Startup responsibilities": "אחריות הסטארטאפ",
     "Ready to inspect the work itself?": "מוכנים לבחון את העבודה עצמה?",
     "Open all 110 collaborations": "פתחו את כל 110 שיתופי הפעולה",
-    "Read the Actasys case": "קראו את מקרה Actasys"
+    "Read the Actasys case": "קראו את מקרה Actasys",
+    "Home": "דף הבית",
+    "All pages": "כל העמודים",
+    "110 POCs": "110 ניסויי היתכנות",
+    "Browse the complete catalogue": "עיינו בקטלוג המלא",
+    "Legal and access": "מידע משפטי ונגישות"
   };
 
   var language = "en";
