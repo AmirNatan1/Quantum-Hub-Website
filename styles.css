@@ -198,27 +198,39 @@ mark { background: none; color: var(--q-magenta-soft); font-weight: var(--weight
 .signal-flow-viewport::-webkit-scrollbar { height: 7px; }
 .signal-flow-viewport::-webkit-scrollbar-thumb { background: rgba(240,107,160,.38); border-radius: var(--radius-pill); }
 .signal-flow-viewport:focus-visible { box-shadow: inset 0 0 0 3px rgba(216,43,114,.22); }
-.signal-flow-stage { position: relative; width: max(100%, 1180px); height: 500px; }
+.signal-flow-stage { position: relative; width: max(100%, 1380px); height: 650px; }
 .signal-flow-canvas { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; pointer-events: none; }
 .flow-direction {
-  position: absolute; z-index: 1; inset: auto 4% 44px; display: flex; justify-content: space-between;
+  position: absolute; z-index: 1; inset: auto 3% 20px; display: flex; justify-content: space-between;
   color: rgba(194,203,203,.48); font: 600 10px/1 var(--font-ui); letter-spacing: .14em; text-transform: lowercase;
 }
 .flow-direction span:last-child { color: var(--q-magenta-soft); }
 .flow-node-list { position: absolute; z-index: 2; inset: 0; margin: 0; padding: 0; list-style: none; }
 .flow-node {
-  --flow-lift: 0px;
-  position: absolute; left: var(--flow-x); top: calc(58px + var(--flow-lift));
-  width: clamp(204px, 15.5vw, 224px); min-height: 194px; padding: 18px 18px 20px;
+  --flow-energy: 0;
+  position: absolute; left: var(--flow-x); top: var(--flow-y);
+  width: clamp(204px, 15.5vw, 218px); min-height: 210px; padding: 18px 18px 44px;
   display: grid; grid-template-rows: auto minmax(2.35em, auto) 1fr; align-content: start;
   border: 1px solid rgba(255,255,255,.1);
   border-radius: var(--radius-md); background: rgba(14,17,18,.94);
+  box-shadow: 0 0 32px rgba(216,43,114,var(--flow-energy));
   transition: border-color var(--duration-base) var(--ease-out), box-shadow var(--duration-base) var(--ease-out), transform var(--duration-base) var(--ease-out);
 }
 .flow-node:hover { border-color: rgba(240,107,160,.42); box-shadow: 0 0 30px rgba(216,43,114,.1); transform: translateY(-2px); }
-.flow-node::after {
-  content: ""; position: absolute; left: 50%; bottom: -8px; width: 18px; height: 7px;
-  transform: translateX(-50%); border: 1px solid rgba(194,203,203,.32); border-radius: var(--radius-pill); background: #0e1112;
+.flow-node::before {
+  content: ""; position: absolute; z-index: 0; left: 7px; right: 7px; bottom: 25px; height: 2px;
+  background: rgba(194,203,203,.17);
+}
+.flow-node-port {
+  position: absolute; z-index: 2; bottom: 18px; width: 9px; height: 16px;
+  border: 1px solid rgba(194,203,203,.34); border-radius: 4px; background: #0e1112;
+}
+.flow-node-port--in { left: -5px; }
+.flow-node-port--out { right: -5px; }
+.flow-node-current {
+  position: absolute; z-index: 1; left: 7px; bottom: 23px; width: 42px; height: 6px;
+  border-radius: var(--radius-pill); background: var(--q-magenta-soft); opacity: 0; pointer-events: none;
+  box-shadow: 0 0 15px rgba(216,43,114,.82); will-change: transform, opacity;
 }
 .flow-step-number { color: var(--q-magenta-soft); font: 700 10px/1 var(--font-ui); letter-spacing: .16em; }
 .flow-node h3 { margin-top: 11px; font-size: clamp(19px, 1.7vw, 24px); line-height: 1.12; overflow-wrap: break-word; }
@@ -226,6 +238,8 @@ mark { background: none; color: var(--q-magenta-soft); font-weight: var(--weight
 html[dir="rtl"] .signal-flow-viewport { direction: rtl; }
 html[dir="rtl"] .signal-flow-stage { direction: ltr; }
 html[dir="rtl"] .flow-node { left: auto; right: var(--flow-x); direction: rtl; text-align: right; }
+html[dir="rtl"] .flow-node-port--in { left: auto; right: -5px; }
+html[dir="rtl"] .flow-node-port--out { right: auto; left: -5px; }
 html[dir="rtl"] .flow-direction { direction: rtl; }
 
 @media (max-width: 780px) {
@@ -233,9 +247,9 @@ html[dir="rtl"] .flow-direction { direction: rtl; }
   .signal-flow-heading .heading { font-size: clamp(31px, 9vw, 44px); }
   .signal-flow-heading p { font-size: 17px; }
   .signal-flow-viewport { margin-top: var(--space-5); }
-  .signal-flow-stage { width: 1120px; height: 480px; }
-  .flow-node { width: 202px; min-height: 188px; padding: 16px; }
-  .flow-direction { bottom: 38px; }
+  .signal-flow-stage { width: 1320px; height: 620px; }
+  .flow-node { width: 204px; min-height: 204px; padding: 16px 16px 42px; }
+  .flow-direction { bottom: 16px; }
 }
 
 .audience { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); max-width: 920px; margin-top: var(--space-6); }

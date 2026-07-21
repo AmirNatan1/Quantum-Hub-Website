@@ -574,90 +574,137 @@
     if (!document.hidden) videos.forEach(attemptPlay);
   });
 
-  /* A restrained cable bundle carries one visible current from need to evidence.
-     The aligned cards keep every connection readable and avoid crossing paths. */
+  /* Four orderly cables carry current through every process card in sequence. */
   var cableStage = document.querySelector("[data-cable-flow]");
   if (cableStage) {
     var cableCanvas = cableStage.querySelector("canvas");
     var cableContext = cableCanvas && cableCanvas.getContext("2d");
     var cableNodes = Array.prototype.slice.call(cableStage.querySelectorAll(".flow-node"));
+    var cableCurrents = cableNodes.map(function (node) { return node.querySelector(".flow-node-current"); });
+    var cableLaneOffsets = [-9, -3, 3, 9];
+    var cableLaneColors = [
+      "rgba(194,203,203,.18)",
+      "rgba(240,107,160,.22)",
+      "rgba(194,203,203,.15)",
+      "rgba(240,107,160,.18)"
+    ];
     var cableWidth = 0;
     var cableHeight = 0;
-    var cableTrunkY = 0;
     var cableVisible = !("IntersectionObserver" in window);
     var cableRunning = false;
     var cableFrame = 0;
 
-    function cableY(x, offset) {
-      return cableTrunkY + offset + Math.sin((x / Math.max(1, cableWidth)) * Math.PI * 2 - .45) * 4;
+    function cablePort(node, entering, laneOffset, rtl) {
+      var left = node.offsetLeft;
+      var right = left + node.offsetWidth;
+      return {
+        x: rtl ? (entering ? right : left) : (entering ? left : right),
+        y: node.offsetTop + node.offsetHeight - 25 + laneOffset
+      };
     }
 
-    function traceCable(offset) {
-      cableContext.beginPath();
-      for (var x = -40; x <= cableWidth + 40; x += 12) {
-        var y = cableY(x, offset);
-        if (x === -40) cableContext.moveTo(x, y);
-        else cableContext.lineTo(x, y);
+    function cableSegment(segmentIndex, laneIndex, rtl) {
+      var laneOffset = cableLaneOffsets[laneIndex];
+      var direction = rtl ? -1 : 1;
+      var start;
+      var end;
+      if (segmentIndex === 0) {
+        end = cablePort(cableNodes[0], true, laneOffset, rtl);
+        start = { x: rtl ? cableWidth + 46 : -46, y: end.y };
+      } else if (segmentIndex === cableNodes.length) {
+        start = cablePort(cableNodes[cableNodes.length - 1], false, laneOffset, rtl);
+        end = { x: rtl ? -46 : cableWidth + 46, y: start.y };
+      } else {
+        start = cablePort(cableNodes[segmentIndex - 1], false, laneOffset, rtl);
+        end = cablePort(cableNodes[segmentIndex], true, laneOffset, rtl);
       }
+      var gap = Math.abs(end.x - start.x);
+      var control = Math.max(40, Math.min(112, gap * .52));
+      return {
+        p0: start,
+        p1: { x: start.x + direction * control, y: start.y },
+        p2: { x: end.x - direction * control, y: end.y },
+        p3: end
+      };
     }
 
-    function drawCableBranches() {
-      cableNodes.forEach(function (node, index) {
-        var anchorX = node.offsetLeft + node.offsetWidth / 2;
-        var anchorY = node.offsetTop + node.offsetHeight + 7;
-        var bend = index % 2 === 0 ? 9 : -9;
-        cableContext.beginPath();
-        cableContext.moveTo(anchorX, anchorY);
-        cableContext.bezierCurveTo(anchorX, anchorY + 38, anchorX + bend, cableTrunkY - 38, anchorX, cableY(anchorX, 0));
-        cableContext.lineWidth = 1.5;
-        cableContext.strokeStyle = "rgba(194,203,203,.22)";
-        cableContext.shadowBlur = 0;
-        cableContext.stroke();
-      });
+    function cablePoint(curve, t) {
+      var inverse = 1 - t;
+      return {
+        x: inverse * inverse * inverse * curve.p0.x + 3 * inverse * inverse * t * curve.p1.x + 3 * inverse * t * t * curve.p2.x + t * t * t * curve.p3.x,
+        y: inverse * inverse * inverse * curve.p0.y + 3 * inverse * inverse * t * curve.p1.y + 3 * inverse * t * t * curve.p2.y + t * t * t * curve.p3.y
+      };
+    }
+
+    function traceCableRange(curve, from, to) {
+      var samples = Math.max(4, Math.ceil((to - from) * 28));
+      cableContext.beginPath();
+      for (var sample = 0; sample <= samples; sample += 1) {
+        var point = cablePoint(curve, from + (to - from) * (sample / samples));
+        if (sample === 0) cableContext.moveTo(point.x, point.y);
+        else cableContext.lineTo(point.x, point.y);
+      }
     }
 
     function drawCableFlow(time) {
       if (!cableContext) return;
       cableContext.clearRect(0, 0, cableWidth, cableHeight);
-      drawCableBranches();
-
-      [-8, 8].forEach(function (offset) {
-        traceCable(offset);
-        cableContext.lineWidth = 1.5;
-        cableContext.strokeStyle = "rgba(194,203,203,.16)";
-        cableContext.shadowBlur = 0;
-        cableContext.stroke();
+      var rtl = document.documentElement.dir === "rtl";
+      cableContext.shadowBlur = 0;
+      cableLaneOffsets.forEach(function (_, laneIndex) {
+        for (var segmentIndex = 0; segmentIndex <= cableNodes.length; segmentIndex += 1) {
+          traceCableRange(cableSegment(segmentIndex, laneIndex, rtl), 0, 1);
+          cableContext.lineWidth = laneIndex === 1 ? 1.8 : 1.4;
+          cableContext.strokeStyle = cableLaneColors[laneIndex];
+          cableContext.stroke();
+        }
       });
 
-      traceCable(0);
-      cableContext.lineWidth = 2;
-      cableContext.strokeStyle = "rgba(240,107,160,.34)";
-      cableContext.shadowBlur = 0;
-      cableContext.stroke();
-
-      var rtl = document.documentElement.dir === "rtl";
-      var progress = reduced ? .78 : (time % 5200) / 5200;
-      var pulseX = rtl ? cableWidth + 32 - progress * (cableWidth + 64) : -32 + progress * (cableWidth + 64);
-      var tail = rtl ? 30 : -30;
-      cableContext.beginPath();
-      for (var step = 0; step <= 12; step += 1) {
-        var tailX = pulseX + tail * (1 - step / 12);
-        var tailY = cableY(tailX, 0);
-        if (step === 0) cableContext.moveTo(tailX, tailY);
-        else cableContext.lineTo(tailX, tailY);
+      var cardEnergy = cableNodes.map(function () { return 0; });
+      var cardProgress = cableNodes.map(function () { return 0; });
+      if (!reduced) {
+        var totalUnits = cableNodes.length * 2 + 1;
+        cableLaneOffsets.forEach(function (_, laneIndex) {
+          var routePosition = ((time / 1050) + laneIndex * 2.65) % totalUnits;
+          var unit = Math.floor(routePosition);
+          var local = routePosition - unit;
+          if (unit % 2 === 0) {
+            var activeSegment = unit / 2;
+            var activeCurve = cableSegment(activeSegment, laneIndex, rtl);
+            traceCableRange(activeCurve, Math.max(0, local - .2), local);
+            cableContext.lineWidth = laneIndex === 1 ? 3 : 2.4;
+            cableContext.strokeStyle = "rgba(240,107,160,.84)";
+            cableContext.shadowColor = "rgba(216,43,114,.82)";
+            cableContext.shadowBlur = 13;
+            cableContext.stroke();
+            var head = cablePoint(activeCurve, local);
+            cableContext.beginPath();
+            cableContext.arc(head.x, head.y, 2.6, 0, Math.PI * 2);
+            cableContext.fillStyle = "rgba(255,214,231,.98)";
+            cableContext.shadowBlur = 15;
+            cableContext.fill();
+          } else {
+            var activeCard = (unit - 1) / 2;
+            var energy = .45 + Math.sin(local * Math.PI) * .55;
+            if (energy > cardEnergy[activeCard]) {
+              cardEnergy[activeCard] = energy;
+              cardProgress[activeCard] = local;
+            }
+          }
+        });
       }
-      cableContext.lineWidth = 3;
-      cableContext.strokeStyle = "rgba(240,107,160,.8)";
-      cableContext.shadowColor = "rgba(216,43,114,.78)";
-      cableContext.shadowBlur = 14;
-      cableContext.stroke();
-
-      cableContext.beginPath();
-      cableContext.arc(pulseX, cableY(pulseX, 0), 3.2, 0, Math.PI * 2);
-      cableContext.fillStyle = "rgba(255,214,231,.98)";
-      cableContext.shadowBlur = 18;
-      cableContext.fill();
       cableContext.shadowBlur = 0;
+
+      cableNodes.forEach(function (node, index) {
+        var energy = cardEnergy[index];
+        var current = cableCurrents[index];
+        node.style.setProperty("--flow-energy", (energy * .16).toFixed(3));
+        if (!current) return;
+        var travel = Math.max(0, node.offsetWidth - 56);
+        var position = (rtl ? 1 - cardProgress[index] : cardProgress[index]) * travel;
+        current.style.transform = "translateX(" + position.toFixed(2) + "px)";
+        current.style.opacity = energy ? Math.min(1, energy * 1.18).toFixed(3) : "0";
+      });
     }
 
     function sizeCableCanvas() {
@@ -666,7 +713,6 @@
       var ratio = Math.min(window.devicePixelRatio || 1, 2);
       cableWidth = Math.max(1, rect.width);
       cableHeight = Math.max(1, rect.height);
-      cableTrunkY = cableHeight * .72;
       cableCanvas.width = Math.round(cableWidth * ratio);
       cableCanvas.height = Math.round(cableHeight * ratio);
       cableCanvas.style.width = cableWidth + "px";
