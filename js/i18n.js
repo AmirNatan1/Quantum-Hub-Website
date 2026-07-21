@@ -14,6 +14,8 @@
     "Engineers calibrating an automotive camera and lidar test rig": "מהנדסים מכיילים מערך בדיקה של מצלמה ולידאר לרכב",
     "Cold-chain team testing an IoT condition sensor": "צוות שרשרת קירור בודק חיישן IoT לניטור תנאים",
     "Engineers testing battery modules and an instrumented energy line": "מהנדסים בודקים מודולי סוללה וקו אנרגיה המצויד בחיישנים",
+    "Engineers validating machine-vision quality control on a factory production cell": "מהנדסים מאמתים בקרת איכות באמצעות ראייה ממוחשבת בתא ייצור תעשייתי",
+    "Engineer testing an air-jet sensor-cleaning system on a vehicle": "מהנדס בודק מערכת לניקוי חיישני רכב באמצעות סילון אוויר",
 
     /* Page titles */
     "Quantum-hub — Corporate innovation, proven in the field": "Quantum-hub — חדשנות תאגידית שמוכחת בשטח",

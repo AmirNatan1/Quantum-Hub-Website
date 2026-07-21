@@ -4,12 +4,13 @@
   "use strict";
 
   var root = document.documentElement;
-  var storageKey = "qh-splash-seen-v1";
+  /* Bump the key only when the splash itself changes so every visitor sees
+     the new version once, without replaying it during normal navigation. */
+  var storageKey = "qh-splash-seen-v2";
   var shouldPlay = true;
 
   try {
     shouldPlay = sessionStorage.getItem(storageKey) !== "1";
-    if (shouldPlay) sessionStorage.setItem(storageKey, "1");
   } catch (error) {
     /* The splash can still play when storage is unavailable. */
   }
@@ -38,6 +39,7 @@
     ].join("");
 
     document.body.insertBefore(splash, document.body.firstChild);
+    try { sessionStorage.setItem(storageKey, "1"); } catch (error) {}
     var blockedSiblings = [];
     if ("inert" in HTMLElement.prototype) {
       blockedSiblings = Array.prototype.slice.call(document.body.children).filter(function (element) {
