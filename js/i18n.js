@@ -4,6 +4,17 @@
   "use strict";
 
   var he = {
+    /* Generated placeholder descriptions */
+    "Team evaluating a prototype during an innovation workshop": "צוות בוחן אבטיפוס במהלך סדנת חדשנות",
+    "Connected industrial campus spanning logistics, energy and manufacturing": "מתחם תעשייתי מחובר המשלב לוגיסטיקה, אנרגיה וייצור",
+    "Engineers testing a sensor in a working logistics facility": "מהנדסים בודקים חיישן בסביבה לוגיסטית פעילה",
+    "Corporate leaders evaluating a prototype during an innovation session": "מנהלים בחברות השותפות בוחנים אבטיפוס במפגש חדשנות",
+    "Conceptual vehicle-camera cleaning test with an air nozzle": "המחשת בדיקת ניקוי מצלמת רכב באמצעות סילון אוויר",
+    "Operations lead and engineer reviewing POC evidence": "מנהלת תפעול ומהנדס בוחנים נתוני POC",
+    "Engineers calibrating an automotive camera and lidar test rig": "מהנדסים מכיילים מערך בדיקה של מצלמה ולידאר לרכב",
+    "Cold-chain team testing an IoT condition sensor": "צוות שרשרת קירור בודק חיישן IoT לניטור תנאים",
+    "Engineers testing battery modules and an instrumented energy line": "מהנדסים בודקים מודולי סוללה וקו אנרגיה המצויד בחיישנים",
+
     /* Page titles */
     "Quantum-hub — Corporate innovation, proven in the field": "Quantum-hub — חדשנות תאגידית שמוכחת בשטח",
     "For partners — Quantum-hub": "לשותפים — Quantum-hub",

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Page not found — Quantum-hub</title>
 <meta name="robots" content="noindex">
+<script src="js/splash.js"></script>
 <link rel="stylesheet" href="styles.css">
 <link rel="icon" type="image/svg+xml" href="assets/quantum-logo.svg">
 </head>
@@ -26,6 +27,16 @@
 </section>
 </main>
 
+<footer class="site-footer">
+  <div class="container">
+    <p class="footer-legal">
+      <a href="accessibility.html">Accessibility</a> · <a href="cookies.html">Cookies</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a>
+      &nbsp;|&nbsp; Quantum © <span id="y"></span> · T.L.G-T.S Technology LTD &nbsp;|&nbsp; <a href="index.html">← Back to site</a>
+    </p>
+  </div>
+</footer>
+
+<script>document.getElementById("y").textContent = new Date().getFullYear();</script>
 <script src="js/i18n-runtime.js" defer></script>
 <script src="js/motion.js" defer></script>
 </body>
