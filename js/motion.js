@@ -87,6 +87,18 @@
   /* Footer color field reveals as it enters and gently follows a fine pointer. */
   var gradientFooter = document.querySelector(".site-footer");
   if (gradientFooter) {
+    var footerNavigation = gradientFooter.querySelector(".footer-nav");
+    if (footerNavigation) {
+      var footerLinks = [
+        ["For partners", "for-partners.html"], ["For startups", "for-startups.html"],
+        ["POCs", "pocs.html"], ["SPARK", "spark.html"], ["Industries", "industries.html"],
+        ["POC catalogue", "case-studies.html"], ["Hub updates", "updates.html"],
+        ["About", "about.html"], ["Contact", "contact.html"]
+      ];
+      footerNavigation.innerHTML = footerLinks.map(function (link) {
+        return '<a href="' + link[1] + '">' + t(link[0]) + '</a>';
+      }).join("");
+    }
     var footerLinkedIn = gradientFooter.querySelector('a[href*="linkedin.com/company/quantum-hub"]');
     if (!footerLinkedIn) {
       footerLinkedIn = document.createElement("a");
@@ -164,86 +176,140 @@
     }, { passive: true });
   }
 
-  /* The floating nav's magenta orbit follows the hovered or keyboard-focused link. */
+  /* One direction-aware mega panel grows and shrinks between menu groups. Its
+     150ms open and 200ms close buffers mirror the intentional hover behavior
+     studied on Annnimate, while the visual system remains native to Quantum. */
   var navBar = document.querySelector(".site-header .nav");
+  var megaGroups = [
+    {
+      label: "Partners", files: ["for-partners.html"],
+      kicker: "For operating companies", title: "Turn a live constraint into a testable brief.",
+      links: [["Partner overview", "for-partners.html", "How Quantum works inside the consortium"], ["Bring a challenge", "contact.html", "Start with the operating question"]]
+    },
+    {
+      label: "Startups", files: ["for-startups.html", "spark.html", "spark-register.html"],
+      kicker: "For technology teams", title: "Enter through a use case, not a pitch queue.",
+      links: [["Startup pathway", "for-startups.html", "Understand the route into a partner POC"], ["SPARK program", "spark.html", "Build toward a partner-selected trial"], ["Apply to SPARK", "spark-register.html", "Submit the technology for review"]]
+    },
+    {
+      label: "POCs", files: ["pocs.html", "case-studies.html", "case-study-actasys.html"],
+      kicker: "Proof in the field", title: "See how promising technology becomes usable evidence.",
+      links: [["Why POCs matter", "pocs.html", "Explore the decisions a strong trial unlocks"], ["POC catalogue", "case-studies.html", "Browse all 110 supplied collaborations"], ["Actasys case", "case-study-actasys.html", "Follow one sensor-cleaning test in detail"]]
+    },
+    {
+      label: "Explore", files: ["industries.html", "about.html", "updates.html", "contact.html"],
+      kicker: "Inside Quantum-hub", title: "Meet the network around every field test.",
+      links: [["Industries", "industries.html", "Four connected operating environments"], ["Company", "about.html", "The people translating between both sides"], ["Hub updates", "updates.html", "Verified notes from the work in motion"], ["Contact", "contact.html", "Choose the right starting point"]]
+    }
+  ];
+
   if (navBar) {
-    var navTargets = [];
-    Array.prototype.forEach.call(navBar.children, function (child) {
-      if (child.tagName === "A") navTargets.push(child);
-      if (child.classList && child.classList.contains("explore")) {
-        var exploreLink = child.querySelector("a");
-        if (exploreLink) navTargets.push(exploreLink);
-      }
-    });
+    navBar.classList.add("mega-nav");
+    navBar.innerHTML = megaGroups.map(function (group, index) {
+      return '<button class="mega-trigger" type="button" data-mega-index="' + index + '" aria-expanded="false" aria-controls="quantum-mega-panel">' + t(group.label) + '<i data-lucide="chevron-down" aria-hidden="true"></i></button>';
+    }).join("") + '<span class="nav-orbit" aria-hidden="true"></span>';
 
+    var megaPanel = document.createElement("div");
+    megaPanel.id = "quantum-mega-panel";
+    megaPanel.className = "mega-panel";
+    megaPanel.setAttribute("aria-hidden", "true");
+    megaPanel.innerHTML = '<div class="mega-panel-inner"></div>';
+    navBar.appendChild(megaPanel);
+
+    var megaInner = megaPanel.querySelector(".mega-panel-inner");
+    var navTargets = Array.prototype.slice.call(navBar.querySelectorAll(".mega-trigger"));
     var currentFile = window.location.pathname.split("/").pop() || "index.html";
-    var exploreFiles = ["industries.html", "case-studies.html", "case-study-actasys.html", "about.html"];
-    navTargets.forEach(function (link) {
-      var linkFile = (link.getAttribute("href") || "").split("#")[0];
-      var isCurrent = linkFile === currentFile ||
-        (link.hasAttribute("data-explore-toggle") && exploreFiles.indexOf(currentFile) !== -1);
-      link.classList.toggle("active", isCurrent);
-      if (isCurrent) link.setAttribute("aria-current", "page");
+    var activeMegaIndex = -1;
+    var renderedMegaIndex = -1;
+    var openMegaTimer = 0;
+    var closeMegaTimer = 0;
+    var orbitTarget = null;
+
+    megaGroups.forEach(function (group, index) {
+      if (group.files.indexOf(currentFile) !== -1) {
+        navTargets[index].classList.add("active");
+        navTargets[index].setAttribute("aria-current", "page");
+      }
     });
 
-    if (!reduced && navTargets.length) {
-      var orbit = document.createElement("span");
-      orbit.className = "nav-orbit";
-      orbit.setAttribute("aria-hidden", "true");
-      navBar.insertBefore(orbit, navBar.firstChild);
-      var orbitTarget = null;
+    function moveOrbit(target) {
+      var navRect = navBar.getBoundingClientRect();
+      var targetRect = target.getBoundingClientRect();
+      navBar.style.setProperty("--nav-orbit-x", (targetRect.left - navRect.left) + "px");
+      navBar.style.setProperty("--nav-orbit-w", targetRect.width + "px");
+      navBar.classList.add("nav-orbit-on");
+      orbitTarget = target;
+    }
 
-      function moveOrbit(link) {
-        var navRect = navBar.getBoundingClientRect();
-        var linkRect = link.getBoundingClientRect();
-        navBar.style.setProperty("--nav-orbit-x", (linkRect.left - navRect.left) + "px");
-        navBar.style.setProperty("--nav-orbit-w", linkRect.width + "px");
-        navBar.classList.add("nav-orbit-on");
-        orbitTarget = link;
-      }
+    function renderMega(index) {
+      var group = megaGroups[index];
+      var direction = renderedMegaIndex < 0 || index >= renderedMegaIndex ? 1 : -1;
+      megaInner.style.setProperty("--mega-direction", direction);
+      megaInner.innerHTML = '<div class="mega-copy"><span class="eyebrow">' + t(group.kicker) + '</span><p>' + t(group.title) + '</p></div><div class="mega-links">' + group.links.map(function (link, linkIndex) {
+        return '<a href="' + link[1] + '" style="--mega-stagger:' + (linkIndex * 40) + 'ms"><span><strong>' + t(link[0]) + '</strong><small>' + t(link[2]) + '</small></span><i data-lucide="arrow-up-right" aria-hidden="true"></i></a>';
+      }).join("") + '</div>';
+      megaPanel.style.setProperty("--mega-w", [570, 630, 660, 700][index] + "px");
+      megaPanel.style.setProperty("--mega-h", (megaInner.scrollHeight + 48) + "px");
+      renderedMegaIndex = index;
+      if (window.lucide) window.lucide.createIcons();
+    }
 
-      navTargets.forEach(function (link) {
-        link.addEventListener("mouseenter", function () { moveOrbit(link); });
-        link.addEventListener("focus", function () { moveOrbit(link); });
+    function openMega(index) {
+      window.clearTimeout(closeMegaTimer);
+      if (activeMegaIndex !== index) renderMega(index);
+      activeMegaIndex = index;
+      navTargets.forEach(function (trigger, triggerIndex) {
+        trigger.setAttribute("aria-expanded", String(triggerIndex === index));
       });
-      navBar.addEventListener("mouseleave", function () {
+      moveOrbit(navTargets[index]);
+      megaPanel.classList.add("is-open");
+      megaPanel.setAttribute("aria-hidden", "false");
+    }
+
+    function queueMega(index) {
+      window.clearTimeout(closeMegaTimer);
+      window.clearTimeout(openMegaTimer);
+      openMegaTimer = window.setTimeout(function () { openMega(index); }, activeMegaIndex < 0 ? 150 : 0);
+    }
+
+    function closeMega() {
+      window.clearTimeout(openMegaTimer);
+      closeMegaTimer = window.setTimeout(function () {
+        activeMegaIndex = -1;
+        megaPanel.classList.remove("is-open");
+        megaPanel.setAttribute("aria-hidden", "true");
+        navTargets.forEach(function (trigger) { trigger.setAttribute("aria-expanded", "false"); });
         navBar.classList.remove("nav-orbit-on");
         orbitTarget = null;
-      });
-      navBar.addEventListener("focusout", function (event) {
-        if (!navBar.contains(event.relatedTarget)) {
-          navBar.classList.remove("nav-orbit-on");
-          orbitTarget = null;
-        }
-      });
-      window.addEventListener("resize", function () {
-        if (orbitTarget) window.requestAnimationFrame(function () { moveOrbit(orbitTarget); });
-      }, { passive: true });
+      }, 200);
     }
-  }
 
-  /* Explore dropdown */
-  var exploreBtn = document.querySelector("[data-explore-toggle]");
-  var explorePanel = document.querySelector(".explore-panel");
-  if (exploreBtn && explorePanel) {
-    exploreBtn.addEventListener("click", function (event) {
-      event.preventDefault();
-      event.stopPropagation();
-      explorePanel.classList.toggle("is-open");
-      exploreBtn.setAttribute("aria-expanded", String(explorePanel.classList.contains("is-open")));
+    navTargets.forEach(function (trigger, index) {
+      trigger.addEventListener("mouseenter", function () { queueMega(index); });
+      trigger.addEventListener("focus", function () { queueMega(index); });
+      trigger.addEventListener("click", function () {
+        if (activeMegaIndex === index && megaPanel.classList.contains("is-open")) closeMega();
+        else openMega(index);
+      });
+    });
+    navBar.addEventListener("mouseleave", closeMega);
+    navBar.addEventListener("mouseenter", function () { window.clearTimeout(closeMegaTimer); });
+    navBar.addEventListener("focusout", function (event) {
+      if (!navBar.contains(event.relatedTarget)) closeMega();
     });
     document.addEventListener("click", function (event) {
-      if (!explorePanel.contains(event.target)) {
-        explorePanel.classList.remove("is-open");
-        exploreBtn.setAttribute("aria-expanded", "false");
-      }
+      if (!navBar.contains(event.target) && activeMegaIndex >= 0) closeMega();
     });
     document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape") {
-        explorePanel.classList.remove("is-open");
-        exploreBtn.setAttribute("aria-expanded", "false");
+      if (event.key === "Escape" && activeMegaIndex >= 0) {
+        var returnTarget = navTargets[activeMegaIndex];
+        closeMega();
+        if (returnTarget) returnTarget.focus();
       }
     });
+    window.addEventListener("resize", function () {
+      if (orbitTarget) window.requestAnimationFrame(function () { moveOrbit(orbitTarget); });
+    }, { passive: true });
   }
 
   /* Counters */
@@ -900,7 +966,7 @@
     });
   });
 
-  /* Mobile menu */
+  /* Mobile menu: the desktop mega groups become compact tap accordions. */
   var headerContainer = document.querySelector(".site-header .container");
   var nav = document.querySelector(".site-header .nav");
   if (headerContainer && nav) {
@@ -915,20 +981,41 @@
     overlay.setAttribute("role", "dialog");
     overlay.setAttribute("aria-modal", "true");
     overlay.setAttribute("aria-label", t("Menu"));
-    var links = [
-      ["For partners", "for-partners.html"], ["For startups", "for-startups.html"],
-      ["SPARK", "spark.html"], ["Industries", "industries.html"],
-      ["Case studies", "case-studies.html"], ["About", "about.html"], ["Contact", "contact.html"]
-    ];
-    overlay.innerHTML = links.map(function (link) {
-      return '<a href="' + link[1] + '">' + t(link[0]) + "</a>";
-    }).join("") +
-      '<a class="btn btn--primary" href="contact.html">' + t("Contact us") + "</a>" +
+    overlay.innerHTML = '<div class="mobile-menu-head"><span class="eyebrow">' + t("Navigate Quantum-hub") + '</span></div><div class="mobile-menu-groups">' + megaGroups.map(function (group, groupIndex) {
+      return '<section class="mobile-menu-group"><button type="button" aria-expanded="false" aria-controls="mobile-menu-group-' + groupIndex + '"><span>' + t(group.label) + '</span><i data-lucide="plus" aria-hidden="true"></i></button><div class="mobile-menu-group-panel" id="mobile-menu-group-' + groupIndex + '">' + group.links.map(function (link) {
+        return '<a href="' + link[1] + '"><strong>' + t(link[0]) + '</strong><small>' + t(link[2]) + '</small></a>';
+      }).join("") + '</div></section>';
+    }).join("") + '</div>' +
+      '<a class="btn btn--primary mobile-menu-contact" href="contact.html">' + t("Contact us") + "</a>" +
       '<button class="close-btn" aria-label="' + t("Close menu") + '"><i data-lucide="x" style="width:26px;height:26px;"></i></button>';
     document.body.appendChild(overlay);
-    menuButton.addEventListener("click", function () { overlay.classList.add("is-open"); });
-    overlay.querySelector(".close-btn").addEventListener("click", function () { overlay.classList.remove("is-open"); });
-    document.addEventListener("keydown", function (event) { if (event.key === "Escape") overlay.classList.remove("is-open"); });
+    var mobileGroupButtons = Array.prototype.slice.call(overlay.querySelectorAll(".mobile-menu-group > button"));
+    mobileGroupButtons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        var shouldOpen = button.getAttribute("aria-expanded") !== "true";
+        mobileGroupButtons.forEach(function (other) {
+          other.setAttribute("aria-expanded", "false");
+          other.parentElement.classList.remove("is-open");
+        });
+        if (shouldOpen) {
+          button.setAttribute("aria-expanded", "true");
+          button.parentElement.classList.add("is-open");
+        }
+      });
+    });
+    function openMobileMenu() {
+      overlay.classList.add("is-open");
+      document.body.classList.add("menu-open");
+      overlay.querySelector(".close-btn").focus();
+    }
+    function closeMobileMenu() {
+      overlay.classList.remove("is-open");
+      document.body.classList.remove("menu-open");
+      menuButton.focus();
+    }
+    menuButton.addEventListener("click", openMobileMenu);
+    overlay.querySelector(".close-btn").addEventListener("click", closeMobileMenu);
+    document.addEventListener("keydown", function (event) { if (event.key === "Escape" && overlay.classList.contains("is-open")) closeMobileMenu(); });
   }
 
   /* Language selector with real flag assets */
