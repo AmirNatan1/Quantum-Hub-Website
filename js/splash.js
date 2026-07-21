@@ -7,12 +7,34 @@
   /* Bump the key only when the splash itself changes so every visitor sees
      the new version once, without replaying it during normal navigation. */
   var storageKey = "qh-splash-seen-v2";
+  var replayKey = "qh-splash-replay";
   var shouldPlay = true;
 
   try {
-    shouldPlay = sessionStorage.getItem(storageKey) !== "1";
+    var replayRequested = sessionStorage.getItem(replayKey) === "1";
+    shouldPlay = replayRequested || sessionStorage.getItem(storageKey) !== "1";
+    if (replayRequested) sessionStorage.removeItem(replayKey);
   } catch (error) {
     /* The splash can still play when storage is unavailable. */
+  }
+
+  /* The top-left brand mark remains a home link, but it also requests one
+     deliberate replay. Modified clicks retain normal browser behavior. */
+  function bindLogoReplay() {
+    document.querySelectorAll('.site-header .logo-tile[href]').forEach(function (logoLink) {
+      logoLink.addEventListener("click", function (event) {
+        if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        try { sessionStorage.setItem(replayKey, "1"); } catch (error) {}
+        window.location.assign(logoLink.href);
+      });
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bindLogoReplay, { once: true });
+  } else {
+    bindLogoReplay();
   }
 
   if (!shouldPlay) return;
