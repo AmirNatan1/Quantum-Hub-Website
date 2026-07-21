@@ -574,6 +574,149 @@
     if (!document.hidden) videos.forEach(attemptPlay);
   });
 
+  /* A restrained cable bundle carries one visible current from need to evidence.
+     The aligned cards keep every connection readable and avoid crossing paths. */
+  var cableStage = document.querySelector("[data-cable-flow]");
+  if (cableStage) {
+    var cableCanvas = cableStage.querySelector("canvas");
+    var cableContext = cableCanvas && cableCanvas.getContext("2d");
+    var cableNodes = Array.prototype.slice.call(cableStage.querySelectorAll(".flow-node"));
+    var cableWidth = 0;
+    var cableHeight = 0;
+    var cableTrunkY = 0;
+    var cableVisible = !("IntersectionObserver" in window);
+    var cableRunning = false;
+    var cableFrame = 0;
+
+    function cableY(x, offset) {
+      return cableTrunkY + offset + Math.sin((x / Math.max(1, cableWidth)) * Math.PI * 2 - .45) * 4;
+    }
+
+    function traceCable(offset) {
+      cableContext.beginPath();
+      for (var x = -40; x <= cableWidth + 40; x += 12) {
+        var y = cableY(x, offset);
+        if (x === -40) cableContext.moveTo(x, y);
+        else cableContext.lineTo(x, y);
+      }
+    }
+
+    function drawCableBranches() {
+      cableNodes.forEach(function (node, index) {
+        var anchorX = node.offsetLeft + node.offsetWidth / 2;
+        var anchorY = node.offsetTop + node.offsetHeight + 7;
+        var bend = index % 2 === 0 ? 9 : -9;
+        cableContext.beginPath();
+        cableContext.moveTo(anchorX, anchorY);
+        cableContext.bezierCurveTo(anchorX, anchorY + 38, anchorX + bend, cableTrunkY - 38, anchorX, cableY(anchorX, 0));
+        cableContext.lineWidth = 1.5;
+        cableContext.strokeStyle = "rgba(194,203,203,.22)";
+        cableContext.shadowBlur = 0;
+        cableContext.stroke();
+      });
+    }
+
+    function drawCableFlow(time) {
+      if (!cableContext) return;
+      cableContext.clearRect(0, 0, cableWidth, cableHeight);
+      drawCableBranches();
+
+      [-8, 8].forEach(function (offset) {
+        traceCable(offset);
+        cableContext.lineWidth = 1.5;
+        cableContext.strokeStyle = "rgba(194,203,203,.16)";
+        cableContext.shadowBlur = 0;
+        cableContext.stroke();
+      });
+
+      traceCable(0);
+      cableContext.lineWidth = 2;
+      cableContext.strokeStyle = "rgba(240,107,160,.34)";
+      cableContext.shadowBlur = 0;
+      cableContext.stroke();
+
+      var rtl = document.documentElement.dir === "rtl";
+      var progress = reduced ? .78 : (time % 5200) / 5200;
+      var pulseX = rtl ? cableWidth + 32 - progress * (cableWidth + 64) : -32 + progress * (cableWidth + 64);
+      var tail = rtl ? 30 : -30;
+      cableContext.beginPath();
+      for (var step = 0; step <= 12; step += 1) {
+        var tailX = pulseX + tail * (1 - step / 12);
+        var tailY = cableY(tailX, 0);
+        if (step === 0) cableContext.moveTo(tailX, tailY);
+        else cableContext.lineTo(tailX, tailY);
+      }
+      cableContext.lineWidth = 3;
+      cableContext.strokeStyle = "rgba(240,107,160,.8)";
+      cableContext.shadowColor = "rgba(216,43,114,.78)";
+      cableContext.shadowBlur = 14;
+      cableContext.stroke();
+
+      cableContext.beginPath();
+      cableContext.arc(pulseX, cableY(pulseX, 0), 3.2, 0, Math.PI * 2);
+      cableContext.fillStyle = "rgba(255,214,231,.98)";
+      cableContext.shadowBlur = 18;
+      cableContext.fill();
+      cableContext.shadowBlur = 0;
+    }
+
+    function sizeCableCanvas() {
+      if (!cableContext) return;
+      var rect = cableStage.getBoundingClientRect();
+      var ratio = Math.min(window.devicePixelRatio || 1, 2);
+      cableWidth = Math.max(1, rect.width);
+      cableHeight = Math.max(1, rect.height);
+      cableTrunkY = cableHeight * .72;
+      cableCanvas.width = Math.round(cableWidth * ratio);
+      cableCanvas.height = Math.round(cableHeight * ratio);
+      cableCanvas.style.width = cableWidth + "px";
+      cableCanvas.style.height = cableHeight + "px";
+      cableContext.setTransform(ratio, 0, 0, ratio, 0, 0);
+      drawCableFlow(reduced ? 0 : performance.now());
+    }
+
+    function runCableFlow(time) {
+      drawCableFlow(time);
+      if (cableVisible && !reduced && !document.hidden) cableFrame = window.requestAnimationFrame(runCableFlow);
+      else {
+        cableFrame = 0;
+        cableRunning = false;
+      }
+    }
+
+    function startCableFlow() {
+      if (reduced || cableRunning || !cableVisible || document.hidden) return;
+      cableRunning = true;
+      cableFrame = window.requestAnimationFrame(runCableFlow);
+    }
+
+    function stopCableFlow() {
+      if (cableFrame) window.cancelAnimationFrame(cableFrame);
+      cableFrame = 0;
+      cableRunning = false;
+    }
+
+    sizeCableCanvas();
+    if ("ResizeObserver" in window) {
+      var cableResizeObserver = new ResizeObserver(sizeCableCanvas);
+      cableResizeObserver.observe(cableStage);
+      cableNodes.forEach(function (node) { cableResizeObserver.observe(node); });
+    } else window.addEventListener("resize", sizeCableCanvas, { passive: true });
+
+    if (!reduced && "IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        cableVisible = entries[0].isIntersecting;
+        if (cableVisible) startCableFlow();
+        else stopCableFlow();
+      }, { rootMargin: "180px 0px" }).observe(cableStage);
+    }
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) stopCableFlow();
+      else startCableFlow();
+    });
+    startCableFlow();
+  }
+
   /* Audience preference */
   document.querySelectorAll("[data-audience]").forEach(function (el) {
     el.addEventListener("click", function () {
