@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Case studies — Quantum-hub</title>
-<meta name="description" content="Explore Quantum-hub’s supplied POC catalogue by startup, partner site, and sector, with original-site sources shown where available.">
+<title>Case studies — Quantum-Hub</title>
+<meta name="description" content="The POC catalogue: the constraint, the technology and what the measurement showed, across thirty-four portfolio companies.">
 <script src="js/splash.js"></script>
 <link rel="stylesheet" href="styles.css">
 <link rel="icon" type="image/svg+xml" href="assets/quantum-logo.svg">
 <link rel="canonical" href="https://quantum-hub.com/case-studies.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Case studies — Quantum-hub">
-<meta property="og:description" content="Explore Quantum-hub’s supplied POC catalogue by startup, partner site, and sector, with original-site sources shown where available.">
+<meta property="og:title" content="Case studies — Quantum-Hub">
+<meta property="og:description" content="The POC catalogue: the constraint, the technology and what the measurement showed, across thirty-four portfolio companies.">
 <meta property="og:url" content="https://quantum-hub.com/case-studies.html">
 <meta property="og:image" content="https://quantum-hub.com/assets/quantum-logo.svg">
 <meta name="twitter:card" content="summary">
@@ -24,28 +24,20 @@
 
 <header class="site-header">
   <div class="container">
-    <a class="logo-tile" href="index.html" aria-label="Quantum-hub home">
-      <img src="assets/quantum-logo.svg" alt="Quantum-hub">
+    <a class="logo-tile" href="index.html" aria-label="Quantum-Hub home">
+      <img src="assets/quantum-logo.svg" alt="Quantum-Hub"
+           onerror="this.style.display='none';this.parentNode.insertAdjacentHTML('beforeend','&lt;span class=&quot;logo-fallback&quot;&gt;q&lt;/span&gt;')">
     </a>
     <nav class="nav" aria-label="Main">
-      <a href="for-partners.html">For partners</a>
-      <a href="for-startups.html">For startups</a>
-      <a href="spark.html">SPARK</a>
-      <span class="explore">
-        <a href="#" data-explore-toggle aria-expanded="false" aria-haspopup="true" class="active">Explore</a>
-        <div class="explore-panel" role="menu">
-          <div>
-            <a href="industries.html" role="menuitem">Industries</a>
-            <a href="case-studies.html" role="menuitem" class="active">Case studies</a>
-            <a href="about.html" role="menuitem">About</a>
-            <a href="updates.html" role="menuitem">Hub updates</a>
-          </div>
-          <a class="explore-feature" href="case-study-actasys.html">Featured: Actasys — sensor cleaning proven at speed</a>
-        </div>
-      </span>
+      <a href="pocs.html">Approach</a>
+      <a href="industries.html">Industries</a>
+      <a href="partners.html">Partners</a>
+      <a href="spark.html">Programs</a>
+      <a href="q-europe.html">Q-Europe</a>
+      <a href="case-studies.html" class="active" aria-current="page">Case Studies</a>
+      <a href="about.html">About</a>
     </nav>
-    <button class="utility-btn" type="button" aria-label="Change language"><img class="language-flag" src="assets/flags/gb.png" alt=""> EN</button>
-    <a class="btn btn--primary btn--sm" href="contact.html">Contact us</a>
+    <a class="btn btn--primary btn--sm" data-context-cta href="contact.html">Contact us</a>
   </div>
 </header>
 
@@ -56,7 +48,7 @@
   <div class="container reveal">
     <span class="eyebrow">from the playground</span>
     <h1 class="display-xl">The POC catalogue</h1>
-    <p class="lede" style="margin-top: var(--space-4);">Explore the collaborations supplied for this catalogue. Where public technical detail exists, it is shown; elsewhere, the pairing is preserved <em>without inventing an outcome</em>.</p>
+    <p class="lede" style="margin-top: var(--space-4);">Thirty-four portfolio companies have come through our programmes. Below are the tests we can describe publicly — the constraint, the technology and what the measurement showed.</p>
   </div>
 </section>
 
@@ -69,7 +61,7 @@
       </video>
       <div class="vm-caption">
         <h2>The POC Playground</h2>
-        <p>Our own beta site — where partner industries and startup technologies meet under real operating conditions.</p>
+        <p>Designated workshops and vehicles. Logistics warehouses. PDI and test areas. Car and truck carriers. Production lines, data centres and refining facilities. Plus an Advanced Testing Vehicle Platform built with Hyundai: a fully electric Kia Niro fitted with CAN/LIN loggers, GMSL vision-sensor interfaces, Applanix positioning and on-board compute, for outdoor POCs in real conditions.</p>
         <a class="btn btn--primary btn--sm" href="case-study-actasys.html" style="margin-top: var(--space-3);">Read a case</a>
       </div>
     </div>
@@ -82,13 +74,13 @@
     <div class="reveal drift-gallery-heading">
       <span class="eyebrow">POCs from the playground</span>
       <h2 class="heading">Drag through the catalogue</h2>
-      <p class="lede" style="margin-top: var(--space-3);">Drag, swipe, search, or use the arrow keys to explore the supplied POC catalogue by sector.</p>
+      <p class="lede" style="margin-top: var(--space-3);">Drag, swipe, search or use the arrow keys to inspect the public records by sector.</p>
     </div>
     <div class="drift-controls reveal" style="margin-top: var(--space-5);">
       <label class="poc-search">
-        <span class="sr-only">Search by startup or partner</span>
+        <span class="sr-only">Search by startup</span>
         <i data-lucide="search" aria-hidden="true"></i>
-        <input type="search" data-poc-search autocomplete="off" placeholder="Search startup or partner" aria-controls="poc-drift-track">
+        <input type="search" data-poc-search autocomplete="off" placeholder="Search startup" aria-controls="poc-drift-track">
       </label>
       <div class="drift-toolbar">
         <div class="drift-filters" role="group" aria-label="Filter POCs by sector">
@@ -114,7 +106,7 @@
 <section class="section surface-inverse section--compressed">
   <div class="container convert reveal">
     <h2>Want your technology on this page?</h2>
-    <a class="btn btn--primary" href="spark.html">Apply to SPARK</a>
+    <a class="btn btn--primary" href="spark-register.html">Apply to SPARK</a>
   </div>
 </section>
 
@@ -123,25 +115,28 @@
 <footer class="site-footer">
   <div class="container">
     <div class="footer-top">
-      <a class="logo-tile" href="index.html" aria-label="Quantum-hub home" style="width:100px;height:36px;">
-        <img src="assets/quantum-logo.svg" alt="Quantum-hub">
+      <a class="logo-tile" href="index.html" aria-label="Quantum-Hub home" style="width:100px;height:36px;">
+        <img src="assets/quantum-logo.svg" alt="Quantum-Hub"
+             onerror="this.style.display='none';this.parentNode.insertAdjacentHTML('beforeend','&lt;span class=&quot;logo-fallback&quot;&gt;q&lt;/span&gt;')">
       </a>
       <nav class="footer-nav" aria-label="Footer">
-        <a href="for-partners.html">For partners</a><a href="for-startups.html">For startups</a>
-        <a href="spark.html">SPARK</a><a href="industries.html">Industries</a>
-        <a href="case-studies.html">Case studies</a><a href="about.html">About</a><a href="contact.html">Contact</a>
+        <a href="for-partners.html">For partner companies</a>
+        <a href="for-startups.html">For startups</a>
+        <a href="partners.html">Partners</a>
+        <a href="q-europe.html">Q-Europe</a>
+        <a href="updates.html">Hub updates</a>
       </nav>
-      <a href="https://www.linkedin.com/company/quantum-hub/" aria-label="Quantum-hub on LinkedIn"><i data-lucide="linkedin" style="width:20px;height:20px;"></i></a>
+      <a href="https://www.linkedin.com/company/quantum-hub/" aria-label="Quantum-Hub on LinkedIn"><i data-lucide="linkedin" style="width:20px;height:20px;"></i></a>
     </div>
     <p class="footer-legal">
       <a href="accessibility.html">Accessibility</a> · <a href="cookies.html">Cookies</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a>
-      &nbsp;|&nbsp; Quantum © <span id="y"></span> · T.L.G-T.S Technology LTD
+      &nbsp;|&nbsp; Quantum-Hub © <span id="y"></span> · T.L.G-T.S Technology LTD
     </p>
   </div>
 </footer>
 
 <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
-<script src="js/i18n-runtime.js" defer></script>
+
 <script src="js/poc-catalogue.js" defer></script>
 <script src="js/drifting-gallery.js" defer></script>
 <script src="js/motion.js" defer></script>

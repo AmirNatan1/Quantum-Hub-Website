@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Register for SPARK — Quantum-hub</title>
-<meta name="description" content="Apply to SPARK, Quantum-hub's equity-free POC runway program.">
+<title>Apply to SPARK — Quantum-Hub</title>
+<meta name="description" content="Apply with an MVP+ product. Applications are reviewed for technical readiness, then circulated to relevant partner companies.">
 <script src="js/splash.js"></script>
 <link rel="stylesheet" href="styles.css">
 <link rel="icon" type="image/svg+xml" href="assets/quantum-logo.svg">
 <link rel="canonical" href="https://quantum-hub.com/spark-register.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Register for SPARK — Quantum-hub">
-<meta property="og:description" content="Apply to SPARK, Quantum-hub's equity-free POC runway program.">
+<meta property="og:title" content="Apply to SPARK — Quantum-Hub">
+<meta property="og:description" content="Apply with an MVP+ product. Applications are reviewed for technical readiness, then circulated to relevant partner companies.">
 <meta property="og:url" content="https://quantum-hub.com/spark-register.html">
 <meta property="og:image" content="https://quantum-hub.com/assets/quantum-logo.svg">
 <meta name="twitter:card" content="summary">
@@ -23,28 +23,20 @@
 
 <header class="site-header">
   <div class="container">
-    <a class="logo-tile" href="index.html" aria-label="Quantum-hub home">
-      <img src="assets/quantum-logo.svg" alt="Quantum-hub">
+    <a class="logo-tile" href="index.html" aria-label="Quantum-Hub home">
+      <img src="assets/quantum-logo.svg" alt="Quantum-Hub"
+           onerror="this.style.display='none';this.parentNode.insertAdjacentHTML('beforeend','&lt;span class=&quot;logo-fallback&quot;&gt;q&lt;/span&gt;')">
     </a>
     <nav class="nav" aria-label="Main">
-      <a href="for-partners.html">For partners</a>
-      <a href="for-startups.html">For startups</a>
-      <a href="spark.html" class="active">SPARK</a>
-      <span class="explore">
-        <a href="#" data-explore-toggle aria-expanded="false" aria-haspopup="true">Explore</a>
-        <div class="explore-panel" role="menu">
-          <div>
-            <a href="industries.html" role="menuitem">Industries</a>
-            <a href="case-studies.html" role="menuitem">Case studies</a>
-            <a href="about.html" role="menuitem">About</a>
-            <a href="updates.html" role="menuitem">Hub updates</a>
-          </div>
-          <a class="explore-feature" href="case-studies.html">Featured: the POC Playground</a>
-        </div>
-      </span>
+      <a href="pocs.html">Approach</a>
+      <a href="industries.html">Industries</a>
+      <a href="partners.html">Partners</a>
+      <a href="spark.html" class="active" aria-current="page">Programs</a>
+      <a href="q-europe.html">Q-Europe</a>
+      <a href="case-studies.html">Case Studies</a>
+      <a href="about.html">About</a>
     </nav>
-    <button class="utility-btn" type="button" aria-label="Change language"><img class="language-flag" src="assets/flags/gb.png" alt=""> EN</button>
-    <!-- no CTA pill: this page IS the conversion -->
+    <a class="btn btn--primary btn--sm" data-context-cta href="contact.html">Contact us</a>
   </div>
 </header>
 
@@ -54,8 +46,8 @@
   <div class="container" style="max-width: 720px;">
     <div class="reveal">
       <span class="eyebrow">spark — startup intake</span>
-      <h1 class="display-l">Register for SPARK</h1>
-      <p style="margin-top: var(--space-3);">Tell us who you are — the full application form follows by email. We review <em>every</em> submission, even outside batch windows.</p>
+      <h1 class="display-l">Apply to SPARK</h1>
+      <p style="margin-top: var(--space-3);">Applications are reviewed for technical readiness first, then circulated to the partner companies whose operations your product touches.</p>
     </div>
 
     <form class="field reveal" action="https://formsubmit.co/ajax/intern@quantum-hub.com" method="POST" style="margin-top: var(--space-5);">
@@ -77,11 +69,10 @@
         <input type="checkbox" name="privacy_consent" value="agreed" required style="width:auto; height:auto; margin-top:4px;"> <span style="font-size:13px;">I agree to the <a href="privacy.html">privacy policy</a></span>
       </label>
       <label style="font-weight:400; display:flex; gap:10px; align-items:flex-start; color: var(--q-neutral-300);">
-        <input type="checkbox" name="future_batch_updates" value="yes" style="width:auto; height:auto; margin-top:4px;"> <span style="font-size:13px;">Send me updates about future batches (optional)</span>
+        <input type="checkbox" name="future_batch_updates" value="yes" style="width:auto; height:auto; margin-top:4px;"> <span style="font-size:13px;">Send me updates about future cohorts (optional)</span>
       </label>
       <button class="btn btn--primary" type="submit" style="margin-top: var(--space-5);">Submit application</button>
-      <!-- success state replaces the form in place:
-           "Application received — we'll get back to you within [X] days." ([X] pending team) -->
+      <!-- TODO: confirm response-time copy before publishing a quantified service level. -->
     </form>
   </div>
 </section>
@@ -91,25 +82,28 @@
 <footer class="site-footer">
   <div class="container">
     <div class="footer-top">
-      <a class="logo-tile" href="index.html" aria-label="Quantum-hub home" style="width:100px;height:36px;">
-        <img src="assets/quantum-logo.svg" alt="Quantum-hub">
+      <a class="logo-tile" href="index.html" aria-label="Quantum-Hub home" style="width:100px;height:36px;">
+        <img src="assets/quantum-logo.svg" alt="Quantum-Hub"
+             onerror="this.style.display='none';this.parentNode.insertAdjacentHTML('beforeend','&lt;span class=&quot;logo-fallback&quot;&gt;q&lt;/span&gt;')">
       </a>
       <nav class="footer-nav" aria-label="Footer">
-        <a href="for-partners.html">For partners</a><a href="for-startups.html">For startups</a>
-        <a href="spark.html">SPARK</a><a href="industries.html">Industries</a>
-        <a href="case-studies.html">Case studies</a><a href="about.html">About</a><a href="contact.html">Contact</a>
+        <a href="for-partners.html">For partner companies</a>
+        <a href="for-startups.html">For startups</a>
+        <a href="partners.html">Partners</a>
+        <a href="q-europe.html">Q-Europe</a>
+        <a href="updates.html">Hub updates</a>
       </nav>
-      <a href="https://www.linkedin.com/company/quantum-hub/" aria-label="Quantum-hub on LinkedIn"><i data-lucide="linkedin" style="width:20px;height:20px;"></i></a>
+      <a href="https://www.linkedin.com/company/quantum-hub/" aria-label="Quantum-Hub on LinkedIn"><i data-lucide="linkedin" style="width:20px;height:20px;"></i></a>
     </div>
     <p class="footer-legal">
       <a href="accessibility.html">Accessibility</a> · <a href="cookies.html">Cookies</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a>
-      &nbsp;|&nbsp; Quantum © <span id="y"></span> · T.L.G-T.S Technology LTD
+      &nbsp;|&nbsp; Quantum-Hub © <span id="y"></span> · T.L.G-T.S Technology LTD
     </p>
   </div>
 </footer>
 
 <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
-<script src="js/i18n-runtime.js" defer></script>
+
 <script src="js/motion.js" defer></script>
 </body>
 </html>
