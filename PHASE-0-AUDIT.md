@@ -5,7 +5,7 @@ Three deliverables: **A. Content inventory** (pages, sections, links, triage) ·
 
 Governing rules established here:
 
-1. **Partners Login is removed entirely** — inactive service (per Amir, 2026-07-12). It currently appears in every header; the desktop button even points to a *different* URL (`qh.partners`) than the mobile menu (`qdealflow.com` password page). Both go.
+1. **The retired partner portal is removed entirely** — inactive service (per Amir, 2026-07-12). It currently appears in every header; the desktop button even points to a *different* URL (`qh.partners`) than the mobile menu (`qdealflow.com` password page). Both go.
 2. No unverifiable numbers on the new site.
 3. Every link label must predict its destination (link map below is the enforcement tool).
 
@@ -18,7 +18,7 @@ Governing rules established here:
 | Element | Current state | Verdict |
 |---|---|---|
 | Header nav | Home · POC Playground · Partners (CHAMP, Enrichment Academy) · Startups (SPARK) | REBUILD per new sitemap (For partners / For startups / SPARK / Industries / Case studies / About / Contact) |
-| **Partners Login button** | Desktop → `https://qh.partners/`; mobile menu → `https://qdealflow.com/?password-protected=login…` (two different dead-end destinations) | **REMOVE ENTIRELY** — inactive service |
+| **Retired partner-portal button** | Desktop → `https://qh.partners/`; mobile menu → `https://qdealflow.com/?password-protected=login…` (two different dead-end destinations) | **REMOVE ENTIRELY** — inactive service |
 | Contact us button | → /contact-us/ | KEEP (becomes book-a-meeting + contact CTA) |
 | Contact form embedded at bottom of every page | Full Name, Company, Email, Message, consent | REMOVE from all pages; Contact page only, simplified (email + message) |
 | Footer | Duplicated nav ×2, LinkedIn icon, legal links, "Quantum 2024" | REBUILD; fix stale year; "Terms of use" points to `/privacy-policy-2/` (a privacy-policy slug — verify the actual terms content exists) |
@@ -92,8 +92,8 @@ Governing rules established here:
 
 | Page | Link label | Actually goes to | Should go to | Status |
 |---|---|---|---|---|
-| All | Partners Login (desktop) | qh.partners | — | **REMOVE** |
-| All | Partners Login (mobile) | qdealflow.com password page | — | **REMOVE** |
+| All | Retired partner portal (desktop) | qh.partners | — | **REMOVE** |
+| All | Retired partner portal (mobile) | qdealflow.com password page | — | **REMOVE** |
 | Home | STARTUPS (hero) | `#` (dead) | /for-startups/ | BROKEN |
 | Home | PARTNERS (hero) | /partners/ | /for-partners/ | OK→remap |
 | Home | DISCOVER MORE (industries) | /poc-playground/ | /industries/ | WRONG |
@@ -122,7 +122,7 @@ Every number/claim found on the site. Status: ✅ verified externally · ⚠️ 
 |---|---|---|---|---|---|
 | F-01 | "five holding companies with 300+ subsidiaries worldwide" | Home | Also appears as "300+ industrial partners" (Home card) and "over 300 companies" (Startups) — **three different framings of the same number** | Internal | ❓ pick ONE framing + confirm count |
 | F-02 | VDL: "over 100 subsidiaries, spread over 20 countries, about 17,000 employees" | Partners, Startups | **19 countries, 16,000+ employees, 100+ companies** — the live text (and the audit's 20/17,000 correction) are both stale | vdlgroep.com (official, Dutch): "ruim 16.000 medewerkers actief in 19 landen … meer dan 100 werkmaatschappijen" | ⚠️ update |
-| F-03 | Hyundai: "active in 200 countries with 250,000 employees" | Partners, Startups | Only 195 countries exist. Group employees ≈ **292,575 (2021)**. Safe reframe: "the world's third-largest automaker, with brands (Hyundai, Kia, Genesis) sold in markets worldwide and ~290,000 employees" | Wikipedia/HMG corporate performance; OICA ranking | ⚠️ rewrite claim |
+| F-03 | Hyundai: "active in 200 countries with 250,000 employees" | Partners, Startups | Only 195 countries exist. Group employees ≈ **292,575 (2021)**. Cautious reframe: "the world's third-largest automaker, with brands (Hyundai, Kia, Genesis) sold in markets worldwide and ~290,000 employees" | Wikipedia/HMG corporate performance; OICA ranking | ⚠️ rewrite claim |
 | F-04 | Talcar: "12% market share (2021)", "over 5 decades", Kia largest brand | Partners, Startups | 2021 figure is 5 years stale | Internal/importer data | ❓ refresh or drop the % |
 | F-05 | Taavura-Livnat: "over 100 subsidiaries" | Partners, Startups | — | Internal | ❓ confirm |
 | F-06 | Bazan: "largest refinery… in Israel", "up to 8 tons hydrogen per hour" | Partners, Startups | — | Internal/Bazan | ❓ confirm with Bazan page |
@@ -134,7 +134,7 @@ Every number/claim found on the site. Status: ✅ verified externally · ⚠️ 
 | F-12 | "The program is equity-free, and we are not taking any fees" | Startups FAQ | Contractual claim | Internal | ❓ legal sign-off |
 | F-13 | Supplied list described as "110 POCs" | POC catalogue | The corrected supplied file contains **110 distinct non-empty records and no exact duplicates**, aligning with the confirmed headline. Repeated companies remain separate where the partner, site, track, or demo differs. | Amir's corrected supplied list, 2026-07-15 | ✅ internally verified |
 
-**Register updates (2026-07-14, per Amir):** F-04 moot — **Talcar/Kia is no longer a partner; removed site-wide (partner count is now four)**. F-07 testimonials confirmed. F-11 address confirmed (Arik Einstein 3, 8th Fl., Herzliya). F-12 equity-free claim confirmed. Team roster replaced with fresh 11-person list from The Team.pdf (photos extracted; Liron Ben Zaken has no LinkedIn URL yet).
+**Content-brief override:** Talcar is included in the approved five corporate groups. The public team roster is the ten members listed in the approved content brief. Unverified testimonials remain removed. F-11 address and the SPARK equity-free claim remain confirmed.
 
 **Register update (2026-07-15, per Amir):** F-08 resolved — 110 POCs across all partners and 29 group-wide implementations are confirmed for publication.
 

@@ -92,8 +92,8 @@
     }).forEach(function (card) { track.appendChild(card); });
   }
 
-  function cloneCard(seed, cloneIndex) {
-    var clone = seed.cloneNode(true);
+  function cloneCard(sourceCard, cloneIndex) {
+    var clone = sourceCard.cloneNode(true);
     clone.removeAttribute("data-drift-original");
     clone.setAttribute("data-drift-clone", "");
     clone.setAttribute("aria-hidden", "true");
@@ -101,7 +101,7 @@
     clone.style.transform = "";
     clone.querySelectorAll("[id]").forEach(function (element) { element.removeAttribute("id"); });
     clone.querySelectorAll("[aria-labelledby]").forEach(function (element) { element.removeAttribute("aria-labelledby"); });
-    clone.dataset.driftOrder = String(parseInt(seed.dataset.driftOrder, 10) + cloneIndex * originalCards.length);
+    clone.dataset.driftOrder = String(parseInt(sourceCard.dataset.driftOrder, 10) + cloneIndex * originalCards.length);
     clone.querySelectorAll("a, button, input, select, textarea, [tabindex]").forEach(function (interactive) {
       interactive.setAttribute("tabindex", "-1");
     });

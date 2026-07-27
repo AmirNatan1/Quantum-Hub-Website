@@ -1,4 +1,4 @@
-/* One-time Quantum-hub splash. Loaded synchronously in <head> so the first
+/* One-time Quantum-Hub splash. Loaded synchronously in <head> so the first
    paint is covered without flashing the page underneath. */
 (function () {
   "use strict";

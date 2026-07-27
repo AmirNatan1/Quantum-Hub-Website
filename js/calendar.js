@@ -3,12 +3,10 @@
   var root = document.querySelector("[data-calendar]");
   if (!root) return;
   var url = window.QH_CONFIG && window.QH_CONFIG.calendarUrl;
-  var translate = function (text) {
-    return window.QuantumI18n ? window.QuantumI18n.translate(text) : text;
-  };
+  var translate = function (text) { return text; };
 
   if (!url) {
-    root.innerHTML = '<div class="calendar-fallback" role="status"><span class="eyebrow">Calendly</span><h3>' + translate("Online booking is being activated") + '</h3><p>' + translate("Available startup-meeting times will appear here as soon as Quantum-hub's calendar connection is complete.") + "</p></div>";
+    root.innerHTML = '<div class="calendar-fallback" role="status"><span class="eyebrow">Calendly</span><h3>' + translate("Online booking is being activated") + '</h3><p>' + translate("Available startup-meeting times will appear here as soon as Quantum-Hub's calendar connection is complete.") + "</p></div>";
     return;
   }
 

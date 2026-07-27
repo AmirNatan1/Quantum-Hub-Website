@@ -4,9 +4,7 @@
   "use strict";
 
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var t = function (text) {
-    return window.QuantumI18n ? window.QuantumI18n.translate(text) : text;
-  };
+  var t = function (text) { return text; };
 
   var orbit = document.querySelector("[data-poc-orbit]");
   if (orbit && !reduced && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {

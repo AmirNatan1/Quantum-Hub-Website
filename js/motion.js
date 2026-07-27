@@ -1,12 +1,10 @@
-/* Quantum-hub interaction layer. Motion follows DESIGN-SPEC.md and stops when
+/* Quantum-Hub interaction layer. Motion follows DESIGN-SPEC.md and stops when
    the visitor requests reduced motion. */
 (function () {
   "use strict";
 
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var t = function (english) {
-    return window.QuantumI18n ? window.QuantumI18n.translate(english) : english;
-  };
+  var t = function (english) { return english; };
   var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
   /* Reveals */
@@ -26,7 +24,7 @@
   }
 
   /* A restrained word reveal for the primary marketing headlines. The split is
-     created after translation so Hebrew and English animate their own words. */
+     created before animation so each word can move independently. */
   if (!reduced) {
     var textRevealHeadings = Array.prototype.slice.call(document.querySelectorAll("main h1.display-xl"))
       .filter(function (heading) { return heading.children.length === 0; });
@@ -90,10 +88,11 @@
     var footerNavigation = gradientFooter.querySelector(".footer-nav");
     if (footerNavigation) {
       var footerLinks = [
-        ["For partners", "for-partners.html"], ["For startups", "for-startups.html"],
-        ["POCs", "pocs.html"], ["SPARK", "spark.html"], ["Industries", "industries.html"],
-        ["POC catalogue", "case-studies.html"], ["Hub updates", "updates.html"],
-        ["About", "about.html"], ["Contact", "contact.html"]
+        ["For partner companies", "for-partners.html"],
+        ["For startups", "for-startups.html"],
+        ["Partners", "partners.html"],
+        ["Q-Europe", "q-europe.html"],
+        ["Hub updates", "updates.html"]
       ];
       footerNavigation.innerHTML = footerLinks.map(function (link) {
         return '<a href="' + link[1] + '">' + t(link[0]) + '</a>';
@@ -115,7 +114,7 @@
         if (footerContainer) footerContainer.insertBefore(footerSocialRow, footerLegal || null);
       }
     }
-    footerLinkedIn.setAttribute("aria-label", t("Quantum-hub on LinkedIn"));
+    footerLinkedIn.setAttribute("aria-label", t("Quantum-Hub on LinkedIn"));
     footerLinkedIn.classList.add("footer-social-link");
     footerLinkedIn.target = "_blank";
     footerLinkedIn.rel = "noopener";
@@ -191,20 +190,32 @@
   var navBar = document.querySelector(".site-header .nav");
   var megaGroups = [
     {
-      label: "Partners", href: "for-partners.html", files: ["for-partners.html", "industries.html", "contact.html"],
-      links: [["For partners", "for-partners.html"], ["Industries", "industries.html"], ["Contact", "contact.html"]]
+      label: "Approach", href: "pocs.html", files: ["pocs.html"],
+      links: [["The POC method", "pocs.html"]]
     },
     {
-      label: "Startups", href: "for-startups.html", files: ["for-startups.html", "spark.html", "spark-register.html"],
-      links: [["For startups", "for-startups.html"], ["SPARK", "spark.html"], ["Apply to SPARK", "spark-register.html"]]
+      label: "Industries", href: "industries.html", files: ["industries.html"],
+      links: [["Industries", "industries.html"]]
     },
     {
-      label: "POCs", href: "pocs.html", files: ["pocs.html", "case-studies.html", "case-study-actasys.html"],
-      links: [["POCs", "pocs.html"], ["Actasys case", "case-study-actasys.html"]]
+      label: "Partners", href: "partners.html", files: ["partners.html", "for-partners.html", "contact.html"],
+      links: [["Meet the partners", "partners.html"], ["For partner companies", "for-partners.html"], ["Contact", "contact.html"]]
     },
     {
-      label: "Explore", href: "about.html", files: ["index.html", "about.html", "updates.html"],
-      links: [["Home", "index.html"], ["About", "about.html"], ["Hub updates", "updates.html"]]
+      label: "Programs", href: "spark.html", files: ["spark.html", "for-startups.html", "spark-register.html"],
+      links: [["SPARK", "spark.html"], ["For startups", "for-startups.html"], ["Apply to SPARK", "spark-register.html"]]
+    },
+    {
+      label: "Q-Europe", href: "q-europe.html", files: ["q-europe.html"],
+      links: [["Q-Europe", "q-europe.html"]]
+    },
+    {
+      label: "Case Studies", href: "case-studies.html", files: ["case-studies.html", "case-study-actasys.html"],
+      links: [["Case studies", "case-studies.html"], ["Actasys case", "case-study-actasys.html"]]
+    },
+    {
+      label: "About", href: "about.html", files: ["about.html", "updates.html"],
+      links: [["About", "about.html"], ["Hub updates", "updates.html"]]
     }
   ];
   var legalLinks = [["Accessibility", "accessibility.html"], ["Cookies", "cookies.html"], ["Privacy", "privacy.html"], ["Terms", "terms.html"]];
@@ -227,7 +238,7 @@
         megaLinkIndex += 1;
         return '<a href="' + link[1] + '" style="--mega-stagger:' + delay + 'ms"><span>' + t(link[0]) + '</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></a>';
       }).join("") + '</div></section>';
-    }).join("") + '<a class="mega-menu-feature" href="case-studies.html" style="--mega-stagger:' + (megaLinkIndex * 40) + 'ms"><span class="eyebrow">' + t("POC catalogue") + '</span><strong>' + t("110 POCs") + '</strong><span>' + t("Browse the complete catalogue") + '</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></a></div>' +
+    }).join("") + '<a class="mega-menu-feature" href="case-studies.html" style="--mega-stagger:' + (megaLinkIndex * 40) + 'ms"><span class="eyebrow">' + t("Case studies") + '</span><strong>' + t("34 portfolio companies") + '</strong><span>' + t("Inspect the public record") + '</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></a></div>' +
       '<div class="mega-menu-utility"><span>' + t("Legal and access") + '</span><nav aria-label="' + t("Legal and access") + '">' + legalLinks.map(function (link) {
         return '<a href="' + link[1] + '">' + t(link[0]) + '</a>';
       }).join("") + '</nav></div></div>';
@@ -1004,8 +1015,8 @@
     overlay.setAttribute("role", "dialog");
     overlay.setAttribute("aria-modal", "true");
     overlay.setAttribute("aria-label", t("Menu"));
-    overlay.innerHTML = '<div class="mobile-menu-head"><span class="eyebrow">' + t("Navigate Quantum-hub") + '</span></div><div class="mobile-menu-groups">' + megaGroups.map(function (group, groupIndex) {
-      var mobileLinks = group.links.concat(group.label === "POCs" ? [["POC catalogue", "case-studies.html"]] : []);
+    overlay.innerHTML = '<div class="mobile-menu-head"><span class="eyebrow">' + t("Navigate Quantum-Hub") + '</span></div><div class="mobile-menu-groups">' + megaGroups.map(function (group, groupIndex) {
+      var mobileLinks = group.links;
       return '<section class="mobile-menu-group"><button type="button" aria-expanded="false" aria-controls="mobile-menu-group-' + groupIndex + '"><span>' + t(group.label) + '</span><i data-lucide="plus" aria-hidden="true"></i></button><div class="mobile-menu-group-panel" id="mobile-menu-group-' + groupIndex + '">' + mobileLinks.map(function (link) {
         return '<a href="' + link[1] + '"><strong>' + t(link[0]) + '</strong></a>';
       }).join("") + '</div></section>';
@@ -1042,38 +1053,6 @@
     menuButton.addEventListener("click", openMobileMenu);
     overlay.querySelector(".close-btn").addEventListener("click", closeMobileMenu);
     document.addEventListener("keydown", function (event) { if (event.key === "Escape" && overlay.classList.contains("is-open")) closeMobileMenu(); });
-  }
-
-  /* Language selector with real flag assets */
-  var languageButton = document.querySelector(".utility-btn");
-  if (languageButton) {
-    var currentLanguage = window.QuantumI18n ? window.QuantumI18n.current() : "en";
-    var languageWrap = document.createElement("span");
-    languageWrap.className = "lang-wrap";
-    languageButton.parentNode.insertBefore(languageWrap, languageButton);
-    languageWrap.appendChild(languageButton);
-    languageButton.innerHTML = '<img class="language-flag" src="assets/flags/' + (currentLanguage === "he" ? "il" : "gb") + '.png" alt=""><span>' + (currentLanguage === "he" ? "HE" : "EN") + "</span>";
-
-    var languagePanel = document.createElement("div");
-    languagePanel.className = "lang-panel";
-    languagePanel.innerHTML =
-      '<button type="button" data-language="en"><span class="lang-option-label"><img class="language-flag" src="assets/flags/gb.png" alt="">English</span><span aria-hidden="true">' + (currentLanguage === "en" ? "✓" : "") + "</span></button>" +
-      '<button type="button" data-language="he"><span class="lang-option-label"><img class="language-flag" src="assets/flags/il.png" alt="">עברית</span><span aria-hidden="true">' + (currentLanguage === "he" ? "✓" : "") + "</span></button>";
-    languageWrap.appendChild(languagePanel);
-    languagePanel.querySelector('[data-language="' + currentLanguage + '"]').classList.add("current");
-
-    languageButton.addEventListener("click", function (event) {
-      event.stopPropagation();
-      languagePanel.classList.toggle("is-open");
-    });
-    languagePanel.querySelectorAll("[data-language]").forEach(function (option) {
-      option.addEventListener("click", function () {
-        if (window.QuantumI18n) window.QuantumI18n.set(option.getAttribute("data-language"));
-      });
-    });
-    document.addEventListener("click", function (event) {
-      if (!languageWrap.contains(event.target)) languagePanel.classList.remove("is-open");
-    });
   }
 
   /* AJAX forms send submissions to the configured FormSubmit endpoint, which
